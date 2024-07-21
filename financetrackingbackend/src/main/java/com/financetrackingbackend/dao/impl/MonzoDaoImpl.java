@@ -117,14 +117,13 @@ public class MonzoDaoImpl implements MonzoDao {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
         String clientId = monzoConfig.getClientId();
         String clientSecret = monzoConfig.getClientSecret();
+
         formData.add(GRANT_TYPE, grantType);
         formData.add(CLIENT_ID, clientId);
         formData.add(CLIENT_SECRET, clientSecret);
         formData.add(REDIRECT_URI, redirectUri);
-
         formData.add(grantType.equals(REFRESH_TOKEN) ? REFRESH_TOKEN : CODE, code);
 
-        System.out.println(formData);
         return formData;
     }
 
@@ -144,7 +143,7 @@ public class MonzoDaoImpl implements MonzoDao {
             }
             throw new ServiceUnavailableException(message+e.getMessage());
         } catch (WebClientException e) {
-            throw new IllegalStateException(MONZO_REQUEST_FAIL, e);
+            throw new IllegalStateException(MONZO_REQUEST_FAIL+e.getMessage(), e);
         }
     }
 }

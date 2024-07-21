@@ -43,14 +43,22 @@ import static reactor.core.publisher.Mono.just;
 
 @ExtendWith(MockitoExtension.class)
 public class UlsterbankDaoImplTest {
-    @Mock private WebClient webClient;
-    @Mock private Builder webClientBuilder;
-    @Mock private RequestBodyUriSpec uriSpecForPost;
-    @Mock private RequestHeadersUriSpec uriSpecForGet;
-    @Mock private RequestBodySpec bodySpec;
-    @Mock private RequestHeadersSpec headersSpec;
-    @Mock private ResponseSpec responseSpec;
-    @Mock private UlsterbankConfig config;
+    @Mock
+    WebClient webClient;
+    @Mock
+    private Builder webClientBuilder;
+    @Mock
+    private RequestBodyUriSpec uriSpecForPost;
+    @Mock
+    private RequestHeadersUriSpec uriSpecForGet;
+    @Mock
+    private RequestBodySpec bodySpec;
+    @Mock
+    private RequestHeadersSpec headersSpec;
+    @Mock
+    private ResponseSpec responseSpec;
+    @Mock
+    private UlsterbankConfig config;
 
     private UlsterbankDaoImpl ulsterbankDao;
 
