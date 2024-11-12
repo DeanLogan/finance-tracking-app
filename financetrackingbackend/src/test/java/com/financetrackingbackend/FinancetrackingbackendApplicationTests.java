@@ -1,10 +1,10 @@
-package com.tracking.finance.financeappbackend;
+package com.financetrackingbackend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class FinanceappbackendApplicationTests {
+class FinancetrackingbackendApplicationTests {
 
 	@Test
 	void contextLoads() {
