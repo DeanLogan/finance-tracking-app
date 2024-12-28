@@ -7,14 +7,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientException;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
 import java.security.SecureRandom;
 import java.util.Base64;
 
@@ -31,15 +30,17 @@ public class MonzoExperiments {
 
     public WhoAmI getWhoAmI() {
         if(monzoAccessToken == null) {
-            buildMonzoAuthorizationUrl();
-            return new WhoAmI(false, "1", "1");
+            monzoAccessToken = new MonzoAccessToken();
+            monzoAccessToken.setAccessToken(dotenv.get("MONZO_ACCESSTOKEN"));
+            monzoAccessToken.setClientId(dotenv.get("MONZO_CLIENT_ID"));
+            monzoAccessToken.setExpiresIn(dotenv.get("MONZO_EXPIRESIN"));
+            monzoAccessToken.setRefreshToken(dotenv.get("MONZO_REFRESHTOKEN"));
+            monzoAccessToken.setTokenType(dotenv.get("MONZO_TOKENTYPE"));
         }
 
         return webClient.get()
-                .uri(uriBuilder -> uriBuilder.path("/ping/whoami")
-                        .queryParam("Authorization: Bearer", monzoAccessToken.getAccessToken())
-                        .build())
-                .headers(headers -> headers.setBearerAuth(dotenv.get("MONZO_ACCESS_TOKEN")))
+                .uri(uriBuilder -> uriBuilder.path("/ping/whoami").build())
+                .headers(headers -> headers.setBearerAuth(monzoAccessToken.getAccessToken()))
                 .retrieve()
                 .bodyToMono(WhoAmI.class)
                 .block();
@@ -58,30 +59,15 @@ public class MonzoExperiments {
             throw new IllegalStateException("Failed to generate state token");
         }
 
-        try {
-            ResponseEntity<String> response = webClient.get()
-                    .uri(uriBuilder -> uriBuilder
-                            .scheme("https")
-                            .host("auth.monzo.com")
-                            .queryParam("client_id", clientId)
-                            .queryParam("redirect_uri", redirectUri)
-                            .queryParam("response_type", "code")
-                            .queryParam("state", totallySecureStateToken)
-                            .build())
-                    .retrieve()
-                    .toEntity(String.class)
-                    .block();
-
-            if (response == null) {
-                throw new IllegalStateException("No response received from Monzo authorization endpoint");
-            }
-
-            System.out.println(response);
-            return "success";
-
-        } catch (WebClientException e) {
-            throw new IllegalStateException("Failed to connect to Monzo authorization endpoint", e);
-        }
+        return UriComponentsBuilder.newInstance()
+                .scheme("https")
+                .host("auth.monzo.com")
+                .queryParam("client_id", clientId)
+                .queryParam("redirect_uri", redirectUri)
+                .queryParam("response_type", "code")
+                .queryParam("state", totallySecureStateToken)
+                .build()
+                .toUriString();
     }
 
     private String generateStateToken() {
@@ -113,13 +99,19 @@ public class MonzoExperiments {
             throw new IllegalStateException("Failed to generate state token");
         }
 
+        getMonzoAccessToken("authorization_code", clientId, clientSecret, redirectUri, totallySecureAuthCode);
+    }
+
+    private MonzoAccessToken getMonzoAccessToken(String grantType, String clientId, String clientSecret, String authCode, String redirectUri) {
         try {
             MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-            formData.add("grant_type", "authorization_code");
+            formData.add("grant_type", grantType);
             formData.add("client_id", clientId);
             formData.add("client_secret", clientSecret);
             formData.add("redirect_uri", redirectUri);
-            formData.add("code", totallySecureAuthCode);
+            formData.add("code", authCode);
+
+            System.out.println(formData);
 
             monzoAccessToken = webClient.post()
                     .uri(uriBuilder -> uriBuilder
@@ -133,9 +125,13 @@ public class MonzoExperiments {
                     .bodyToMono(MonzoAccessToken.class)
                     .block();
 
+            System.out.println("\n\n\n\n"+monzoAccessToken+"\n\n\n\n");
+
         } catch (WebClientException e) {
             throw new IllegalStateException("Failed to connect to Monzo authorization endpoint", e);
         }
+
+        return monzoAccessToken;
     }
 
 }

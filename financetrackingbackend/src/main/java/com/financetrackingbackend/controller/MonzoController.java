@@ -19,6 +19,13 @@ public class MonzoController {
     private final MonzoExperiments monzoExperiments;
     private final Dotenv dotenv;
 
+    @GetMapping("/authorize")
+    public String authoriseUser() {
+        String redirect = "redirect: "+monzoExperiments.buildMonzoAuthorizationUrl();
+        System.out.println(redirect);
+        return redirect;
+    }
+
     @GetMapping("/whoami")
     public WhoAmI getWhoAmI() {
         return monzoExperiments.getWhoAmI();
@@ -37,6 +44,6 @@ public class MonzoController {
         }
         monzoExperiments.setTotallySecureAuthCode(authorizationCode);
         monzoExperiments.exchangeAuthCode();
-        return ResponseEntity.ok("Authorization successful");
+        return ResponseEntity.ok("Code: "+authorizationCode+"\n\n\nState: "+stateToken);
     }
 }
