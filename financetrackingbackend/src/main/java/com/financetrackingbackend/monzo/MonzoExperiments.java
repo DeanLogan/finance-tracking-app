@@ -20,6 +20,9 @@ import java.util.Base64;
 @Service
 @RequiredArgsConstructor
 public class MonzoExperiments {
+    private final String REFRESH_TOKEN = "refresh_token";
+    private final String AUTHORISATION_CODE = "authorization_code";
+
     private final WebClient webClient;
     private final Dotenv dotenv;
     private String totallySecureStateToken = null;
@@ -28,19 +31,10 @@ public class MonzoExperiments {
     @Setter
     private String totallySecureAuthCode = null;
 
-    public WhoAmI getWhoAmI() {
-        if(monzoAccessToken == null) {
-            monzoAccessToken = new MonzoAccessToken();
-            monzoAccessToken.setAccessToken(dotenv.get("MONZO_ACCESSTOKEN"));
-            monzoAccessToken.setClientId(dotenv.get("MONZO_CLIENT_ID"));
-            monzoAccessToken.setExpiresIn(dotenv.get("MONZO_EXPIRESIN"));
-            monzoAccessToken.setRefreshToken(dotenv.get("MONZO_REFRESHTOKEN"));
-            monzoAccessToken.setTokenType(dotenv.get("MONZO_TOKENTYPE"));
-        }
-
+    public WhoAmI getWhoAmI(String accessToken) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/ping/whoami").build())
-                .headers(headers -> headers.setBearerAuth(monzoAccessToken.getAccessToken()))
+                .headers(headers -> headers.setBearerAuth(accessToken))
                 .retrieve()
                 .bodyToMono(WhoAmI.class)
                 .block();
@@ -85,7 +79,7 @@ public class MonzoExperiments {
         return (givenStateToken != null && givenStateToken.equals(totallySecureStateToken));
     }
 
-    public void exchangeAuthCode() {
+    public MonzoAccessToken exchangeAuthCode() {
         String clientId = dotenv.get("MONZO_CLIENT_ID");
         String redirectUri = dotenv.get("MONZO_REDIRECT_URI");
         String clientSecret = dotenv.get("MONZO_CLIENT_SECRET");
@@ -99,7 +93,24 @@ public class MonzoExperiments {
             throw new IllegalStateException("Failed to generate state token");
         }
 
-        getMonzoAccessToken("authorization_code", clientId, clientSecret, redirectUri, totallySecureAuthCode);
+        return getMonzoAccessToken(AUTHORISATION_CODE, clientId, clientSecret, totallySecureAuthCode, redirectUri);
+    }
+
+    public MonzoAccessToken refreshAuthCode(String refreshToken) {
+        String clientId = dotenv.get("MONZO_CLIENT_ID");
+        String redirectUri = dotenv.get("MONZO_REDIRECT_URI");
+        String clientSecret = dotenv.get("MONZO_CLIENT_SECRET");
+
+        if (StringUtils.isAnyBlank(clientId, redirectUri, clientSecret)) {
+            throw new IllegalStateException("Environment variables are not configured");
+        }
+
+        totallySecureStateToken = generateStateToken();
+        if (totallySecureStateToken == null) {
+            throw new IllegalStateException("Failed to generate state token");
+        }
+
+        return getMonzoAccessToken(REFRESH_TOKEN, clientId, clientSecret, refreshToken, "");
     }
 
     private MonzoAccessToken getMonzoAccessToken(String grantType, String clientId, String clientSecret, String authCode, String redirectUri) {
@@ -109,7 +120,13 @@ public class MonzoExperiments {
             formData.add("client_id", clientId);
             formData.add("client_secret", clientSecret);
             formData.add("redirect_uri", redirectUri);
-            formData.add("code", authCode);
+
+            String additionalFormData = "code";
+            if(grantType.equals(REFRESH_TOKEN)) {
+                additionalFormData = "refresh_token";
+            }
+
+            formData.add(additionalFormData, authCode);
 
             System.out.println(formData);
 

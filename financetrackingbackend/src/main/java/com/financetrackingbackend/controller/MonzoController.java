@@ -1,15 +1,13 @@
 package com.financetrackingbackend.controller;
 
 import com.financetrackingbackend.monzo.MonzoExperiments;
+import com.financetrackingbackend.monzo.schema.MonzoAccessToken;
 import com.financetrackingbackend.monzo.schema.WhoAmI;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -19,7 +17,7 @@ public class MonzoController {
     private final MonzoExperiments monzoExperiments;
     private final Dotenv dotenv;
 
-    @GetMapping("/authorize")
+    @GetMapping("/auth")
     public String authoriseUser() {
         String redirect = "redirect: "+monzoExperiments.buildMonzoAuthorizationUrl();
         System.out.println(redirect);
@@ -27,11 +25,15 @@ public class MonzoController {
     }
 
     @GetMapping("/whoami")
-    public WhoAmI getWhoAmI() {
-        return monzoExperiments.getWhoAmI();
+    public WhoAmI getWhoAmI(@RequestHeader("accessToken") String accessToken) {
+        System.out.println("access token=test:"+accessToken);
+        if(accessToken == null || accessToken.equalsIgnoreCase("testing")) {
+            accessToken = dotenv.get("MONZO_ACCESSTOKEN");
+        }
+        return monzoExperiments.getWhoAmI(accessToken);
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public String home() {
         return "monzo";
     }
@@ -43,7 +45,12 @@ public class MonzoController {
                     .body("Invalid state token");
         }
         monzoExperiments.setTotallySecureAuthCode(authorizationCode);
-        monzoExperiments.exchangeAuthCode();
-        return ResponseEntity.ok("Code: "+authorizationCode+"\n\n\nState: "+stateToken);
+        MonzoAccessToken accessToken = monzoExperiments.exchangeAuthCode();
+        return ResponseEntity.ok("AuthCode:\n"+authorizationCode+"\n\nToken:\n"+accessToken);
+    }
+
+    @GetMapping("/refreshAccessToken")
+    public MonzoAccessToken refreshAccessToken(@RequestHeader("refreshToken") String refreshToken) {
+        return monzoExperiments.refreshAuthCode(refreshToken);
     }
 }
