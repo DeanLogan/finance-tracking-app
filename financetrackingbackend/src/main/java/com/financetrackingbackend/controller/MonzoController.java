@@ -7,7 +7,11 @@ import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 
 @RestController
@@ -33,6 +37,15 @@ public class MonzoController {
         return monzoExperiments.getWhoAmI(accessToken);
     }
 
+    @GetMapping("/balance")
+    public float getAccounts(@RequestHeader("accessToken") String accessToken) {
+        System.out.println("access token=test:"+accessToken);
+        if(accessToken == null || accessToken.equalsIgnoreCase("testing")) {
+            accessToken = dotenv.get("MONZO_ACCESSTOKEN");
+        }
+        return monzoExperiments.getBalance(accessToken);
+    }
+
     @GetMapping("")
     public String home() {
         return "monzo";
@@ -49,7 +62,7 @@ public class MonzoController {
         return ResponseEntity.ok("AuthCode:\n"+authorizationCode+"\n\nToken:\n"+accessToken);
     }
 
-    @GetMapping("/refreshAccessToken")
+    @GetMapping("/oauth/refresh")
     public MonzoAccessToken refreshAccessToken(@RequestHeader("refreshToken") String refreshToken) {
         return monzoExperiments.refreshAuthCode(refreshToken);
     }

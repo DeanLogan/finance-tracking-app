@@ -1,7 +1,6 @@
 package com.financetrackingbackend.monzo;
 
-import com.financetrackingbackend.monzo.schema.MonzoAccessToken;
-import com.financetrackingbackend.monzo.schema.WhoAmI;
+import com.financetrackingbackend.monzo.schema.*;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -16,12 +15,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class MonzoExperiments {
     private final String REFRESH_TOKEN = "refresh_token";
     private final String AUTHORISATION_CODE = "authorization_code";
+    private final String HOST = "api.monzo.com";
 
     private final WebClient webClient;
     private final Dotenv dotenv;
@@ -133,7 +134,7 @@ public class MonzoExperiments {
             monzoAccessToken = webClient.post()
                     .uri(uriBuilder -> uriBuilder
                             .scheme("https")
-                            .host("api.monzo.com")
+                            .host(HOST)
                             .path("/oauth2/token")
                             .build())
                     .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -149,6 +150,41 @@ public class MonzoExperiments {
         }
 
         return monzoAccessToken;
+    }
+
+    private List<MonzoAccount> getAccounts(String accessToken) {
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/accounts").build())
+                .headers(headers -> headers.setBearerAuth(accessToken))
+                .retrieve()
+                .bodyToMono(MonzoAccounts.class)
+                .block()
+                .getAccounts();
+    }
+
+    private MonzoBalance getBalanceForAccount(String accessToken, String accountId) {
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/balance")
+                        .queryParam("account_id", accountId)
+                        .build())
+                .headers(headers -> headers.setBearerAuth(accessToken))
+                .retrieve()
+                .bodyToMono(MonzoBalance.class)
+                .block();
+    }
+
+    public float getBalance(String accessToken) {
+        List<MonzoAccount> accounts = getAccounts(accessToken);
+        int pennyBalance = 0;
+        if (accounts != null) {
+            for (MonzoAccount account : accounts) {
+                System.out.println("id being tested:"+account.getId());
+                MonzoBalance monzoBalance = getBalanceForAccount(accessToken, account.getId());
+                pennyBalance += monzoBalance.getBalance();
+            }
+        }
+        return (float) pennyBalance / 100;
     }
 
 }
