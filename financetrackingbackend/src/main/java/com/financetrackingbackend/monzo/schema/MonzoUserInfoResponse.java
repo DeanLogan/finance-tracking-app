@@ -5,16 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class MonzoBalance {
-    @JsonProperty("balance")
-    private float balance;
+public class MonzoUserInfoResponse {
     @JsonProperty("total_balance")
     private float totalBalance;
-    @JsonProperty("currency")
-    private String currency;
-    @JsonProperty("spend_today")
-    private int spendToday;
+    @JsonProperty("accounts")
+    private List<MonzoAccount> accounts;
 }

@@ -16,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @RequiredArgsConstructor
@@ -158,33 +159,99 @@ public class MonzoExperiments {
                 .headers(headers -> headers.setBearerAuth(accessToken))
                 .retrieve()
                 .bodyToMono(MonzoAccounts.class)
-                .block()
-                .getAccounts();
+                .map(MonzoAccounts::getAccounts)
+                .block();
     }
 
-    private MonzoBalance getBalanceForAccount(String accessToken, String accountId) {
+    private MonzoAccount getBalanceForAccount(String accessToken, MonzoAccount account) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/balance")
-                        .queryParam("account_id", accountId)
+                        .queryParam("account_id", account.getId())
                         .build())
                 .headers(headers -> headers.setBearerAuth(accessToken))
                 .retrieve()
-                .bodyToMono(MonzoBalance.class)
+                .bodyToMono(MonzoAccount.class)
+                .map(updatedFields -> {
+                    if (updatedFields != null) {
+                        account.setAccountBalance(updatedFields.getAccountBalance() / 100);
+                        account.setTotalBalance(updatedFields.getTotalBalance() / 100);
+                        account.setCurrency(updatedFields.getCurrency());
+                        account.setSpendToday(updatedFields.getSpendToday() / 100);
+                    }
+                    return account;
+                })
                 .block();
     }
 
     public float getBalance(String accessToken) {
         List<MonzoAccount> accounts = getAccounts(accessToken);
-        int pennyBalance = 0;
+        float balance = 0;
         if (accounts != null) {
             for (MonzoAccount account : accounts) {
                 System.out.println("id being tested:"+account.getId());
-                MonzoBalance monzoBalance = getBalanceForAccount(accessToken, account.getId());
-                pennyBalance += monzoBalance.getBalance();
+                MonzoAccount monzoBalance = getBalanceForAccount(accessToken, account);
+                System.out.println("accountTHing:"+monzoBalance);
+                balance += monzoBalance.getAccountBalance();
             }
         }
-        return (float) pennyBalance / 100;
+        return balance;
     }
 
+    private MonzoPots getAllPots(String accessToken, String accountId) {
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/pots")
+                        .queryParam("current_account_id", accountId)
+                        .build())
+                .headers(headers -> headers.setBearerAuth(accessToken))
+                .retrieve()
+                .bodyToMono(MonzoPots.class)
+                .block();
+    }
+
+    public MonzoPots getAllActivePots(String accessToken, String accountId) {
+        AtomicReference<Float> totalBalance = new AtomicReference<>(0.0F);
+
+        List<MonzoPot> activePots = getAllPots(accessToken, accountId).getPots()
+                .stream()
+                .filter(pot -> !pot.isDeleted())
+                .peek(monzoPot -> {
+                    float adjustedBalance = monzoPot.getBalance() / 100;
+                    monzoPot.setBalance(adjustedBalance);
+                    totalBalance.updateAndGet(currentTotal -> currentTotal + adjustedBalance);
+                })
+                .toList();
+
+        MonzoPots monzoPots = new MonzoPots();
+        monzoPots.setPots(activePots);
+        monzoPots.setTotalPotsBalance(totalBalance.get());
+
+        return monzoPots;
+    }
+
+    private MonzoAccount addActivePotsToAccount(String accessToken, MonzoAccount account) {
+        account.setPots(getAllActivePots(accessToken, account.getId()));
+        return account;
+    }
+
+    public MonzoUserInfoResponse getUserInfo(String accessToken) {
+        MonzoUserInfoResponse response = new MonzoUserInfoResponse();
+        List<MonzoAccount> accounts = getAccounts(accessToken);
+
+        float totalBalance = 0.0F;
+
+        for (int i = 0; i < accounts.size(); i++) {
+            MonzoAccount account = accounts.get(i);
+            account = getBalanceForAccount(accessToken, account);
+            account = addActivePotsToAccount(accessToken, account);
+            totalBalance += account.getTotalBalance();
+
+            accounts.set(i, account);
+        }
+        response.setAccounts(accounts);
+        response.setTotalBalance(totalBalance);
+
+        return response;
+    }
 }

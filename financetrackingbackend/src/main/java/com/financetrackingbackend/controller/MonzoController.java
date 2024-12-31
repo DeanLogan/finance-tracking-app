@@ -2,6 +2,8 @@ package com.financetrackingbackend.controller;
 
 import com.financetrackingbackend.monzo.MonzoExperiments;
 import com.financetrackingbackend.monzo.schema.MonzoAccessToken;
+import com.financetrackingbackend.monzo.schema.MonzoPots;
+import com.financetrackingbackend.monzo.schema.MonzoUserInfoResponse;
 import com.financetrackingbackend.monzo.schema.WhoAmI;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
@@ -21,11 +23,32 @@ public class MonzoController {
     private final MonzoExperiments monzoExperiments;
     private final Dotenv dotenv;
 
+    @GetMapping("")
+    public String home() {
+        return "monzo";
+    }
+
     @GetMapping("/auth")
     public String authoriseUser() {
         String redirect = "redirect: "+monzoExperiments.buildMonzoAuthorizationUrl();
         System.out.println(redirect);
         return redirect;
+    }
+
+    @GetMapping("/oauth/callback")
+    public ResponseEntity<String> handleMonzoCallback(@RequestParam("code") String authorizationCode, @RequestParam("state") String stateToken) {
+        if (!monzoExperiments.validateStateToken(stateToken)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Invalid state token");
+        }
+        monzoExperiments.setTotallySecureAuthCode(authorizationCode);
+        MonzoAccessToken accessToken = monzoExperiments.exchangeAuthCode();
+        return ResponseEntity.ok("AuthCode:\n"+authorizationCode+"\n\nToken:\n"+accessToken);
+    }
+
+    @GetMapping("/oauth/refresh")
+    public MonzoAccessToken refreshAccessToken(@RequestHeader("refreshToken") String refreshToken) {
+        return monzoExperiments.refreshAuthCode(refreshToken);
     }
 
     @GetMapping("/whoami")
@@ -46,24 +69,21 @@ public class MonzoController {
         return monzoExperiments.getBalance(accessToken);
     }
 
-    @GetMapping("")
-    public String home() {
-        return "monzo";
-    }
-
-    @GetMapping("/oauth/callback")
-    public ResponseEntity<String> handleMonzoCallback(@RequestParam("code") String authorizationCode, @RequestParam("state") String stateToken) {
-        if (!monzoExperiments.validateStateToken(stateToken)){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body("Invalid state token");
+    @GetMapping("/pots")
+    public MonzoPots getPots(@RequestHeader("accessToken") String accessToken, @RequestParam("accountId") String accountId) {
+        System.out.println("access token=test:"+accessToken);
+        if(accessToken == null || accessToken.equalsIgnoreCase("testing")) {
+            accessToken = dotenv.get("MONZO_ACCESSTOKEN");
         }
-        monzoExperiments.setTotallySecureAuthCode(authorizationCode);
-        MonzoAccessToken accessToken = monzoExperiments.exchangeAuthCode();
-        return ResponseEntity.ok("AuthCode:\n"+authorizationCode+"\n\nToken:\n"+accessToken);
+        return monzoExperiments.getAllActivePots(accessToken, accountId);
     }
 
-    @GetMapping("/oauth/refresh")
-    public MonzoAccessToken refreshAccessToken(@RequestHeader("refreshToken") String refreshToken) {
-        return monzoExperiments.refreshAuthCode(refreshToken);
+    @GetMapping("/userInfo")
+    public MonzoUserInfoResponse userInfo(@RequestHeader("accessToken") String accessToken) {
+        System.out.println("access token=test:"+accessToken);
+        if(accessToken == null || accessToken.equalsIgnoreCase("testing")) {
+            accessToken = dotenv.get("MONZO_ACCESSTOKEN");
+        }
+        return monzoExperiments.getUserInfo(accessToken);
     }
 }
