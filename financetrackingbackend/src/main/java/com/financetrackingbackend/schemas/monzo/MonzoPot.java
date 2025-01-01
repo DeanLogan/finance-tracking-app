@@ -1,4 +1,4 @@
-package com.financetrackingbackend.monzo.schema;
+package com.financetrackingbackend.schemas.monzo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -8,13 +8,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class MonzoBalance {
+public class MonzoPot {
+    @JsonProperty("id")
+    private String id;
+    @JsonProperty("name")
+    private String name;
     @JsonProperty("balance")
     private float balance;
-    @JsonProperty("total_balance")
-    private float totalBalance;
     @JsonProperty("currency")
     private String currency;
-    @JsonProperty("spend_today")
-    private int spendToday;
+    @JsonProperty("deleted")
+    private boolean deleted;
 }
