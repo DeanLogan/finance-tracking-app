@@ -1,5 +1,6 @@
 package com.financetrackingbackend.monzo;
 
+import com.financetrackingbackend.dao.MonzoDao;
 import com.financetrackingbackend.monzo.schema.*;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
@@ -27,22 +28,9 @@ public class MonzoExperiments {
 
     private final WebClient webClient;
     private final Dotenv dotenv;
-    private String totallySecureStateToken = null;
-    private MonzoAccessToken monzoAccessToken;
+    private final MonzoDao monzoDao;
 
-    @Setter
-    private String totallySecureAuthCode = null;
-
-    public WhoAmI getWhoAmI(String accessToken) {
-        return webClient.get()
-                .uri(uriBuilder -> uriBuilder.path("/ping/whoami").build())
-                .headers(headers -> headers.setBearerAuth(accessToken))
-                .retrieve()
-                .bodyToMono(WhoAmI.class)
-                .block();
-    }
-
-    public String buildMonzoAuthorizationUrl() {
+    public String buildMonzoAuthorizationUrl(String state) {
         String clientId = dotenv.get("MONZO_CLIENT_ID");
         String redirectUri = dotenv.get("MONZO_REDIRECT_URI");
 
@@ -50,8 +38,7 @@ public class MonzoExperiments {
             throw new IllegalStateException("Environment variables are not configured");
         }
 
-        totallySecureStateToken = generateStateToken();
-        if (totallySecureStateToken == null) {
+        if (state == null) {
             throw new IllegalStateException("Failed to generate state token");
         }
 
@@ -61,61 +48,13 @@ public class MonzoExperiments {
                 .queryParam("client_id", clientId)
                 .queryParam("redirect_uri", redirectUri)
                 .queryParam("response_type", "code")
-                .queryParam("state", totallySecureStateToken)
+                .queryParam("state", state)
                 .build()
                 .toUriString();
     }
 
-    private String generateStateToken() {
-        try {
-            byte[] randomBytes = new byte[32];
-            SecureRandom secureRandom = new SecureRandom();
-            secureRandom.nextBytes(randomBytes);
-            return Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    public boolean validateStateToken(String givenStateToken){
-        return (givenStateToken != null && givenStateToken.equals(totallySecureStateToken));
-    }
-
-    public MonzoAccessToken exchangeAuthCode() {
-        String clientId = dotenv.get("MONZO_CLIENT_ID");
-        String redirectUri = dotenv.get("MONZO_REDIRECT_URI");
-        String clientSecret = dotenv.get("MONZO_CLIENT_SECRET");
-
-        if (StringUtils.isAnyBlank(clientId, redirectUri, clientSecret)) {
-            throw new IllegalStateException("Environment variables are not configured");
-        }
-
-        totallySecureStateToken = generateStateToken();
-        if (totallySecureStateToken == null) {
-            throw new IllegalStateException("Failed to generate state token");
-        }
-
-        return getMonzoAccessToken(AUTHORISATION_CODE, clientId, clientSecret, totallySecureAuthCode, redirectUri);
-    }
-
-    public MonzoAccessToken refreshAuthCode(String refreshToken) {
-        String clientId = dotenv.get("MONZO_CLIENT_ID");
-        String redirectUri = dotenv.get("MONZO_REDIRECT_URI");
-        String clientSecret = dotenv.get("MONZO_CLIENT_SECRET");
-
-        if (StringUtils.isAnyBlank(clientId, redirectUri, clientSecret)) {
-            throw new IllegalStateException("Environment variables are not configured");
-        }
-
-        totallySecureStateToken = generateStateToken();
-        if (totallySecureStateToken == null) {
-            throw new IllegalStateException("Failed to generate state token");
-        }
-
-        return getMonzoAccessToken(REFRESH_TOKEN, clientId, clientSecret, refreshToken, "");
-    }
-
     private MonzoAccessToken getMonzoAccessToken(String grantType, String clientId, String clientSecret, String authCode, String redirectUri) {
+        MonzoAccessToken monzoAccessToken;
         try {
             MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
             formData.add("grant_type", grantType);
@@ -124,7 +63,7 @@ public class MonzoExperiments {
             formData.add("redirect_uri", redirectUri);
 
             String additionalFormData = "code";
-            if(grantType.equals(REFRESH_TOKEN)) {
+            if (grantType.equals(REFRESH_TOKEN)) {
                 additionalFormData = "refresh_token";
             }
 
@@ -144,23 +83,13 @@ public class MonzoExperiments {
                     .bodyToMono(MonzoAccessToken.class)
                     .block();
 
-            System.out.println("\n\n\n\n"+monzoAccessToken+"\n\n\n\n");
+            System.out.println("\n\n\n\n" + monzoAccessToken + "\n\n\n\n");
 
         } catch (WebClientException e) {
             throw new IllegalStateException("Failed to connect to Monzo authorization endpoint", e);
         }
 
         return monzoAccessToken;
-    }
-
-    private List<MonzoAccount> getAccounts(String accessToken) {
-        return webClient.get()
-                .uri(uriBuilder -> uriBuilder.path("/accounts").build())
-                .headers(headers -> headers.setBearerAuth(accessToken))
-                .retrieve()
-                .bodyToMono(MonzoAccounts.class)
-                .map(MonzoAccounts::getAccounts)
-                .block();
     }
 
     private MonzoAccount getBalanceForAccount(String accessToken, MonzoAccount account) {
@@ -185,7 +114,7 @@ public class MonzoExperiments {
     }
 
     public float getBalance(String accessToken) {
-        List<MonzoAccount> accounts = getAccounts(accessToken);
+        List<MonzoAccount> accounts = monzoDao.getAccounts(accessToken);
         float balance = 0;
         if (accounts != null) {
             for (MonzoAccount account : accounts) {
@@ -198,22 +127,10 @@ public class MonzoExperiments {
         return balance;
     }
 
-    private MonzoPots getAllPots(String accessToken, String accountId) {
-        return webClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/pots")
-                        .queryParam("current_account_id", accountId)
-                        .build())
-                .headers(headers -> headers.setBearerAuth(accessToken))
-                .retrieve()
-                .bodyToMono(MonzoPots.class)
-                .block();
-    }
-
     public MonzoPots getAllActivePots(String accessToken, String accountId) {
         AtomicReference<Float> totalBalance = new AtomicReference<>(0.0F);
 
-        List<MonzoPot> activePots = getAllPots(accessToken, accountId).getPots()
+        List<MonzoPot> activePots = monzoDao.getAllPots(accessToken, accountId).getPots()
                 .stream()
                 .filter(pot -> !pot.isDeleted())
                 .peek(monzoPot -> {
@@ -237,7 +154,7 @@ public class MonzoExperiments {
 
     public MonzoUserInfoResponse getUserInfo(String accessToken) {
         MonzoUserInfoResponse response = new MonzoUserInfoResponse();
-        List<MonzoAccount> accounts = getAccounts(accessToken);
+        List<MonzoAccount> accounts = monzoDao.getAccounts(accessToken);
 
         float totalBalance = 0.0F;
 

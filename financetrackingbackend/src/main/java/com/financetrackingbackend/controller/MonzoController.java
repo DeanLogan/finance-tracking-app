@@ -1,12 +1,17 @@
 package com.financetrackingbackend.controller;
 
+import com.financetrackingbackend.dao.MonzoDao;
 import com.financetrackingbackend.monzo.MonzoExperiments;
 import com.financetrackingbackend.monzo.schema.MonzoAccessToken;
 import com.financetrackingbackend.monzo.schema.MonzoPots;
 import com.financetrackingbackend.monzo.schema.MonzoUserInfoResponse;
 import com.financetrackingbackend.monzo.schema.WhoAmI;
+import com.financetrackingbackend.util.TokenUtil;
+
 import io.github.cdimascio.dotenv.Dotenv;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public class MonzoController {
     private final MonzoExperiments monzoExperiments;
     private final Dotenv dotenv;
+    private final MonzoDao monzoDao;
 
     @GetMapping("")
     public String home() {
@@ -29,26 +35,35 @@ public class MonzoController {
     }
 
     @GetMapping("/auth")
-    public String authoriseUser() {
-        String redirect = "redirect: "+monzoExperiments.buildMonzoAuthorizationUrl();
+    public String authoriseUser(HttpSession session) {
+        String expectedStateToken = TokenUtil.generateStateToken();
+        session.setAttribute("stateToken", expectedStateToken);
+        String redirect = "redirect: " + monzoExperiments.buildMonzoAuthorizationUrl(expectedStateToken);
         System.out.println(redirect);
         return redirect;
     }
 
     @GetMapping("/oauth/callback")
-    public ResponseEntity<String> handleMonzoCallback(@RequestParam("code") String authorizationCode, @RequestParam("state") String stateToken) {
-        if (!monzoExperiments.validateStateToken(stateToken)){
+    public ResponseEntity<String> handleMonzoCallback(@RequestParam("code") String authCode, @RequestParam("state") String stateToken, HttpSession session) {
+        String expectedStateToken = (String) session.getAttribute("stateToken");
+        
+        if (!TokenUtil.validateStateToken(stateToken, expectedStateToken)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Invalid state token");
         }
-        monzoExperiments.setTotallySecureAuthCode(authorizationCode);
-        MonzoAccessToken accessToken = monzoExperiments.exchangeAuthCode();
-        return ResponseEntity.ok("AuthCode:\n"+authorizationCode+"\n\nToken:\n"+accessToken);
+
+        session.removeAttribute("stateToken");
+
+        String clientId = dotenv.get("MONZO_CLIENT_ID");
+        String clientSecret = dotenv.get("");
+
+        MonzoAccessToken accessToken = monzoDao.exchangeAuthCode(authCode);
+        return ResponseEntity.ok("AuthCode:\n" + authCode + "\n\nToken:\n" + accessToken);
     }
 
     @GetMapping("/oauth/refresh")
     public MonzoAccessToken refreshAccessToken(@RequestHeader("refreshToken") String refreshToken) {
-        return monzoExperiments.refreshAuthCode(refreshToken);
+        return monzoDao.refreshAccessToken(refreshToken);
     }
 
     @GetMapping("/whoami")
@@ -57,7 +72,7 @@ public class MonzoController {
         if(accessToken == null || accessToken.equalsIgnoreCase("testing")) {
             accessToken = dotenv.get("MONZO_ACCESSTOKEN");
         }
-        return monzoExperiments.getWhoAmI(accessToken);
+        return monzoDao.getWhoAmI(accessToken);
     }
 
     @GetMapping("/balance")
