@@ -1,10 +1,10 @@
 package com.financetrackingbackend.services.impl;
 
 import com.financetrackingbackend.dao.MonzoDao;
-import com.financetrackingbackend.monzo.schema.MonzoAccount;
-import com.financetrackingbackend.monzo.schema.MonzoPot;
-import com.financetrackingbackend.monzo.schema.MonzoPots;
-import com.financetrackingbackend.monzo.schema.MonzoUserInfoResponse;
+import com.financetrackingbackend.schemas.monzo.MonzoAccount;
+import com.financetrackingbackend.schemas.monzo.MonzoPot;
+import com.financetrackingbackend.schemas.monzo.MonzoPots;
+import com.financetrackingbackend.schemas.monzo.MonzoUserInfoResponse;
 import com.financetrackingbackend.services.MonzoAccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,9 +1,9 @@
 package com.financetrackingbackend.dao;
 
-import com.financetrackingbackend.monzo.schema.MonzoAccessToken;
-import com.financetrackingbackend.monzo.schema.MonzoAccount;
-import com.financetrackingbackend.monzo.schema.MonzoPots;
-import com.financetrackingbackend.monzo.schema.WhoAmI;
+import com.financetrackingbackend.schemas.monzo.MonzoAccessToken;
+import com.financetrackingbackend.schemas.monzo.MonzoAccount;
+import com.financetrackingbackend.schemas.monzo.MonzoPots;
+import com.financetrackingbackend.schemas.monzo.WhoAmI;
 
 import java.util.List;
 

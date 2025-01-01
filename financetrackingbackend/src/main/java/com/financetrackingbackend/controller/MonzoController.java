@@ -1,12 +1,12 @@
 package com.financetrackingbackend.controller;
 
 import com.financetrackingbackend.dao.MonzoDao;
-import com.financetrackingbackend.monzo.MonzoExperiments;
-import com.financetrackingbackend.monzo.schema.MonzoAccessToken;
-import com.financetrackingbackend.monzo.schema.MonzoPots;
-import com.financetrackingbackend.monzo.schema.MonzoUserInfoResponse;
-import com.financetrackingbackend.monzo.schema.WhoAmI;
+import com.financetrackingbackend.schemas.monzo.MonzoAccessToken;
+import com.financetrackingbackend.schemas.monzo.MonzoPots;
+import com.financetrackingbackend.schemas.monzo.MonzoUserInfoResponse;
+import com.financetrackingbackend.schemas.monzo.WhoAmI;
 import com.financetrackingbackend.services.MonzoAccountService;
+import com.financetrackingbackend.services.MonzoAuthService;
 import com.financetrackingbackend.util.TokenUtil;
 
 import io.github.cdimascio.dotenv.Dotenv;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @RequestMapping("/monzo")
 @RequiredArgsConstructor
 public class MonzoController {
-    private final MonzoExperiments monzoExperiments;
+    private final MonzoAuthService monzoAuthService;
     private final Dotenv dotenv;
     private final MonzoDao monzoDao;
     private final MonzoAccountService monzoAccountService;
@@ -40,7 +40,7 @@ public class MonzoController {
     public String authoriseUser(HttpSession session) {
         String expectedStateToken = TokenUtil.generateStateToken();
         session.setAttribute("stateToken", expectedStateToken);
-        String redirect = "redirect: " + monzoExperiments.buildMonzoAuthorizationUrl(expectedStateToken);
+        String redirect = "redirect: " + monzoAuthService.buildMonzoAuthUrl(expectedStateToken);
         System.out.println(redirect);
         return redirect;
     }
@@ -55,9 +55,6 @@ public class MonzoController {
         }
 
         session.removeAttribute("stateToken");
-
-        String clientId = dotenv.get("MONZO_CLIENT_ID");
-        String clientSecret = dotenv.get("");
 
         MonzoAccessToken accessToken = monzoDao.exchangeAuthCode(authCode);
         return ResponseEntity.ok("AuthCode:\n" + authCode + "\n\nToken:\n" + accessToken);

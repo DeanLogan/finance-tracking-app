@@ -1,11 +1,11 @@
 package com.financetrackingbackend.dao.impl;
 
 import com.financetrackingbackend.dao.MonzoDao;
-import com.financetrackingbackend.monzo.schema.MonzoAccessToken;
-import com.financetrackingbackend.monzo.schema.MonzoAccount;
-import com.financetrackingbackend.monzo.schema.MonzoAccounts;
-import com.financetrackingbackend.monzo.schema.MonzoPots;
-import com.financetrackingbackend.monzo.schema.WhoAmI;
+import com.financetrackingbackend.schemas.monzo.MonzoAccessToken;
+import com.financetrackingbackend.schemas.monzo.MonzoAccount;
+import com.financetrackingbackend.schemas.monzo.MonzoAccounts;
+import com.financetrackingbackend.schemas.monzo.MonzoPots;
+import com.financetrackingbackend.schemas.monzo.WhoAmI;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;

@@ -1,8 +1,8 @@
 package com.financetrackingbackend.services;
 
-import com.financetrackingbackend.monzo.schema.MonzoAccount;
-import com.financetrackingbackend.monzo.schema.MonzoPots;
-import com.financetrackingbackend.monzo.schema.MonzoUserInfoResponse;
+import com.financetrackingbackend.schemas.monzo.MonzoAccount;
+import com.financetrackingbackend.schemas.monzo.MonzoPots;
+import com.financetrackingbackend.schemas.monzo.MonzoUserInfoResponse;
 
 public interface MonzoAccountService {
     MonzoAccount getBalanceForAccount(String accessToken, MonzoAccount account);
