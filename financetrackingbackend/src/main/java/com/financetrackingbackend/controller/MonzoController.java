@@ -6,6 +6,7 @@ import com.financetrackingbackend.monzo.schema.MonzoAccessToken;
 import com.financetrackingbackend.monzo.schema.MonzoPots;
 import com.financetrackingbackend.monzo.schema.MonzoUserInfoResponse;
 import com.financetrackingbackend.monzo.schema.WhoAmI;
+import com.financetrackingbackend.services.MonzoAccountService;
 import com.financetrackingbackend.util.TokenUtil;
 
 import io.github.cdimascio.dotenv.Dotenv;
@@ -28,6 +29,7 @@ public class MonzoController {
     private final MonzoExperiments monzoExperiments;
     private final Dotenv dotenv;
     private final MonzoDao monzoDao;
+    private final MonzoAccountService monzoAccountService;
 
     @GetMapping("")
     public String home() {
@@ -81,7 +83,7 @@ public class MonzoController {
         if(accessToken == null || accessToken.equalsIgnoreCase("testing")) {
             accessToken = dotenv.get("MONZO_ACCESSTOKEN");
         }
-        return monzoExperiments.getBalance(accessToken);
+        return monzoAccountService.getBalanceForAllAccounts(accessToken);
     }
 
     @GetMapping("/pots")
@@ -90,7 +92,7 @@ public class MonzoController {
         if(accessToken == null || accessToken.equalsIgnoreCase("testing")) {
             accessToken = dotenv.get("MONZO_ACCESSTOKEN");
         }
-        return monzoExperiments.getAllActivePots(accessToken, accountId);
+        return monzoAccountService.getAllActivePotsForAccount(accessToken, accountId);
     }
 
     @GetMapping("/userInfo")
@@ -99,6 +101,6 @@ public class MonzoController {
         if(accessToken == null || accessToken.equalsIgnoreCase("testing")) {
             accessToken = dotenv.get("MONZO_ACCESSTOKEN");
         }
-        return monzoExperiments.getUserInfo(accessToken);
+        return monzoAccountService.getUserInfo(accessToken);
     }
 }

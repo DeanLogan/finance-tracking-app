@@ -86,6 +86,19 @@ public class MonzoDaoImpl implements MonzoDao {
                 .block();
     }
 
+    @Override
+    public MonzoAccount getBalanceForAccount(String accessToken, String accountId) {
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/balance")
+                        .queryParam("account_id", accountId)
+                        .build())
+                .headers(headers -> headers.setBearerAuth(accessToken))
+                .retrieve()
+                .bodyToMono(MonzoAccount.class)
+                .block();
+    }
+
     private MultiValueMap<String, String> buildFormData(String grantType, String code, String redirectUri) {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
         String clientId = dotenv.get("MONZO_CLIENT_ID");
