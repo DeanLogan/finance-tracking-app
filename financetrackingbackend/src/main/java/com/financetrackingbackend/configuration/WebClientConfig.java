@@ -10,7 +10,7 @@ public class WebClientConfig {
     @Bean
     public WebClient webClient() {
         return WebClient.builder()
-                .baseUrl("https://api.monzo.com")
+                .baseUrl("https://ob.sandbox.ulsterbank.co.uk")
                 .build();
     }
 }
