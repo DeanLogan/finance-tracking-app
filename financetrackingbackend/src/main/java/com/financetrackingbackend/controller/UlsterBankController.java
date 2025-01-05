@@ -1,6 +1,7 @@
 package com.financetrackingbackend.controller;
 
 import com.financetrackingbackend.ulsterbank.UlsterbankExperiments;
+import com.financetrackingbackend.ulsterbank.schema.UlsterbankAccessToken;
 import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -25,5 +26,11 @@ public class UlsterBankController {
     @GetMapping("/auth")
     public String authoriseUser(HttpSession session) {
         return ulsterbankExperiments.getAccessToken().toString();
+    }
+
+    @GetMapping("/consentId")
+    public String getConsentId() {
+        UlsterbankAccessToken accessToken = ulsterbankExperiments.getAccessToken();
+        return ulsterbankExperiments.getConsentId(accessToken.getAccessToken()).toString();
     }
 }

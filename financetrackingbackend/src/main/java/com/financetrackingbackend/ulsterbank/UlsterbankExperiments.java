@@ -1,6 +1,8 @@
 package com.financetrackingbackend.ulsterbank;
 
+import com.financetrackingbackend.ulsterbank.schema.UlsterbankAccountAccessConsents;
 import com.financetrackingbackend.ulsterbank.schema.UlsterbankAccessToken;
+import com.financetrackingbackend.ulsterbank.schema.UlsterbankDataConsent;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
@@ -10,6 +12,10 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -35,5 +41,31 @@ public class UlsterbankExperiments {
             .bodyToMono(UlsterbankAccessToken.class);
 
         return response.block();
+    }
+
+    public UlsterbankAccountAccessConsents getConsentId(String accountRequestAccessToken) {
+        Map<String, Object> requestBody = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
+        data.put("Permissions", Arrays.asList(
+                "ReadAccountsDetail",
+                "ReadBalances",
+                "ReadTransactionsCredits",
+                "ReadTransactionsDebits",
+                "ReadTransactionsDetail"
+        ));
+        requestBody.put("Data", data);
+        requestBody.put("Risk", new HashMap<>());
+
+
+        UlsterbankDataConsent response = webClient.post()
+            .uri("open-banking/v3.1/aisp/account-access-consents")
+            .header("Authorization", "Bearer " + accountRequestAccessToken)
+            .header("Content-Type", "application/json")
+            .body(BodyInserters.fromValue(requestBody))
+            .retrieve()
+            .bodyToMono(UlsterbankDataConsent.class)
+                .block();
+    
+        return response.getConsent();
     }
 }
