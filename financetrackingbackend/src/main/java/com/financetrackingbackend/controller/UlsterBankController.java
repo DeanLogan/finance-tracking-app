@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -34,12 +35,25 @@ public class UlsterBankController {
     }
 
     @GetMapping("/consentId")
-    public ResponseEntity<List<String>> getConsentId() {
+    public List<String> getConsentId() {
         UlsterbankAccessToken accessToken = ulsterbankExperiments.getAccessToken();
         UlsterbankConsentResponse consent = ulsterbankExperiments.getConsentResponse(accessToken.getAccessToken());
         List<String> response = new ArrayList<>();
         response.add(ulsterbankExperiments.extractConsentId(consent));
         response.add(ulsterbankExperiments.extractRedirectUrl(consent));
-        return ResponseEntity.ok(response);
+        return response;
+    }
+
+    @GetMapping("/redirect")
+    public String getRedirect() {
+        String consent = getConsentId().get(0);
+        return ulsterbankExperiments.getRedirectUrl(consent);
+    }
+
+    @GetMapping("/oauth/callback")
+    public String callback(@RequestParam("code") String code, @RequestParam("id_token") String idToken) {
+        System.out.println("hit callback");
+        System.out.println("code:\n" + code + "\n\nid:\n" + idToken);
+        return "code:\n" + code + "\n\nid:\n" + idToken;
     }
 }

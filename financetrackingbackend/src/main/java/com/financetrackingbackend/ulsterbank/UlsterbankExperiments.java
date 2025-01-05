@@ -12,6 +12,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,5 +73,25 @@ public class UlsterbankExperiments {
 
     public String extractRedirectUrl(UlsterbankConsentResponse response) {
         return response.getLinks().getSelf();
+    }
+
+    public String getRedirectUrl(String consentId) {
+        String clientId = dotenv.get("ULSTER_BANK_CLIENT_ID");
+        return formAuthorizationUrl(clientId, "http://localhost:8080/ulsterbank/oauth/callback", consentId);
+    }
+
+    private String formAuthorizationUrl(String clientId, String redirectUri, String consentId) {
+        String baseUrl = "https://api.sandbox.ulsterbank.co.uk/authorize";
+        String responseType = "code id_token";
+        String scope = "openid accounts";
+
+        return String.format("%s?client_id=%s&response_type=%s&scope=%s&redirect_uri=%s&request=%s",
+                baseUrl,
+                URLEncoder.encode(clientId, StandardCharsets.UTF_8),
+                URLEncoder.encode(responseType, StandardCharsets.UTF_8),
+                URLEncoder.encode(scope, StandardCharsets.UTF_8),
+                URLEncoder.encode(redirectUri, StandardCharsets.UTF_8),
+                URLEncoder.encode(consentId, StandardCharsets.UTF_8)
+        );
     }
 }
