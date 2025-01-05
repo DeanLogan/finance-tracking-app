@@ -5,10 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
-public class UlsterbankDataConsent {
-    @JsonProperty("Data")
-    private UlsterbankAccountAccessConsents consent;
+public class UlsterbankLinks {
+    @JsonProperty("Self")
+    private String self;
 }

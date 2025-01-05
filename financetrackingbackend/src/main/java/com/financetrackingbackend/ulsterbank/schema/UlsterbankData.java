@@ -7,12 +7,18 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
-public class UlsterbankAccountAccessConsents {
+@NoArgsConstructor
+@AllArgsConstructor
+public class UlsterbankData {
     @JsonProperty("ConsentId")
     private String consentId;
+    @JsonProperty("CreationDateTime")
+    private String creationDateTime;
+    @JsonProperty("Status")
+    private String status;
+    @JsonProperty("StatusUpdateDateTime")
+    private String statusUpdateDateTime;
     @JsonProperty("Permissions")
     private List<String> permissions;
 }

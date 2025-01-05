@@ -2,13 +2,18 @@ package com.financetrackingbackend.controller;
 
 import com.financetrackingbackend.ulsterbank.UlsterbankExperiments;
 import com.financetrackingbackend.ulsterbank.schema.UlsterbankAccessToken;
+import com.financetrackingbackend.ulsterbank.schema.UlsterbankConsentResponse;
 import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -29,8 +34,12 @@ public class UlsterBankController {
     }
 
     @GetMapping("/consentId")
-    public String getConsentId() {
+    public ResponseEntity<List<String>> getConsentId() {
         UlsterbankAccessToken accessToken = ulsterbankExperiments.getAccessToken();
-        return ulsterbankExperiments.getConsentId(accessToken.getAccessToken()).toString();
+        UlsterbankConsentResponse consent = ulsterbankExperiments.getConsentResponse(accessToken.getAccessToken());
+        List<String> response = new ArrayList<>();
+        response.add(ulsterbankExperiments.extractConsentId(consent));
+        response.add(ulsterbankExperiments.extractRedirectUrl(consent));
+        return ResponseEntity.ok(response);
     }
 }

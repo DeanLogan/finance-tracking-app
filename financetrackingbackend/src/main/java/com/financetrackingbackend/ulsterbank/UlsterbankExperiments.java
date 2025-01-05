@@ -1,8 +1,7 @@
 package com.financetrackingbackend.ulsterbank;
 
-import com.financetrackingbackend.ulsterbank.schema.UlsterbankAccountAccessConsents;
+import com.financetrackingbackend.ulsterbank.schema.UlsterbankConsentResponse;
 import com.financetrackingbackend.ulsterbank.schema.UlsterbankAccessToken;
-import com.financetrackingbackend.ulsterbank.schema.UlsterbankDataConsent;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
@@ -43,7 +42,7 @@ public class UlsterbankExperiments {
         return response.block();
     }
 
-    public UlsterbankAccountAccessConsents getConsentId(String accountRequestAccessToken) {
+    public UlsterbankConsentResponse getConsentResponse(String accountRequestAccessToken) {
         Map<String, Object> requestBody = new HashMap<>();
         Map<String, Object> data = new HashMap<>();
         data.put("Permissions", Arrays.asList(
@@ -56,16 +55,21 @@ public class UlsterbankExperiments {
         requestBody.put("Data", data);
         requestBody.put("Risk", new HashMap<>());
 
-
-        UlsterbankDataConsent response = webClient.post()
+        return webClient.post()
             .uri("open-banking/v3.1/aisp/account-access-consents")
             .header("Authorization", "Bearer " + accountRequestAccessToken)
             .header("Content-Type", "application/json")
             .body(BodyInserters.fromValue(requestBody))
             .retrieve()
-            .bodyToMono(UlsterbankDataConsent.class)
+            .bodyToMono(UlsterbankConsentResponse.class)
                 .block();
-    
-        return response.getConsent();
+    }
+
+    public String extractConsentId(UlsterbankConsentResponse response) {
+        return response.getData().getConsentId();
+    }
+
+    public String extractRedirectUrl(UlsterbankConsentResponse response) {
+        return response.getLinks().getSelf();
     }
 }
