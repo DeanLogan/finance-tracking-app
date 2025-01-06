@@ -4,11 +4,14 @@ import com.financetrackingbackend.ulsterbank.UlsterbankExperiments;
 import com.financetrackingbackend.ulsterbank.schema.UlsterbankAccessToken;
 import com.financetrackingbackend.ulsterbank.schema.UlsterbankConsentResponse;
 import io.github.cdimascio.dotenv.Dotenv;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,8 +53,8 @@ public class UlsterBankController {
         return ulsterbankExperiments.getRedirectUrl(consent);
     }
 
-    @GetMapping("/oauth/callback")
-    public String callback(@RequestParam("code") String code, @RequestParam("id_token") String idToken) {
+    @GetMapping("/oauth/callback/extractcode")
+    public String callback(@RequestHeader("code") String code, @RequestHeader("id_token") String idToken) {
         System.out.println("hit callback");
         System.out.println("code:\n" + code + "\n\nid:\n" + idToken);
         return "code:\n" + code + "\n\nid:\n" + idToken;
