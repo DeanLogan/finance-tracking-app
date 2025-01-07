@@ -52,7 +52,13 @@ public class UlsterBankController {
     @GetMapping("/oauth/callback/extractcode")
     public UlsterbankAccessToken callback(@RequestHeader("code") String code, @RequestHeader("id_token") String idToken) {
         UlsterbankAccessToken accessToken = ulsterbankExperiments.getAccessToken(code);
-        System.out.println("AccessToken:\n"+accessToken);
+        System.out.println("AccessToken:\n"+accessToken.getAccessToken());
+        System.out.println("RefreshToken:\n"+accessToken.getRefreshToken());
         return accessToken;
+    }
+
+    @GetMapping("/accounts")
+    public UlsterbankData accounts(@RequestHeader("accessToken") String accessToken) {
+        return ulsterbankExperiments.getAccounts(accessToken);
     }
 }

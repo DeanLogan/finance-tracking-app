@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,7 +24,8 @@ public class UlsterbankAccount {
     @JsonProperty("Nickname")
     private String nickname;
     @JsonProperty("Account")
-    private UlsterbankAccount account;
+    private List<UlsterbankAccount> account;
+
     @JsonProperty("Servicer")
     private UlsterbankServicer servicer;
     @JsonProperty("SwitchStatus")

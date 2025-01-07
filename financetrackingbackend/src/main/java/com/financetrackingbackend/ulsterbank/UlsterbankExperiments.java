@@ -3,6 +3,7 @@ package com.financetrackingbackend.ulsterbank;
 import com.financetrackingbackend.ulsterbank.schema.UlsterbankConsentResponse;
 import com.financetrackingbackend.ulsterbank.schema.UlsterbankAccessToken;
 import com.financetrackingbackend.ulsterbank.schema.UlsterbankData;
+import com.financetrackingbackend.ulsterbank.schema.UlsterbankGeneralResponse;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -109,4 +110,14 @@ public class UlsterbankExperiments {
     public UlsterbankAccessToken getAccessToken(String code) {
         return tokenRequest(code);
     }
+    public UlsterbankData getAccounts(String accessToken) {
+        UlsterbankGeneralResponse response = webClient.get()
+                .uri("open-banking/v3.1/aisp/accounts")
+                .header("Authorization", "Bearer "+ accessToken)
+                .retrieve()
+                .bodyToMono(UlsterbankGeneralResponse.class)
+                .block();
+        return response.getData();
+    }
+
 }
