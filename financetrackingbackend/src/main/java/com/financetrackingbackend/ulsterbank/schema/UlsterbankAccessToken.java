@@ -17,4 +17,6 @@ public class UlsterbankAccessToken {
     private String expiresIn;
     @JsonProperty("scope")
     private String scope;
+    @JsonProperty("refresh_token")
+    private String refreshToken;
 }

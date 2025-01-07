@@ -3,17 +3,13 @@ package com.financetrackingbackend.controller;
 import com.financetrackingbackend.ulsterbank.UlsterbankExperiments;
 import com.financetrackingbackend.ulsterbank.schema.UlsterbankAccessToken;
 import com.financetrackingbackend.ulsterbank.schema.UlsterbankConsentResponse;
+import com.financetrackingbackend.ulsterbank.schema.UlsterbankData;
 import io.github.cdimascio.dotenv.Dotenv;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -33,13 +29,13 @@ public class UlsterBankController {
     }
 
     @GetMapping("/auth")
-    public String authoriseUser(HttpSession session) {
-        return ulsterbankExperiments.getAccessToken().toString();
+    public String authoriseUser(@RequestHeader("code") String code) {
+        return ulsterbankExperiments.tokenRequest(code).toString();
     }
 
     @GetMapping("/consentId")
     public List<String> getConsentId() {
-        UlsterbankAccessToken accessToken = ulsterbankExperiments.getAccessToken();
+        UlsterbankAccessToken accessToken = ulsterbankExperiments.tokenRequest("code");
         UlsterbankConsentResponse consent = ulsterbankExperiments.getConsentResponse(accessToken.getAccessToken());
         List<String> response = new ArrayList<>();
         response.add(ulsterbankExperiments.extractConsentId(consent));
@@ -54,9 +50,9 @@ public class UlsterBankController {
     }
 
     @GetMapping("/oauth/callback/extractcode")
-    public String callback(@RequestHeader("code") String code, @RequestHeader("id_token") String idToken) {
-        System.out.println("hit callback");
-        System.out.println("code:\n" + code + "\n\nid:\n" + idToken);
-        return "code:\n" + code + "\n\nid:\n" + idToken;
+    public UlsterbankAccessToken callback(@RequestHeader("code") String code, @RequestHeader("id_token") String idToken) {
+        UlsterbankAccessToken accessToken = ulsterbankExperiments.getAccessToken(code);
+        System.out.println("AccessToken:\n"+accessToken);
+        return accessToken;
     }
 }

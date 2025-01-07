@@ -24,7 +24,8 @@ function extractKeys(fragment) {
         console.error("Required parameters (code or id_token) are missing in the fragment.");
         return null;
     }
-
+    console.log("code: "+code);
+    console.log("idtoken: "+idToken);
     return { code, idToken };
 }
 

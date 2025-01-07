@@ -2,8 +2,10 @@ package com.financetrackingbackend.ulsterbank;
 
 import com.financetrackingbackend.ulsterbank.schema.UlsterbankConsentResponse;
 import com.financetrackingbackend.ulsterbank.schema.UlsterbankAccessToken;
+import com.financetrackingbackend.ulsterbank.schema.UlsterbankData;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import reactor.core.publisher.Mono;
 
 import org.springframework.stereotype.Service;
@@ -24,15 +26,24 @@ public class UlsterbankExperiments {
     private final WebClient webClient;
     private final Dotenv dotenv;
 
-    public UlsterbankAccessToken getAccessToken() {
+    public UlsterbankAccessToken tokenRequest(String code) {
         String clientId = dotenv.get("ULSTER_BANK_CLIENT_ID");
         String clientSecret = dotenv.get("ULSTER_BANK_CLIENT_SECRET");
 
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-        formData.add("grant_type", "client_credentials");
         formData.add("client_id", clientId);
         formData.add("client_secret", clientSecret);
-        formData.add("scope", "accounts");
+
+        if(code.equalsIgnoreCase("code")) {
+            System.out.println("client credentials");
+            formData.add("grant_type", "client_credentials");
+            formData.add("scope", "accounts");
+        } else {
+            System.out.println("access token");
+            formData.add("grant_type", "authorization_code");
+            formData.add("scope", "openid accounts");
+            formData.add("code", code);
+        }
 
         Mono<UlsterbankAccessToken> response = webClient.post()
             .uri("/token")
@@ -93,5 +104,9 @@ public class UlsterbankExperiments {
                 URLEncoder.encode(redirectUri, StandardCharsets.UTF_8),
                 URLEncoder.encode(consentId, StandardCharsets.UTF_8)
         );
+    }
+
+    public UlsterbankAccessToken getAccessToken(String code) {
+        return tokenRequest(code);
     }
 }
