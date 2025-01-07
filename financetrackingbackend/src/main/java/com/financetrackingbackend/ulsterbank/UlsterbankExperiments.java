@@ -77,7 +77,7 @@ public class UlsterbankExperiments {
 
     public String getRedirectUrl(String consentId) {
         String clientId = dotenv.get("ULSTER_BANK_CLIENT_ID");
-        return formAuthorizationUrl(clientId, "http://localhost:8080/ulsterbank/oauth/callback", consentId);
+        return formAuthorizationUrl(clientId, "http://localhost:8080/ulsterbank/oauth/callback.html", consentId);
     }
 
     private String formAuthorizationUrl(String clientId, String redirectUri, String consentId) {

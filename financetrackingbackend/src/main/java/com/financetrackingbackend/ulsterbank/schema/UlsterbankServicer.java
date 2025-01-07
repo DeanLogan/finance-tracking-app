@@ -5,14 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class UlsterbankLinks {
-    @JsonProperty("Self")
-    private String self;
-    @JsonProperty("Prev")
-    private String prev;
-    @JsonProperty("Next")
-    private String next;
+public class UlsterbankServicer {
+    @JsonProperty("SchemeName")
+    private String schemeName;
+    @JsonProperty("Identification")
+    private String id;
 }

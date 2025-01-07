@@ -21,4 +21,10 @@ public class UlsterbankData {
     private String statusUpdateDateTime;
     @JsonProperty("Permissions")
     private List<String> permissions;
+    @JsonProperty("Links")
+    private UlsterbankLinks links;
+    @JsonProperty("Meta")
+    private UlsterbankMeta meta;
+    @JsonProperty("Account")
+    private List<UlsterbankAccount> accounts;
 }
