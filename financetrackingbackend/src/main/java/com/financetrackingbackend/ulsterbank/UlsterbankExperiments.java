@@ -27,7 +27,7 @@ public class UlsterbankExperiments {
     private final WebClient webClient;
     private final Dotenv dotenv;
 
-    public UlsterbankAccessToken tokenRequest(String code) {
+    public UlsterbankAccessToken tokenRequest(String code, String grantType) {
         String clientId = dotenv.get("ULSTER_BANK_CLIENT_ID");
         String clientSecret = dotenv.get("ULSTER_BANK_CLIENT_SECRET");
 
@@ -35,16 +35,25 @@ public class UlsterbankExperiments {
         formData.add("client_id", clientId);
         formData.add("client_secret", clientSecret);
 
-        if(code.equalsIgnoreCase("code")) {
-            System.out.println("client credentials");
-            formData.add("grant_type", "client_credentials");
-            formData.add("scope", "accounts");
-        } else {
-            System.out.println("access token");
-            formData.add("grant_type", "authorization_code");
-            formData.add("scope", "openid accounts");
-            formData.add("code", code);
+        switch (grantType) {
+            case "client credentials":
+                formData.add("scope", "accounts");
+                break;
+
+            case "authorization_code":
+                formData.add("scope", "openid accounts");
+                formData.add("code", code);
+                break;
+
+            case "refresh_token":
+                formData.add("refresh_token", code);
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unsupported grant type: " + grantType);
         }
+
+        formData.add("grant_type", grantType);
 
         Mono<UlsterbankAccessToken> response = webClient.post()
             .uri("/token")
@@ -108,7 +117,7 @@ public class UlsterbankExperiments {
     }
 
     public UlsterbankAccessToken getAccessToken(String code) {
-        return tokenRequest(code);
+        return tokenRequest(code, "authorization_code");
     }
     public UlsterbankData getAccounts(String accessToken) {
         UlsterbankGeneralResponse response = webClient.get()
@@ -118,6 +127,10 @@ public class UlsterbankExperiments {
                 .bodyToMono(UlsterbankGeneralResponse.class)
                 .block();
         return response.getData();
+    }
+
+    public UlsterbankAccessToken refreshAccessToken(String refreshToken) {
+        return tokenRequest(refreshToken, "refresh_token");
     }
 
 }

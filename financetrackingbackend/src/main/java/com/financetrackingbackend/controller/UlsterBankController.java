@@ -30,12 +30,12 @@ public class UlsterBankController {
 
     @GetMapping("/auth")
     public String authoriseUser(@RequestHeader("code") String code) {
-        return ulsterbankExperiments.tokenRequest(code).toString();
+        return ulsterbankExperiments.tokenRequest(code, "client credentials").toString();
     }
 
     @GetMapping("/consentId")
     public List<String> getConsentId() {
-        UlsterbankAccessToken accessToken = ulsterbankExperiments.tokenRequest("code");
+        UlsterbankAccessToken accessToken = ulsterbankExperiments.tokenRequest("code", "client credentials");
         UlsterbankConsentResponse consent = ulsterbankExperiments.getConsentResponse(accessToken.getAccessToken());
         List<String> response = new ArrayList<>();
         response.add(ulsterbankExperiments.extractConsentId(consent));
@@ -52,6 +52,14 @@ public class UlsterBankController {
     @GetMapping("/oauth/callback/extractcode")
     public UlsterbankAccessToken callback(@RequestHeader("code") String code, @RequestHeader("id_token") String idToken) {
         UlsterbankAccessToken accessToken = ulsterbankExperiments.getAccessToken(code);
+        System.out.println("AccessToken:\n"+accessToken.getAccessToken());
+        System.out.println("RefreshToken:\n"+accessToken.getRefreshToken());
+        return accessToken;
+    }
+
+    @GetMapping("/oauth/refresh")
+    public UlsterbankAccessToken refresh(@RequestHeader("refreshToken") String refreshToken) {
+        UlsterbankAccessToken accessToken = ulsterbankExperiments.refreshAccessToken(refreshToken);
         System.out.println("AccessToken:\n"+accessToken.getAccessToken());
         System.out.println("RefreshToken:\n"+accessToken.getRefreshToken());
         return accessToken;
