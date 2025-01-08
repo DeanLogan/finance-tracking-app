@@ -27,4 +27,6 @@ public class UlsterbankData {
     private UlsterbankMeta meta;
     @JsonProperty("Account")
     private List<UlsterbankAccount> accounts;
+    @JsonProperty("Balance")
+    private List<UlsterbankBalance> balances;
 }

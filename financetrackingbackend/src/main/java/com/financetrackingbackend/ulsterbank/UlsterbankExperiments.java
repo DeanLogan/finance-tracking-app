@@ -1,12 +1,13 @@
 package com.financetrackingbackend.ulsterbank;
 
+import com.financetrackingbackend.ulsterbank.schema.UlsterbankAccount;
+import com.financetrackingbackend.ulsterbank.schema.UlsterbankBalance;
 import com.financetrackingbackend.ulsterbank.schema.UlsterbankConsentResponse;
 import com.financetrackingbackend.ulsterbank.schema.UlsterbankAccessToken;
 import com.financetrackingbackend.ulsterbank.schema.UlsterbankData;
 import com.financetrackingbackend.ulsterbank.schema.UlsterbankGeneralResponse;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import reactor.core.publisher.Mono;
 
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -133,4 +135,23 @@ public class UlsterbankExperiments {
         return tokenRequest(refreshToken, "refresh_token");
     }
 
+    private UlsterbankBalance getBalanceForAccount(String accessToken, String accountId) {
+        UlsterbankGeneralResponse response = webClient.get()
+                .uri("open-banking/v3.1/aisp/accounts/"+accountId+"/balances")
+                .header("Authorization", "Bearer "+ accessToken)
+                .retrieve()
+                .bodyToMono(UlsterbankGeneralResponse.class)
+                .block();
+        return response.getData().getBalances().get(0);
+    }
+
+    public float getBalanceForAllAccounts(String accessToken) {
+        List<UlsterbankAccount> accountList = getAccounts(accessToken).getAccounts();
+        float amount = 0;
+        for(UlsterbankAccount account : accountList) {
+            UlsterbankBalance balance = getBalanceForAccount(accessToken, account.getAccountId());
+            amount += balance.getAmount().getAmount();
+        }
+        return amount;
+    }
 }
