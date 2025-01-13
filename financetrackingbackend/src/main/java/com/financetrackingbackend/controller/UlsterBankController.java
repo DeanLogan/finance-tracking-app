@@ -1,10 +1,10 @@
 package com.financetrackingbackend.controller;
 
+import com.financetrackingbackend.dao.UlsterbankDao;
+import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccount;
 import com.financetrackingbackend.ulsterbank.UlsterbankExperiments;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccessToken;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankConsentResponse;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankData;
-import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/ulsterbank")
 @RequiredArgsConstructor
 public class UlsterBankController {
-    private final Dotenv dotenv;
+    private final UlsterbankDao ulsterbankDao;
     private final UlsterbankExperiments ulsterbankExperiments;
 
     @GetMapping("")
@@ -30,13 +30,13 @@ public class UlsterBankController {
 
     @GetMapping("/auth")
     public String authoriseUser(@RequestHeader("code") String code) {
-        return ulsterbankExperiments.tokenRequest(code, "client credentials").toString();
+        return ulsterbankDao.tokenRequest(code, "client credentials").toString();
     }
 
     @GetMapping("/consentId")
     public List<String> getConsentId() {
-        UlsterbankAccessToken accessToken = ulsterbankExperiments.tokenRequest("code", "client credentials");
-        UlsterbankConsentResponse consent = ulsterbankExperiments.getConsentResponse(accessToken.getAccessToken());
+        UlsterbankAccessToken accessToken = ulsterbankDao.tokenRequest("code", "client credentials");
+        UlsterbankConsentResponse consent = ulsterbankDao.getConsentResponse(accessToken.getAccessToken());
         List<String> response = new ArrayList<>();
         response.add(ulsterbankExperiments.extractConsentId(consent));
         response.add(ulsterbankExperiments.extractRedirectUrl(consent));
@@ -66,8 +66,8 @@ public class UlsterBankController {
     }
 
     @GetMapping("/accounts")
-    public UlsterbankData accounts(@RequestHeader("accessToken") String accessToken) {
-        return ulsterbankExperiments.getAccounts(accessToken);
+    public List<UlsterbankAccount> accounts(@RequestHeader("accessToken") String accessToken) {
+        return ulsterbankDao.getAccounts(accessToken);
     }
 
     @GetMapping("/balance")
