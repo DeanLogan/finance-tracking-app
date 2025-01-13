@@ -1,11 +1,11 @@
 package com.financetrackingbackend.ulsterbank;
 
-import com.financetrackingbackend.ulsterbank.schema.UlsterbankAccount;
-import com.financetrackingbackend.ulsterbank.schema.UlsterbankBalance;
-import com.financetrackingbackend.ulsterbank.schema.UlsterbankConsentResponse;
-import com.financetrackingbackend.ulsterbank.schema.UlsterbankAccessToken;
-import com.financetrackingbackend.ulsterbank.schema.UlsterbankData;
-import com.financetrackingbackend.ulsterbank.schema.UlsterbankGeneralResponse;
+import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccount;
+import com.financetrackingbackend.schemas.ulsterbank.UlsterbankBalance;
+import com.financetrackingbackend.schemas.ulsterbank.UlsterbankConsentResponse;
+import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccessToken;
+import com.financetrackingbackend.schemas.ulsterbank.UlsterbankData;
+import com.financetrackingbackend.schemas.ulsterbank.UlsterbankGeneralResponse;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;

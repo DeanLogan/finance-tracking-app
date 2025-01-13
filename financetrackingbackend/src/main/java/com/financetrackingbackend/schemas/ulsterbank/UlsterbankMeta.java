@@ -1,4 +1,4 @@
-package com.financetrackingbackend.ulsterbank.schema;
+package com.financetrackingbackend.schemas.ulsterbank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

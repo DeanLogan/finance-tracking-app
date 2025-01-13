@@ -1,18 +1,15 @@
 package com.financetrackingbackend.controller;
 
 import com.financetrackingbackend.ulsterbank.UlsterbankExperiments;
-import com.financetrackingbackend.ulsterbank.schema.UlsterbankAccessToken;
-import com.financetrackingbackend.ulsterbank.schema.UlsterbankAmount;
-import com.financetrackingbackend.ulsterbank.schema.UlsterbankBalance;
-import com.financetrackingbackend.ulsterbank.schema.UlsterbankConsentResponse;
-import com.financetrackingbackend.ulsterbank.schema.UlsterbankData;
+import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccessToken;
+import com.financetrackingbackend.schemas.ulsterbank.UlsterbankConsentResponse;
+import com.financetrackingbackend.schemas.ulsterbank.UlsterbankData;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
