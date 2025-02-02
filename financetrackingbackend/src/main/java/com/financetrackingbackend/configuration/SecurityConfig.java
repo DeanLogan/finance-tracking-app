@@ -7,6 +7,8 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 
@@ -24,14 +26,16 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsManager users(DataSource dataSource) {
-        UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password("admin")
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
+        String adminPassword = encoder.encode("admin");
+        String userPassword = encoder.encode("password");
+        UserDetails admin = User.withUsername("admin")
+                .password(adminPassword)
                 .roles("USER")
                 .build();
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("password")
+        UserDetails user = User.withUsername("user")
+                .password(userPassword)
                 .roles("USER")
                 .build();
         JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);

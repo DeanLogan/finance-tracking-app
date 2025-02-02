@@ -19,6 +19,10 @@ public class ExperimentController {
 
     @GetMapping("/envtest")
     public String envFiles() {
-        return dotenv.get("SECRET");
+        String secret = dotenv.get("SECRET"); 
+        if (secret == null) {
+            return "failed env check";
+        }
+        return secret;
     }
 }
