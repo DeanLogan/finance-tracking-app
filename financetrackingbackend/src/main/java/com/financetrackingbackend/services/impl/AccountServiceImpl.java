@@ -24,12 +24,12 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public boolean deleteAccount(int id) {
-        return false;
+        throw new UnsupportedOperationException("Unimplemented method 'deleteAccount'");
     }
 
     @Override
     public Account updateAccount(int id, Account account) {
-        return null;
+        throw new UnsupportedOperationException("Unimplemented method 'updateAccount'");
     }
 
 }
