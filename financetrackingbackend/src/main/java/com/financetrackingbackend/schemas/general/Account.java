@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Account {
+    @JsonProperty("id")
+    private int id;
     @JsonProperty("name")
     private String name;
     @JsonProperty("bank")

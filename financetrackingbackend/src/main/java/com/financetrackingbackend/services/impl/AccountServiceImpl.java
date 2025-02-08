@@ -13,7 +13,7 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public void addAccout(Account account) {
+    public Account addAccount(Account account) {
         throw new UnsupportedOperationException("Unimplemented method 'addAccout'");
     }
 
@@ -21,5 +21,15 @@ public class AccountServiceImpl implements AccountService{
     public float getBalanceForAllAccounts() {
         throw new UnsupportedOperationException("Unimplemented method 'getBalanceForAllAccounts'");
     }
-    
+
+    @Override
+    public boolean deleteAccount(int id) {
+        return false;
+    }
+
+    @Override
+    public Account updateAccount(int id, Account account) {
+        return null;
+    }
+
 }
