@@ -25,6 +25,9 @@ repositories {
 }
 
 dependencies {
+    implementation 'software.amazon.awssdk:dynamodb:2.25.31'
+    implementation 'software.amazon.awssdk:dynamodb-enhanced:2.25.31'
+    implementation 'software.amazon.awssdk:core:2.25.31'
     implementation 'io.github.cdimascio:dotenv-java:3.0.0'
     implementation 'org.apache.commons:commons-lang3:3.14.0'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
