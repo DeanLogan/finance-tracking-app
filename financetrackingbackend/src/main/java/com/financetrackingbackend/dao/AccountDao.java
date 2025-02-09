@@ -1,6 +1,6 @@
 package com.financetrackingbackend.dao;
 
-import com.financetrackingbackend.schemas.general.Account;
+import com.financetrackingbackend.schemas.dynamodb.Account;
 
 import java.util.Map;
 

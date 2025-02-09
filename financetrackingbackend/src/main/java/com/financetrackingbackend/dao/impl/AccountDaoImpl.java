@@ -1,7 +1,7 @@
 package com.financetrackingbackend.dao.impl;
 
 import com.financetrackingbackend.dao.AccountDao;
-import com.financetrackingbackend.schemas.general.Account;
+import com.financetrackingbackend.schemas.dynamodb.Account;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;

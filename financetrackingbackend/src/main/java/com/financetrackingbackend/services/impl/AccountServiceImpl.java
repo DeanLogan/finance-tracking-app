@@ -2,7 +2,7 @@ package com.financetrackingbackend.services.impl;
 
 import java.util.List;
 
-import com.financetrackingbackend.schemas.general.Account;
+import com.financetrackingbackend.schemas.dynamodb.Account;
 import com.financetrackingbackend.services.AccountService;
 
 public class AccountServiceImpl implements AccountService{

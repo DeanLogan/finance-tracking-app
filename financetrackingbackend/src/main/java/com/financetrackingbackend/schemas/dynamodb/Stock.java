@@ -1,4 +1,4 @@
-package com.financetrackingbackend.schemas.general;
+package com.financetrackingbackend.schemas.dynamodb;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.financetrackingbackend.enums.Currency;
@@ -6,9 +6,11 @@ import com.financetrackingbackend.enums.Currency;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamoDbBean
 @Data
 public class Stock {
     @JsonProperty("name")

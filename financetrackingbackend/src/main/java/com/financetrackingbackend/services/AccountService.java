@@ -2,7 +2,7 @@ package com.financetrackingbackend.services;
 
 import java.util.List;
 
-import com.financetrackingbackend.schemas.general.Account;
+import com.financetrackingbackend.schemas.dynamodb.Account;
 
 public interface AccountService {
     List<Account> listUserAccounts();

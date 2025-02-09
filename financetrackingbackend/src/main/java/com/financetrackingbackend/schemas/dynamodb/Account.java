@@ -1,14 +1,18 @@
-package com.financetrackingbackend.schemas.general;
+package com.financetrackingbackend.schemas.dynamodb;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamoDbBean
 @Data
 public class Account {
     @JsonProperty("id")
@@ -21,8 +25,8 @@ public class Account {
     private int accountNumber;
     @JsonProperty("sortCode")
     private int sortCode;
-    @JsonProperty("currentAmount")
-    private float currentAmount;
+    @JsonProperty("balance")
+    private float balance;
     @JsonProperty("stocks")
     private List<Stock> stocks;
     @JsonProperty("currentGains")
@@ -31,4 +35,18 @@ public class Account {
     private List<Fee> fees;
     @JsonProperty("dateCreatedOn")
     private String dateCreatedOn;
+    @JsonProperty("interestRate")
+    private InterestRate interestRate;
+
+    @DynamoDbPartitionKey
+    public String getId() {
+        return id;
+    }
+
+    public void generateIdIfMissing() {
+        if (this.id == null || this.id.isEmpty()) {
+            this.id = UUID.randomUUID().toString();
+        }
+    }
 }
+

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.financetrackingbackend.schemas.general.Account;
+import com.financetrackingbackend.schemas.dynamodb.Account;
 import com.financetrackingbackend.services.AccountService;
 
 @RestController
