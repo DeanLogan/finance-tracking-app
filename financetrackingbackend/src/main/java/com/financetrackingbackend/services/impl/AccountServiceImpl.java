@@ -14,7 +14,7 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public Account addAccount(Account account) {
-        throw new UnsupportedOperationException("Unimplemented method 'addAccout'");
+        throw new UnsupportedOperationException("Unimplemented method 'addAccount'");
     }
 
     @Override

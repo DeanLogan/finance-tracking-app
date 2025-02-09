@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class Account {
     @JsonProperty("id")
-    private int id;
+    private String id;
     @JsonProperty("name")
     private String name;
     @JsonProperty("bank")
