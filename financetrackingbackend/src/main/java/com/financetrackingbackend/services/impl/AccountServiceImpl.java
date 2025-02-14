@@ -2,10 +2,18 @@ package com.financetrackingbackend.services.impl;
 
 import java.util.List;
 
+import com.financetrackingbackend.dao.impl.AccountDaoImpl;
 import com.financetrackingbackend.schemas.dynamodb.Account;
 import com.financetrackingbackend.services.AccountService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
-public class AccountServiceImpl implements AccountService{
+@Service
+@Slf4j
+@RequiredArgsConstructor
+public class AccountServiceImpl implements AccountService {
+    private final AccountDaoImpl accountDao;
 
     @Override
     public List<Account> listUserAccounts() {
@@ -14,7 +22,13 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public Account addAccount(Account account) {
-        throw new UnsupportedOperationException("Unimplemented method 'addAccount'");
+        accountDao.addAccount(account);
+        return null;
+    }
+
+    @Override
+    public Account getAccount(String id) {
+        return accountDao.getAccount(id);
     }
 
     @Override
@@ -23,12 +37,12 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public boolean deleteAccount(int id) {
+    public boolean deleteAccount(String id) {
         throw new UnsupportedOperationException("Unimplemented method 'deleteAccount'");
     }
 
     @Override
-    public Account updateAccount(int id, Account account) {
+    public Account updateAccount(String id, Account account) {
         throw new UnsupportedOperationException("Unimplemented method 'updateAccount'");
     }
 

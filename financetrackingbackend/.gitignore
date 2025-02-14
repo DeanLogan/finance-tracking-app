@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 .env
 .gradle
+.volume
 
 ### STS ###
 .apt_generated

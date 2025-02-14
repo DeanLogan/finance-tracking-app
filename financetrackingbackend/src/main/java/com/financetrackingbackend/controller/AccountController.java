@@ -20,11 +20,16 @@ import com.financetrackingbackend.services.AccountService;
 @RequestMapping("/account")
 @RequiredArgsConstructor
 public class AccountController {
-    private AccountService accountService;
+    private final AccountService accountService;
 
     @GetMapping("/list")
     public List<Account> list(){
         return accountService.listUserAccounts();
+    }
+
+    @GetMapping("/getAccount")
+    public Account getAccount(@RequestParam("id") String id){
+        return accountService.getAccount(id);
     }
 
     @PostMapping("/addAccount")
@@ -33,12 +38,12 @@ public class AccountController {
     }
 
     @PutMapping("/updateAccount")
-    public Account update(@RequestParam("id") int id, @RequestBody Account account) {
+    public Account update(@RequestParam("id") String id, @RequestBody Account account) {
         return accountService.updateAccount(id, account);
     }
 
     @DeleteMapping("/delete")
-    public boolean delete(@RequestParam("id") int id) {
+    public boolean delete(@RequestParam("id") String id) {
         return accountService.deleteAccount(id);
     }
 
