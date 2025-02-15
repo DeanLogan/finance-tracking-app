@@ -43,8 +43,6 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok'
 
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
     annotationProcessor 'org.projectlombok:lombok'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -52,10 +50,6 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
-}
-
-tasks.named('bootRun') {
-    systemProperty 'spring.devtools.restart.enabled', 'true'
 }
 
 application {

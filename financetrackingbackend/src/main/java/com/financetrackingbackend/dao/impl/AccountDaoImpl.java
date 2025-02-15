@@ -2,7 +2,6 @@ package com.financetrackingbackend.dao.impl;
 
 import com.financetrackingbackend.dao.AccountDao;
 import com.financetrackingbackend.schemas.dynamodb.Account;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
@@ -38,6 +37,7 @@ public class AccountDaoImpl implements AccountDao {
         Key key = Key.builder()
                 .partitionValue(id)
                 .build();
+        System.out.println("key:"+key);
         System.out.println("account:"+accountDynamoDbTable.getItem(key));
         return accountDynamoDbTable.getItem(key);
     }
