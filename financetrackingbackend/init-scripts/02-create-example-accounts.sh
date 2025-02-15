@@ -14,8 +14,9 @@ awslocal dynamodb put-item \
         "fees": {"L": []},
         "dateCreatedOn": {"S": "2024-01-17"},
         "interestRate": {"M": {
-            "rate": {"N": "4.2"},
+            "aer": {"N": "4.2"},
             "type": {"S": "VARIABLE"},
+            "paidTime": {"S": "MONTHLY"},
             "startDate": {"S": "2024-01-17"},
             "endDate": {"S": "2025-01-17"}
         }}
@@ -32,52 +33,68 @@ awslocal dynamodb put-item \
         "balance": {"N": "10000.00"},
         "stocks": {"L": [
             {"M": {
-                "symbol": {"S": "GOOGL"},
-                "quantity": {"N": "8"},
+                "name": {"S": "Google"},
+                "currentAmount": {"N": "8"},
+                "gains": {"N": "132.40"},
+                "currency": {"S": "USD"},
+                "tickerSymbol": {"S": "GOOGL"},
+                "purchaseDate": {"S": "2023-09-10"},
                 "purchasePrice": {"N": "125.75"},
-                "currentPrice": {"N": "142.30"},
-                "purchaseDate": {"S": "2023-09-10"}
+                "currentPrice": {"N": "142.30"}
             }},
             {"M": {
-                "symbol": {"S": "AMZN"},
-                "quantity": {"N": "15"},
+                "name": {"S": "Amazon"},
+                "currentAmount": {"N": "15"},
+                "gains": {"N": "384.25"},
+                "currency": {"S": "USD"},
+                "tickerSymbol": {"S": "AMZN"},
+                "purchaseDate": {"S": "2023-07-05"},
                 "purchasePrice": {"N": "130.25"},
-                "currentPrice": {"N": "155.80"},
-                "purchaseDate": {"S": "2023-07-05"}
+                "currentPrice": {"N": "155.80"}
             }},
             {"M": {
-                "symbol": {"S": "TSLA"},
-                "quantity": {"N": "12"},
+                "name": {"S": "Tesla"},
+                "currentAmount": {"N": "12"},
+                "gains": {"N": "303.00"},
+                "currency": {"S": "USD"},
+                "tickerSymbol": {"S": "TSLA"},
+                "purchaseDate": {"S": "2023-10-15"},
                 "purchasePrice": {"N": "200.50"},
-                "currentPrice": {"N": "225.75"},
-                "purchaseDate": {"S": "2023-10-15"}
+                "currentPrice": {"N": "225.75"}
             }}
         ]},
         "currentGains": {"N": "832.40"},
         "fees": {"L": [
             {"M": {
-                "type": {"S": "ACCOUNT_MAINTENANCE"},
+                "type": {"S": "FIXED"},
+                "percentage": {"N": "0"},
                 "amount": {"N": "25.00"},
+                "frequency": {"S": "QUARTERLY"},
                 "date": {"S": "2023-12-31"},
                 "description": {"S": "Quarterly account maintenance fee"}
             }},
             {"M": {
-                "type": {"S": "TRADING"},
+                "type": {"S": "FIXED"},
+                "percentage": {"N": "0"},
                 "amount": {"N": "12.99"},
+                "frequency": {"S": "ONE_TIME"},
                 "date": {"S": "2023-09-10"},
                 "description": {"S": "Stock purchase commission - GOOGL"}
             }},
             {"M": {
-                "type": {"S": "FOREIGN_EXCHANGE"},
+                "type": {"S": "FIXED"},
+                "percentage": {"N": "0"},
                 "amount": {"N": "15.50"},
+                "frequency": {"S": "ONE_TIME"},
                 "date": {"S": "2023-07-05"},
                 "description": {"S": "FX conversion fee"}
             }}
         ]},
         "dateCreatedOn": {"S": "2024-01-17"},
         "interestRate": {"M": {
-            "rate": {"N": "4.2"},
+            "aer": {"N": "4.2"},
             "type": {"S": "VARIABLE"},
+            "paidTime": {"S": "MONTHLY"},
             "startDate": {"S": "2024-01-17"},
             "endDate": {"S": "2025-01-17"}
         }}
@@ -94,50 +111,62 @@ awslocal dynamodb put-item \
         "balance": {"N": "5000.75"},
         "stocks": {"L": [
             {"M": {
-                "symbol": {"S": "VOO"},
-                "quantity": {"N": "20"},
+                "name": {"S": "Vanguard S&P 500 ETF"},
+                "currentAmount": {"N": "20"},
+                "gains": {"N": "510.75"},
+                "currency": {"S": "USD"},
+                "tickerSymbol": {"S": "VOO"},
+                "purchaseDate": {"S": "2023-05-20"},
                 "purchasePrice": {"N": "350.25"},
-                "currentPrice": {"N": "375.80"},
-                "purchaseDate": {"S": "2023-05-20"}
+                "currentPrice": {"N": "375.80"}
             }},
             {"M": {
-                "symbol": {"S": "VTI"},
-                "quantity": {"N": "15"},
+                "name": {"S": "Vanguard Total Stock Market ETF"},
+                "currentAmount": {"N": "15"},
+                "gains": {"N": "300.00"},
+                "currency": {"S": "USD"},
+                "tickerSymbol": {"S": "VTI"},
+                "purchaseDate": {"S": "2023-11-15"},
                 "purchasePrice": {"N": "200.75"},
-                "currentPrice": {"N": "220.50"},
-                "purchaseDate": {"S": "2023-11-15"}
+                "currentPrice": {"N": "220.50"}
             }}
         ]},
         "currentGains": {"N": "810.75"},
         "fees": {"L": [
             {"M": {
-                "type": {"S": "PLATFORM"},
+                "type": {"S": "FIXED"},
+                "percentage": {"N": "0"},
                 "amount": {"N": "5.99"},
+                "frequency": {"S": "MONTHLY"},
                 "date": {"S": "2024-01-01"},
                 "description": {"S": "Monthly platform fee"}
             }},
             {"M": {
-                "type": {"S": "TRADING"},
+                "type": {"S": "FIXED"},
+                "percentage": {"N": "0"},
                 "amount": {"N": "8.99"},
+                "frequency": {"S": "ONE_TIME"},
                 "date": {"S": "2023-05-20"},
                 "description": {"S": "ETF purchase commission - VOO"}
             }},
             {"M": {
-                "type": {"S": "TRADING"},
+                "type": {"S": "FIXED"},
+                "percentage": {"N": "0"},
                 "amount": {"N": "8.99"},
+                "frequency": {"S": "ONE_TIME"},
                 "date": {"S": "2023-11-15"},
                 "description": {"S": "ETF purchase commission - VTI"}
             }}
         ]},
         "dateCreatedOn": {"S": "2024-01-17"},
         "interestRate": {"M": {
-            "rate": {"N": "2.8"},
+            "aer": {"N": "2.8"},
             "type": {"S": "FIXED"},
+            "paidTime": {"S": "MONTHLY"},
             "startDate": {"S": "2024-01-17"},
             "endDate": {"S": "2025-01-17"}
         }}
     }'
-
 
 echo "Accounts table:"
 awslocal dynamodb scan --table-name Accounts
