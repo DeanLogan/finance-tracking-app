@@ -3,5 +3,7 @@ package com.financetrackingbackend.enums;
 public enum PaymentRate {
     DAILY,
     MONTHLY,
-    YEARLY
+    YEARLY,
+    QUARTERLY,
+    ONE_TIME
 }

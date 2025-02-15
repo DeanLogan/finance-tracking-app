@@ -17,10 +17,16 @@ public class Stock {
     private String name;
     @JsonProperty("currentAmount")
     private float currentAmount;
-    @JsonProperty("currentGains")
+    @JsonProperty("gains")
     private float gains;
-    @JsonProperty
+    @JsonProperty("currency")
     private Currency currency;
     @JsonProperty("tickerSymbol")
     private String tickerSymbol;
+    @JsonProperty("purchaseDate")
+    private String purchaseDate;
+    @JsonProperty("purchasePrice")
+    private String purchasePrice;
+    @JsonProperty("currentPrice")
+    private String currentPrice;
 }

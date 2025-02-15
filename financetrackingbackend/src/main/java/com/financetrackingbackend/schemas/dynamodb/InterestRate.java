@@ -15,8 +15,12 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 public class InterestRate {
     @JsonProperty("aer")
     private float aer;
-    @JsonProperty("accountType")
-    private AccountType accountType;
+    @JsonProperty("type")
+    private AccountType type;
     @JsonProperty("paidTime")
     private String paidTime;
+    @JsonProperty("startDate")
+    private String startDate;
+    @JsonProperty("endDate")
+    private String endDate;
 }
