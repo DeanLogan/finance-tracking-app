@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,8 +29,9 @@ public class AccountController {
     }
 
     @GetMapping("/getAccount")
-    public Account getAccount(@RequestParam("id") String id){
-        return accountService.getAccount(id);
+    public ResponseEntity<Account> getAccount(@RequestParam("id") String id) {
+        Account account = accountService.getAccount(id);
+        return account == null ? ResponseEntity.status(404).body(null) : ResponseEntity.ok(account);
     }
 
     @PostMapping("/addAccount")

@@ -37,11 +37,8 @@ public class AccountDaoImpl implements AccountDao {
         Key key = Key.builder()
                 .partitionValue(id)
                 .build();
-        System.out.println("key:"+key);
-        System.out.println("account:"+accountDynamoDbTable.getItem(key));
         return accountDynamoDbTable.getItem(key);
     }
-
 
     @Override
     public Account addAccount(Account account) {
