@@ -6,7 +6,7 @@ import java.util.Map;
 
 public interface AccountDao {
     Account getAccount(String id);
-    void addAccount(Account account);
+    Account addAccount(Account account);
     void deleteAccount(String id);
-    void updateAccount(String id, Map<String, Object> updatedFields);
+    Account updateAccount(String id, Map<String, Object> updatedFields);
 }

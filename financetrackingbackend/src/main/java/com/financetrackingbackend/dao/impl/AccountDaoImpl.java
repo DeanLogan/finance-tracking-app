@@ -44,8 +44,9 @@ public class AccountDaoImpl implements AccountDao {
 
 
     @Override
-    public void addAccount(Account account) {
+    public Account addAccount(Account account) {
         accountDynamoDbTable.putItem(account);
+        return account;
     }
 
     @Override
@@ -54,7 +55,7 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
-    public void updateAccount(String id, Map<String, Object> updatedFields) {
+    public Account updateAccount(String id, Map<String, Object> updatedFields) {
         throw new UnsupportedOperationException("Unimplemented method 'updateAccount'");
     }
 }

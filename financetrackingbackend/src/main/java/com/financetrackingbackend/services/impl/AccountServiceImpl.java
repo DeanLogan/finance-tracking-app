@@ -22,8 +22,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account addAccount(Account account) {
-        accountDao.addAccount(account);
-        return null;
+        return accountDao.addAccount(account);
     }
 
     @Override
