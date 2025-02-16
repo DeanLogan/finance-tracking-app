@@ -22,15 +22,15 @@ public class Account {
     @JsonProperty("bank")
     private String bank;
     @JsonProperty("accountNumber")
-    private int accountNumber;
+    private Integer accountNumber;
     @JsonProperty("sortCode")
-    private int sortCode;
+    private Integer sortCode;
     @JsonProperty("balance")
-    private float balance;
+    private Float balance;
     @JsonProperty("stocks")
     private List<Stock> stocks;
     @JsonProperty("currentGains")
-    private float currentGains;
+    private Float currentGains;
     @JsonProperty("fees")
     private List<Fee> fees;
     @JsonProperty("dateCreatedOn")

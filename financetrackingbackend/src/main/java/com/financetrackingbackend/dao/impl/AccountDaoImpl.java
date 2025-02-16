@@ -8,16 +8,18 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+import software.amazon.awssdk.enhanced.dynamodb.model.UpdateItemEnhancedRequest;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
+import software.amazon.awssdk.enhanced.dynamodb.Expression;
 
 import java.net.URI;
-import java.util.Map;
 
 @Component
 public class AccountDaoImpl implements AccountDao {
     private final DynamoDbTable<Account> accountDynamoDbTable;
+    private static final String UPDATE_EXPRESSION = "attribute_exists(id)";
 
     public AccountDaoImpl() {
         DynamoDbClient dynamoDbClient = DynamoDbClient.builder()
@@ -52,7 +54,19 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
-    public Account updateAccount(String id, Map<String, Object> updatedFields) {
-        throw new UnsupportedOperationException("Unimplemented method 'updateAccount'");
+    public Account updateAccount(String id, Account updatedAccount) {
+        updatedAccount.setId(id);
+
+        Expression expression = Expression.builder()
+            .expression(UPDATE_EXPRESSION)
+            .build();
+
+        UpdateItemEnhancedRequest<Account> request = UpdateItemEnhancedRequest.builder(Account.class)
+                .item(updatedAccount)
+                .conditionExpression(expression)
+                .ignoreNulls(true)
+                .build();
+
+        return accountDynamoDbTable.updateItem(request);
     }
 }

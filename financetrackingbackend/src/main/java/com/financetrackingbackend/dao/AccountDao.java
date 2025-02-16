@@ -8,5 +8,5 @@ public interface AccountDao {
     Account getAccount(String id);
     Account addAccount(Account account);
     void deleteAccount(String id);
-    Account updateAccount(String id, Map<String, Object> updatedFields);
+    Account updateAccount(String id, Account account);
 }
