@@ -27,17 +27,17 @@ public class AccountController {
         return accountService.listUserAccounts();
     }
 
-    @GetMapping("/getAccount")
+    @GetMapping("/get")
     public Account getAccount(@RequestParam("id") String id) {
         return accountService.getAccount(id);
     }
 
-    @PostMapping("/addAccount")
+    @PostMapping("/add")
     public Account add(@RequestBody Account account) {
         return accountService.addAccount(account);
     }
 
-    @PutMapping("/updateAccount")
+    @PutMapping("/update")
     public Account update(@RequestParam("id") String id, @RequestBody Account account) {
         return accountService.updateAccount(id, account);
     }
