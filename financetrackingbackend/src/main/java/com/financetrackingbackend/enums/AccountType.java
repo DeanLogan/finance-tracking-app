@@ -2,5 +2,6 @@ package com.financetrackingbackend.enums;
 
 public enum AccountType {
     FIXED,
-    VARIABLE
+    VARIABLE,
+    PERCENTAGE
 }

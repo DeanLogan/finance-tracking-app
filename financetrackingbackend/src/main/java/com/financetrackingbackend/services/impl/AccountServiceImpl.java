@@ -2,10 +2,21 @@ package com.financetrackingbackend.services.impl;
 
 import java.util.List;
 
-import com.financetrackingbackend.schemas.general.Account;
+import com.financetrackingbackend.dao.impl.AccountDaoImpl;
+import com.financetrackingbackend.exceptions.ResourceNotFoundException;
+import com.financetrackingbackend.schemas.dynamodb.Account;
 import com.financetrackingbackend.services.AccountService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import software.amazon.awssdk.services.dynamodb.model.ConditionalCheckFailedException;
 
-public class AccountServiceImpl implements AccountService{
+@Service
+@Slf4j
+@RequiredArgsConstructor
+public class AccountServiceImpl implements AccountService {
+    private final AccountDaoImpl accountDao;
+    private static final String ACC_NOT_FOUND_MSG = "Account was not found with id: ";
 
     @Override
     public List<Account> listUserAccounts() {
@@ -14,7 +25,16 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public Account addAccount(Account account) {
-        throw new UnsupportedOperationException("Unimplemented method 'addAccout'");
+        return accountDao.addAccount(account);
+    }
+
+    @Override
+    public Account getAccount(String id) {
+        Account account = accountDao.getAccount(id);
+        if (account == null) {
+            throw new ResourceNotFoundException(ACC_NOT_FOUND_MSG+id);
+        }
+        return account;
     }
 
     @Override
@@ -23,13 +43,21 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public boolean deleteAccount(int id) {
-        throw new UnsupportedOperationException("Unimplemented method 'deleteAccount'");
+    public Account deleteAccount(String id) {
+        Account account = accountDao.deleteAccount(id);
+        if (account == null) {
+            throw new ResourceNotFoundException(ACC_NOT_FOUND_MSG+id);
+        }
+        return account;
     }
 
     @Override
-    public Account updateAccount(int id, Account account) {
-        throw new UnsupportedOperationException("Unimplemented method 'updateAccount'");
+    public Account updateAccount(String id, Account account) {
+        try {
+            return accountDao.updateAccount(id, account);
+        } catch (ConditionalCheckFailedException e) {
+            throw new ResourceNotFoundException(ACC_NOT_FOUND_MSG+id);
+        }
     }
 
 }

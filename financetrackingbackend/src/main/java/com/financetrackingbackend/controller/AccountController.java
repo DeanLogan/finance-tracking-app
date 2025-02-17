@@ -13,32 +13,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.financetrackingbackend.schemas.general.Account;
+import com.financetrackingbackend.schemas.dynamodb.Account;
 import com.financetrackingbackend.services.AccountService;
 
 @RestController
 @RequestMapping("/account")
 @RequiredArgsConstructor
 public class AccountController {
-    private AccountService accountService;
+    private final AccountService accountService;
 
     @GetMapping("/list")
     public List<Account> list(){
         return accountService.listUserAccounts();
     }
 
-    @PostMapping("/addAccount")
+    @GetMapping("/get")
+    public Account getAccount(@RequestParam("id") String id) {
+        return accountService.getAccount(id);
+    }
+
+    @PostMapping("/add")
     public Account add(@RequestBody Account account) {
         return accountService.addAccount(account);
     }
 
-    @PutMapping("/updateAccount")
-    public Account update(@RequestParam("id") int id, @RequestBody Account account) {
+    @PutMapping("/update")
+    public Account update(@RequestParam("id") String id, @RequestBody Account account) {
         return accountService.updateAccount(id, account);
     }
 
     @DeleteMapping("/delete")
-    public boolean delete(@RequestParam("id") int id) {
+    public Account delete(@RequestParam("id") String id) {
         return accountService.deleteAccount(id);
     }
 
