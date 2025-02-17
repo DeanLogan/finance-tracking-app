@@ -37,6 +37,8 @@ public class Account {
     private String dateCreatedOn;
     @JsonProperty("interestRate")
     private InterestRate interestRate;
+    @JsonProperty("user")
+    private String user;
 
     @DynamoDbPartitionKey
     public String getId() {
