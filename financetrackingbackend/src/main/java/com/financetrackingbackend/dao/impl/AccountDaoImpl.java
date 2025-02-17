@@ -10,15 +10,19 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+import software.amazon.awssdk.enhanced.dynamodb.model.DeleteItemEnhancedRequest;
 import software.amazon.awssdk.enhanced.dynamodb.model.PutItemEnhancedRequest;
 import software.amazon.awssdk.enhanced.dynamodb.model.UpdateItemEnhancedRequest;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.Expression;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.ConditionalCheckFailedException;
 
 import java.net.URI;
+import java.util.Collections;
+import java.util.Map;
 
 @Component
 public class AccountDaoImpl implements AccountDao {
@@ -27,6 +31,10 @@ public class AccountDaoImpl implements AccountDao {
     private static final String UPDATE_EXPRESSION = "attribute_exists(id)";
     private static final String CHECK_ID_EXISTS_EXPRESSION = "attribute_not_exists(id)";
     private static final String CONFLICT_MSG = "Account already exists with id: ";
+    private static final String CHECK_USER_EXPRESSION = "#usr = :username";
+    private static final String USER_ATTR = "user";
+    private static final String USER_ALIAS = "#usr";
+    private static final String USERNAME_VALUE_ALIAS = ":username";
 
     public AccountDaoImpl() {
         this.authUtil = new AuthenticationUtil();
@@ -55,7 +63,7 @@ public class AccountDaoImpl implements AccountDao {
         try {
             PutItemEnhancedRequest<Account> request = PutItemEnhancedRequest.builder(Account.class)
                     .item(account)
-                    .conditionExpression(buildExpression(CHECK_ID_EXISTS_EXPRESSION))
+                    .conditionExpression(buildExpression(CHECK_ID_EXISTS_EXPRESSION, null, null))
                     .build();
             accountDynamoDbTable.putItem(request);
         } catch (ConditionalCheckFailedException e) {
@@ -67,7 +75,16 @@ public class AccountDaoImpl implements AccountDao {
 
     @Override
     public Account deleteAccount(String id) {
-        return accountDynamoDbTable.deleteItem(buildKey(id));
+        String username = authUtil.getCurrentUsername();
+        DeleteItemEnhancedRequest request = DeleteItemEnhancedRequest.builder()
+                .key(buildKey(id))
+                .conditionExpression(buildExpression(
+                        CHECK_USER_EXPRESSION,
+                        Collections.singletonMap(USER_ALIAS, USER_ATTR),
+                        Collections.singletonMap(USERNAME_VALUE_ALIAS, AttributeValue.builder().s(username).build())
+                ))
+                .build();
+        return accountDynamoDbTable.deleteItem(request);
     }
 
     @Override
@@ -76,7 +93,7 @@ public class AccountDaoImpl implements AccountDao {
 
         UpdateItemEnhancedRequest<Account> request = UpdateItemEnhancedRequest.builder(Account.class)
                 .item(updatedAccount)
-                .conditionExpression(buildExpression(UPDATE_EXPRESSION))
+                .conditionExpression(buildExpression(UPDATE_EXPRESSION, null, null))
                 .ignoreNulls(true)
                 .build();
 
@@ -89,9 +106,18 @@ public class AccountDaoImpl implements AccountDao {
                 .build();
     }
 
-    private Expression buildExpression(String query) {
-        return Expression.builder()
-                .expression(query)
-                .build();
+    private Expression buildExpression(String expression, Map<String, String> expressionNames, Map<String, AttributeValue> expressionValues) {
+        Expression.Builder builder = Expression.builder()
+                .expression(expression);
+
+        if (expressionNames != null && !expressionNames.isEmpty()) {
+            builder.expressionNames(expressionNames);
+        }
+
+        if (expressionValues != null && !expressionValues.isEmpty()) {
+            builder.expressionValues(expressionValues);
+        }
+
+        return builder.build();
     }
 }
