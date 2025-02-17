@@ -52,7 +52,12 @@ public class AccountDaoImpl implements AccountDao {
 
     @Override
     public Account getAccount(String id) {
-        return accountDynamoDbTable.getItem(buildKey(id));
+        String username = authUtil.getCurrentUsername();
+        Account account = accountDynamoDbTable.getItem(buildKey(id));
+        if (account != null && username.equals(account.getUser())) {
+            return account;
+        }
+        return null;
     }
 
     @Override
@@ -78,11 +83,7 @@ public class AccountDaoImpl implements AccountDao {
         String username = authUtil.getCurrentUsername();
         DeleteItemEnhancedRequest request = DeleteItemEnhancedRequest.builder()
                 .key(buildKey(id))
-                .conditionExpression(buildExpression(
-                        CHECK_USER_EXPRESSION,
-                        Collections.singletonMap(USER_ALIAS, USER_ATTR),
-                        Collections.singletonMap(USERNAME_VALUE_ALIAS, AttributeValue.builder().s(username).build())
-                ))
+                .conditionExpression(checkUserExpression(username))
                 .build();
         return accountDynamoDbTable.deleteItem(request);
     }
@@ -96,11 +97,7 @@ public class AccountDaoImpl implements AccountDao {
         UpdateItemEnhancedRequest<Account> request = UpdateItemEnhancedRequest.builder(Account.class)
                 .item(updatedAccount)
                 .conditionExpression(buildExpression(UPDATE_EXPRESSION, null, null))
-                .conditionExpression(buildExpression(
-                        CHECK_USER_EXPRESSION,
-                        Collections.singletonMap(USER_ALIAS, USER_ATTR),
-                        Collections.singletonMap(USERNAME_VALUE_ALIAS, AttributeValue.builder().s(username).build())
-                ))
+                .conditionExpression(checkUserExpression(username))
                 .ignoreNulls(true)
                 .build();
 
@@ -111,6 +108,14 @@ public class AccountDaoImpl implements AccountDao {
         return Key.builder()
                 .partitionValue(id)
                 .build();
+    }
+
+    private Expression checkUserExpression(String username){
+        return buildExpression(
+                CHECK_USER_EXPRESSION,
+                Collections.singletonMap(USER_ALIAS, USER_ATTR),
+                Collections.singletonMap(USERNAME_VALUE_ALIAS, AttributeValue.builder().s(username).build())
+        );
     }
 
     private Expression buildExpression(String expression, Map<String, String> expressionNames, Map<String, AttributeValue> expressionValues) {
