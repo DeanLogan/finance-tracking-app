@@ -89,11 +89,18 @@ public class AccountDaoImpl implements AccountDao {
 
     @Override
     public Account updateAccount(String id, Account updatedAccount) {
+        String username = authUtil.getCurrentUsername();
         updatedAccount.setId(id);
+        updatedAccount.setUser(username);
 
         UpdateItemEnhancedRequest<Account> request = UpdateItemEnhancedRequest.builder(Account.class)
                 .item(updatedAccount)
                 .conditionExpression(buildExpression(UPDATE_EXPRESSION, null, null))
+                .conditionExpression(buildExpression(
+                        CHECK_USER_EXPRESSION,
+                        Collections.singletonMap(USER_ALIAS, USER_ATTR),
+                        Collections.singletonMap(USERNAME_VALUE_ALIAS, AttributeValue.builder().s(username).build())
+                ))
                 .ignoreNulls(true)
                 .build();
 
