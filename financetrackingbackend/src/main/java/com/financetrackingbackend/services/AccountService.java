@@ -9,7 +9,7 @@ public interface AccountService {
     List<Account> listUserAccounts();
     Account addAccount(Account account);
     float getBalanceForAllAccounts();
-    boolean deleteAccount(String id);
+    Account deleteAccount(String id);
     Account updateAccount(String id, Account account);
     Account getAccount(String id);
 }

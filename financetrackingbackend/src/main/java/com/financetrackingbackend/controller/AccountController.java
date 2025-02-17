@@ -43,7 +43,7 @@ public class AccountController {
     }
 
     @DeleteMapping("/delete")
-    public boolean delete(@RequestParam("id") String id) {
+    public Account delete(@RequestParam("id") String id) {
         return accountService.deleteAccount(id);
     }
 

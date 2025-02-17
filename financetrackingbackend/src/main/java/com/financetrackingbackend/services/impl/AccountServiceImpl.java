@@ -43,8 +43,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean deleteAccount(String id) {
-        throw new UnsupportedOperationException("Unimplemented method 'deleteAccount'");
+    public Account deleteAccount(String id) {
+        Account account = accountDao.deleteAccount(id);
+        if (account == null) {
+            throw new ResourceNotFoundException(ACC_NOT_FOUND_MSG+id);
+        }
+        return account;
     }
 
     @Override

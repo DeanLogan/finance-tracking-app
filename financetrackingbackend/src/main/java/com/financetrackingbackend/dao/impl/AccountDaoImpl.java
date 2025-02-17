@@ -49,8 +49,11 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
-    public void deleteAccount(String id) {
-        throw new UnsupportedOperationException("Unimplemented method 'deleteAccount'");
+    public Account deleteAccount(String id) {
+        Key key = Key.builder()
+                .partitionValue(id)
+                .build();
+        return accountDynamoDbTable.deleteItem(key);
     }
 
     @Override
