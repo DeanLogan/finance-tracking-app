@@ -44,11 +44,11 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account deleteAccount(String id) {
-        Account account = accountDao.deleteAccount(id);
-        if (account == null) {
+        try {
+            return accountDao.deleteAccount(id);
+        } catch (ConditionalCheckFailedException e) {
             throw new ResourceNotFoundException(ACC_NOT_FOUND_MSG+id);
         }
-        return account;
     }
 
     @Override

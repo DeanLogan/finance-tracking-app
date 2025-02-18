@@ -1,5 +1,6 @@
 package com.financetrackingbackend.controller;
 
+import com.financetrackingbackend.util.AuthenticationUtil;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ExperimentController {
     private final Dotenv dotenv;
+    private final AuthenticationUtil authUtil;
 
     @GetMapping("/")
     public String test(){
@@ -24,5 +26,10 @@ public class ExperimentController {
             return "failed env check";
         }
         return secret;
+    }
+
+    @GetMapping("/whoami")
+    public String whoami() {
+        return authUtil.getCurrentUsername();
     }
 }

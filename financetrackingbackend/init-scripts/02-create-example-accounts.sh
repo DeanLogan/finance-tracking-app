@@ -19,7 +19,8 @@ awslocal dynamodb put-item \
             "paidTime": {"S": "MONTHLY"},
             "startDate": {"S": "2024-01-17"},
             "endDate": {"S": "2025-01-17"}
-        }}
+        }},
+        "user": {"S": "admin"},
     }'
 
 awslocal dynamodb put-item \
@@ -97,7 +98,8 @@ awslocal dynamodb put-item \
             "paidTime": {"S": "MONTHLY"},
             "startDate": {"S": "2024-01-17"},
             "endDate": {"S": "2025-01-17"}
-        }}
+        }},
+        "user": {"S": "admin"},
     }'
 
 awslocal dynamodb put-item \
@@ -165,7 +167,8 @@ awslocal dynamodb put-item \
             "paidTime": {"S": "MONTHLY"},
             "startDate": {"S": "2024-01-17"},
             "endDate": {"S": "2025-01-17"}
-        }}
+        }},
+        "user": {"S": "user"},
     }'
 
 echo "Accounts table:"
