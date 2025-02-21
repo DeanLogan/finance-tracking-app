@@ -1,8 +1,11 @@
 package com.financetrackingbackend.util;
 
+import lombok.experimental.UtilityClass;
+
 import java.security.SecureRandom;
 import java.util.Base64;
 
+@UtilityClass
 public class TokenUtil {
     public static String generateStateToken() {
         try {

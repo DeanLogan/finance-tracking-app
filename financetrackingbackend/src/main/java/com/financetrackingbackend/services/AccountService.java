@@ -1,7 +1,6 @@
 package com.financetrackingbackend.services;
 
 import java.util.List;
-import java.util.Map;
 
 import com.financetrackingbackend.schemas.dynamodb.Account;
 

@@ -48,18 +48,12 @@ public class UlsterBankController {
 
     @GetMapping("/oauth/callback/extractcode")
     public UlsterbankAccessToken callback(@RequestHeader("code") String code, @RequestHeader("id_token") String idToken) {
-        UlsterbankAccessToken accessToken = ulsterbankAuthService.getAccessToken(code);
-        System.out.println("AccessToken:\n"+accessToken.getAccessToken());
-        System.out.println("RefreshToken:\n"+accessToken.getRefreshToken());
-        return accessToken;
+        return ulsterbankAuthService.getAccessToken(code);
     }
 
     @GetMapping("/oauth/refresh")
     public UlsterbankAccessToken refresh(@RequestHeader("refreshToken") String refreshToken) {
-        UlsterbankAccessToken accessToken = ulsterbankAuthService.refreshAccessToken(refreshToken);
-        System.out.println("AccessToken:\n"+accessToken.getAccessToken());
-        System.out.println("RefreshToken:\n"+accessToken.getRefreshToken());
-        return accessToken;
+        return ulsterbankAuthService.refreshAccessToken(refreshToken);
     }
 
     @GetMapping("/accounts")
