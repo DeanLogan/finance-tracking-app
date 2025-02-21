@@ -69,10 +69,11 @@ public class MonzoAccountServiceImpl implements MonzoAccountService {
         List<MonzoPot> activePots = monzoDao.getAllPots(accessToken, accountId).getPots()
                 .stream()
                 .filter(pot -> !pot.isDeleted())
-                .peek(monzoPot -> {
+                .map(monzoPot -> {
                     float adjustedBalance = monzoPot.getBalance() / 100;
-                    monzoPot.setBalance(adjustedBalance);
+                    monzoPot.setBalance(monzoPot.getBalance() / 100);
                     totalBalance.updateAndGet(currentTotal -> currentTotal + adjustedBalance);
+                    return monzoPot;
                 })
                 .toList();
 
@@ -83,8 +84,7 @@ public class MonzoAccountServiceImpl implements MonzoAccountService {
         return monzoPots;
     }
 
-    private MonzoAccount addActivePotsToAccount(String accessToken, MonzoAccount account) {
+    private void addActivePotsToAccount(String accessToken, MonzoAccount account) {
         account.setPots(getAllActivePotsForAccount(accessToken, account.getId()));
-        return account;
     }
 }

@@ -7,9 +7,9 @@ import com.financetrackingbackend.schemas.dynamodb.InterestRate;
 import com.financetrackingbackend.schemas.dynamodb.Stock;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Component
 public class AccountMapperImpl implements AccountMapper {
@@ -36,7 +36,7 @@ public class AccountMapperImpl implements AccountMapper {
         if (obj instanceof Map) {
             Map<String, Object> interestMap = castToMap(obj);
             InterestRate rate = new InterestRate();
-            rate.setAer(interestMap.get("aer") != null ? ((Number) interestMap.get("aer")).floatValue() : null);
+            rate.setAer(interestMap.get("aer") != null ? ((Number) interestMap.get("aer")).floatValue() : 0.0f);
             rate.setPaidTime((String) interestMap.get("paidTime"));
             rate.setStartDate((String) interestMap.get("startDate"));
             rate.setEndDate((String) interestMap.get("endDate"));
@@ -47,43 +47,39 @@ public class AccountMapperImpl implements AccountMapper {
 
     private List<Stock> mapToStocks(Map<String, Object> map) {
         Object obj = map.get("stocks");
-        if (obj instanceof List) {
-            List<?> list = (List<?>) obj;
-            if (list.isEmpty() || list.get(0) instanceof Map) {
+        if (obj instanceof List<?> list && (list.isEmpty() || list.get(0) instanceof Map)) {
                 return list.stream()
                         .map(this::castToMap)
                         .map(stockMap -> {
                             Stock stock = new Stock();
                             stock.setName((String) stockMap.get("name"));
-                            stock.setCurrentAmount(stockMap.get("currentAmount") != null ? ((Number) stockMap.get("currentAmount")).floatValue() : null);
-                            stock.setGains(stockMap.get("gains") != null ? ((Number) stockMap.get("gains")).floatValue() : null);
+                            stock.setCurrentAmount(stockMap.get("currentAmount") != null ? ((Number) stockMap.get("currentAmount")).floatValue() : 0.0f);
+                            stock.setGains(stockMap.get("gains") != null ? ((Number) stockMap.get("gains")).floatValue() : 0.0f);
                             stock.setTickerSymbol((String) stockMap.get("tickerSymbol"));
                             stock.setPurchaseDate((String) stockMap.get("purchaseDate"));
                             stock.setPurchasePrice((String) stockMap.get("purchasePrice"));
                             stock.setCurrentPrice((String) stockMap.get("currentPrice"));
                             return stock;
-                        }).collect(Collectors.toList());
+                        }).toList();
             }
-        }
-        return null;
+
+        return Collections.emptyList();
     }
 
     private List<Fee> mapToFees(Map<String, Object> map) {
         Object obj = map.get("fees");
-        if (obj instanceof List) {
-            List<?> list = (List<?>) obj;
-            if (list.isEmpty() || list.get(0) instanceof Map) {
+        if (obj instanceof List<?> list && (list.isEmpty() || list.get(0) instanceof Map)) {
                 return list.stream()
                         .map(this::castToMap)
                         .map(feeMap -> {
                             Fee fee = new Fee();
-                            fee.setPercentage(feeMap.get("percentage") != null ? ((Number) feeMap.get("percentage")).floatValue() : null);
-                            fee.setAmount(feeMap.get("amount") != null ? ((Number) feeMap.get("amount")).floatValue() : null);
+                            fee.setPercentage(feeMap.get("percentage") != null ? ((Number) feeMap.get("percentage")).floatValue() : 0.0f);
+                            fee.setAmount(feeMap.get("amount") != null ? ((Number) feeMap.get("amount")).floatValue() : 0.0f);
                             return fee;
-                        }).collect(Collectors.toList());
+                        }).toList();
             }
-        }
-        return null;
+
+        return Collections.emptyList();
     }
 
     @SuppressWarnings("unchecked")
