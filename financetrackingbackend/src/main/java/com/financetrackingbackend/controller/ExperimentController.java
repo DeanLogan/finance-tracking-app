@@ -1,5 +1,6 @@
 package com.financetrackingbackend.controller;
 
+import com.financetrackingbackend.exceptions.ResourceNotFoundException;
 import com.financetrackingbackend.util.AuthenticationUtil;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class ExperimentController {
     public String envFiles() {
         String secret = dotenv.get("SECRET"); 
         if (secret == null) {
-            return "failed env check";
+            throw new ResourceNotFoundException("failed env check");
         }
         return secret;
     }
