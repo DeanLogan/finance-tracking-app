@@ -2,11 +2,13 @@ package com.financetrackingbackend.dao.impl;
 
 import com.financetrackingbackend.dao.AccountDao;
 import com.financetrackingbackend.exceptions.ResourceConflictException;
+import com.financetrackingbackend.exceptions.ServiceUnavailableException;
 import com.financetrackingbackend.schemas.dynamodb.Account;
 import com.financetrackingbackend.util.AuthenticationUtil;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
@@ -53,7 +55,12 @@ public class AccountDaoImpl implements AccountDao {
     @Override
     public Account getAccount(String id) {
         String username = authUtil.getCurrentUsername();
-        Account account = accountDynamoDbTable.getItem(buildKey(id));
+        Account account;
+        try {
+            account = accountDynamoDbTable.getItem(buildKey(id));
+        } catch (SdkClientException e) {
+            throw new ServiceUnavailableException("Could not connect the database");
+        }
         if (account != null && username.equals(account.getUser())) {
             return account;
         }
@@ -73,6 +80,8 @@ public class AccountDaoImpl implements AccountDao {
             accountDynamoDbTable.putItem(request);
         } catch (ConditionalCheckFailedException e) {
             throw new ResourceConflictException(CONFLICT_MSG+account.getId());
+        } catch (SdkClientException e) {
+            throw new ServiceUnavailableException("Could not connect the database");
         }
 
         return account;
@@ -85,7 +94,12 @@ public class AccountDaoImpl implements AccountDao {
                 .key(buildKey(id))
                 .conditionExpression(checkUserExpression(username))
                 .build();
-        return accountDynamoDbTable.deleteItem(request);
+        
+        try {
+            return accountDynamoDbTable.deleteItem(request);
+        } catch (SdkClientException e) {
+            throw new ServiceUnavailableException("Could not connect the database");
+        }
     }
 
     @Override
@@ -101,7 +115,11 @@ public class AccountDaoImpl implements AccountDao {
                 .ignoreNulls(true)
                 .build();
 
-        return accountDynamoDbTable.updateItem(request);
+        try {
+            return accountDynamoDbTable.updateItem(request);
+        } catch (SdkClientException e) {
+            throw new ServiceUnavailableException("Could not connect the database");
+        }
     }
 
     private Key buildKey(String id) {
