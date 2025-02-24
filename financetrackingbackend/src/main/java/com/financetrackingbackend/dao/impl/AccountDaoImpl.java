@@ -37,11 +37,12 @@ public class AccountDaoImpl implements AccountDao {
     private static final String USER_ATTR = "user";
     private static final String USER_ALIAS = "#usr";
     private static final String USERNAME_VALUE_ALIAS = ":username";
+    private static final String CONNECTION_ERROR_MSG = "Could not connect the database";
 
     public AccountDaoImpl() {
         this.authUtil = new AuthenticationUtil();
         DynamoDbClient dynamoDbClient = DynamoDbClient.builder()
-                .endpointOverride(URI.create("http://localhost:4566"))
+                .endpointOverride(URI.create("http://localstack:4566"))
                 .credentialsProvider(StaticCredentialsProvider.create(
                         AwsBasicCredentials.create("test", "test")))
                 .region(Region.EU_WEST_1)
@@ -59,7 +60,7 @@ public class AccountDaoImpl implements AccountDao {
         try {
             account = accountDynamoDbTable.getItem(buildKey(id));
         } catch (SdkClientException e) {
-            throw new ServiceUnavailableException("Could not connect the database");
+            throw new ServiceUnavailableException(CONNECTION_ERROR_MSG);
         }
         if (account != null && username.equals(account.getUser())) {
             return account;
@@ -81,7 +82,7 @@ public class AccountDaoImpl implements AccountDao {
         } catch (ConditionalCheckFailedException e) {
             throw new ResourceConflictException(CONFLICT_MSG+account.getId());
         } catch (SdkClientException e) {
-            throw new ServiceUnavailableException("Could not connect the database");
+            throw new ServiceUnavailableException(CONNECTION_ERROR_MSG);
         }
 
         return account;
@@ -98,7 +99,7 @@ public class AccountDaoImpl implements AccountDao {
         try {
             return accountDynamoDbTable.deleteItem(request);
         } catch (SdkClientException e) {
-            throw new ServiceUnavailableException("Could not connect the database");
+            throw new ServiceUnavailableException(CONNECTION_ERROR_MSG);
         }
     }
 
@@ -118,7 +119,7 @@ public class AccountDaoImpl implements AccountDao {
         try {
             return accountDynamoDbTable.updateItem(request);
         } catch (SdkClientException e) {
-            throw new ServiceUnavailableException("Could not connect the database");
+            throw new ServiceUnavailableException(CONNECTION_ERROR_MSG);
         }
     }
 
