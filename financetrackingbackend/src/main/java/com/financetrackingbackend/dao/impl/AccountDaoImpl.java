@@ -1,10 +1,13 @@
 package com.financetrackingbackend.dao.impl;
 
+import com.financetrackingbackend.configuration.AwsConfig;
 import com.financetrackingbackend.dao.AccountDao;
 import com.financetrackingbackend.exceptions.ResourceConflictException;
 import com.financetrackingbackend.exceptions.ServiceUnavailableException;
 import com.financetrackingbackend.schemas.dynamodb.Account;
 import com.financetrackingbackend.util.AuthenticationUtil;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
@@ -39,13 +42,13 @@ public class AccountDaoImpl implements AccountDao {
     private static final String USERNAME_VALUE_ALIAS = ":username";
     private static final String CONNECTION_ERROR_MSG = "Could not connect the database";
 
-    public AccountDaoImpl() {
+    public AccountDaoImpl(AwsConfig awsConfig) {
         this.authUtil = new AuthenticationUtil();
         DynamoDbClient dynamoDbClient = DynamoDbClient.builder()
-                .endpointOverride(URI.create("http://localstack:4566"))
+                .endpointOverride(URI.create(awsConfig.getEndpoint()))
                 .credentialsProvider(StaticCredentialsProvider.create(
-                        AwsBasicCredentials.create("test", "test")))
-                .region(Region.EU_WEST_1)
+                        AwsBasicCredentials.create(awsConfig.getAccessKey(), awsConfig.getSecretKey())))
+                .region(Region.of(awsConfig.getRegion()))
                 .build();
         DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder()
                 .dynamoDbClient(dynamoDbClient)
