@@ -7,7 +7,6 @@ import com.financetrackingbackend.exceptions.ServiceUnavailableException;
 import com.financetrackingbackend.schemas.dynamodb.Account;
 import com.financetrackingbackend.util.AuthenticationUtil;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
@@ -132,7 +131,7 @@ public class AccountDaoImpl implements AccountDao {
                 .build();
     }
 
-    private Expression checkUserExpression(String username){
+    private Expression checkUserExpression(String username) {
         return buildExpression(
                 CHECK_USER_EXPRESSION,
                 Collections.singletonMap(USER_ALIAS, USER_ATTR),

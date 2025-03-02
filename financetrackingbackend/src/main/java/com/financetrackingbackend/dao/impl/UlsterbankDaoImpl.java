@@ -1,12 +1,12 @@
 package com.financetrackingbackend.dao.impl;
 
+import com.financetrackingbackend.configuration.UlsterbankConfig;
 import com.financetrackingbackend.dao.UlsterbankDao;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccessToken;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccount;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankBalance;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankConsentResponse;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankGeneralResponse;
-import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -22,24 +22,21 @@ import java.util.Map;
 @Component
 public class UlsterbankDaoImpl implements UlsterbankDao {
     private final WebClient webClient;
-    private final Dotenv dotenv;
-    private static final String BASE_URL = "https://ob.sandbox.ulsterbank.co.uk";
+    private final UlsterbankConfig config;
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER = "Bearer ";
 
-    public UlsterbankDaoImpl(WebClient.Builder webClientBuilder, Dotenv dotenv) {
-        this.webClient = webClientBuilder.baseUrl(BASE_URL).build();
-        this.dotenv = dotenv;
+    public UlsterbankDaoImpl(WebClient.Builder webClientBuilder, UlsterbankConfig config) {
+        this.webClient = webClientBuilder.baseUrl(config.getBaseUrl()).build();
+        this.config = config;
     }
 
     @Override
     public UlsterbankAccessToken tokenRequest(String code, String grantType) {
-        String clientId = dotenv.get("ULSTER_BANK_CLIENT_ID");
-        String clientSecret = dotenv.get("ULSTER_BANK_CLIENT_SECRET");
 
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-        formData.add("client_id", clientId);
-        formData.add("client_secret", clientSecret);
+        formData.add("client_id", config.getClientId());
+        formData.add("client_secret", config.getClientSecret());
 
         switch (grantType) {
             case "client credentials":

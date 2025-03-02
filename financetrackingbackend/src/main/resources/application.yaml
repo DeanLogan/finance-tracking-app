@@ -2,12 +2,14 @@ test-val: local-outside-container
 
 external:
     services:
-        ulsterbank-base-url: https://ob.sandbox.ulsterbank.co.uk
-        ulsterbank-auth-url: https://api.sandbox.ulsterbank.co.uk/authorize
-        ulsterbank-client-id: ${ULSTERBANK_CLIENT_ID}
-        ulsterbank-client-secret: ${ULSTERBANK_CLIENT_SECRET}
-        monzo-base-url: https://api.monzo.com
-        monzo-redirect-url: http://localhost:8080/monzo/oauth/callback
+        ulsterbank:
+            base-url: https://ob.sandbox.ulsterbank.co.uk
+            auth-url: https://api.sandbox.ulsterbank.co.uk/authorize
+            client-id: ${ULSTERBANK_CLIENT_ID}
+            client-secret: ${ULSTERBANK_CLIENT_SECRET}
+        monzo:
+            base-url: https://api.monzo.com
+            redirect-url: http://localhost:8080/monzo/oauth/callback
 
 aws:
     dynamodb:
