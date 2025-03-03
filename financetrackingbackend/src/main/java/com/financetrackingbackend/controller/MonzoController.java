@@ -48,8 +48,7 @@ public class MonzoController {
 
     @GetMapping("/oauth/callback")
     public ResponseEntity<String> handleMonzoCallback(@RequestParam("code") String authCode, @RequestParam("state") String stateToken, HttpSession session) {
-        String expectedStateToken = (String) session.getAttribute(stateToken);
-        
+        String expectedStateToken = (String) session.getAttribute(STATE_TOKEN);
         if (!TokenUtil.validateStateToken(stateToken, expectedStateToken)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Invalid state token");
