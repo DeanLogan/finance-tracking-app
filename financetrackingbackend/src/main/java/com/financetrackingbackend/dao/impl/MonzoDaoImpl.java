@@ -5,6 +5,8 @@ import com.financetrackingbackend.schemas.monzo.MonzoAccessToken;
 import com.financetrackingbackend.schemas.monzo.MonzoAccount;
 import com.financetrackingbackend.schemas.monzo.MonzoAccounts;
 import com.financetrackingbackend.schemas.monzo.MonzoPots;
+import com.financetrackingbackend.schemas.monzo.MonzoTransaction;
+import com.financetrackingbackend.schemas.monzo.MonzoTransactionsResponse;
 import com.financetrackingbackend.schemas.monzo.WhoAmI;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.apache.commons.lang3.StringUtils;
@@ -96,6 +98,19 @@ public class MonzoDaoImpl implements MonzoDao {
                 .headers(headers -> headers.setBearerAuth(accessToken))
                 .retrieve()
                 .bodyToMono(MonzoAccount.class)
+                .block();
+    }
+
+    @Override
+    public MonzoTransactionsResponse getTransactions(String accessToken, String accountId) {
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/transactions")
+                        .queryParam("account_id", accountId)
+                        .build())
+                .headers(headers -> headers.setBearerAuth(accessToken))
+                .retrieve()
+                .bodyToMono(MonzoTransactionsResponse.class)
                 .block();
     }
 
