@@ -2,13 +2,13 @@ package com.financetrackingbackend.schemas.monzo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.financetrackingbackend.enums.Currency;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class MonzoTransaction {
     @JsonProperty("id")
     private String id;
