@@ -1,4 +1,5 @@
-test-val: local-outside-container
+test:
+    value: local-outside-container
 
 external:
     services:
