@@ -20,10 +20,10 @@ import java.util.List;
 
 @Component
 public class MonzoDaoImpl implements MonzoDao {
-    private final String REFRESH_TOKEN = "refresh_token";
-    private final String AUTHORISATION_CODE = "authorization_code";
-    private final String HOST = "api.monzo.com";
-    private final String REDIRECT_URI = "http://localhost:8080/monzo/oauth/callback";
+    private static final String REFRESH_TOKEN = "refresh_token";
+    private static final String AUTHORISATION_CODE = "authorization_code";
+    private static final String HOST = "api.monzo.com";
+    private static final String REDIRECT_URI = "http://localhost:8080/monzo/oauth/callback";
 
     private final WebClient webClient;
     private final Dotenv dotenv;
