@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UlsterbankTransation {
+public class UlsterbankTransaction {
     @JsonProperty("AccountId")
     private String accountId;
     @JsonProperty("TransactionId")

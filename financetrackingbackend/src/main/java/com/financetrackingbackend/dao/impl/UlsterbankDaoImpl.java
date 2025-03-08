@@ -6,6 +6,7 @@ import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccount;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankBalance;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankConsentResponse;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankGeneralResponse;
+import com.financetrackingbackend.schemas.ulsterbank.UlsterbankTransaction;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
@@ -115,5 +116,16 @@ public class UlsterbankDaoImpl implements UlsterbankDao {
                 .bodyToMono(UlsterbankGeneralResponse.class)
                 .block();
         return response.getData().getBalances();
+    }
+
+    @Override
+    public List<UlsterbankTransaction> getTransactions(String accessToken, String accountId) {
+        UlsterbankGeneralResponse response = webClient.get()
+                .uri("open-banking/v3.1/aisp/accounts/"+accountId+"/transactions")
+                .header(AUTHORIZATION, BEARER, accessToken)
+                .retrieve()
+                .bodyToMono(UlsterbankGeneralResponse.class)
+                .block();
+        return  response.getData().getTransactions();
     }
 }
