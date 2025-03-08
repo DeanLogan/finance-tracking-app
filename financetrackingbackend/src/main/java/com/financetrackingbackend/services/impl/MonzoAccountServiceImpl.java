@@ -4,12 +4,15 @@ import com.financetrackingbackend.dao.MonzoDao;
 import com.financetrackingbackend.schemas.monzo.MonzoAccount;
 import com.financetrackingbackend.schemas.monzo.MonzoPot;
 import com.financetrackingbackend.schemas.monzo.MonzoPots;
+import com.financetrackingbackend.schemas.monzo.MonzoTransaction;
+import com.financetrackingbackend.schemas.monzo.MonzoTransactionsResponse;
 import com.financetrackingbackend.schemas.monzo.MonzoUserInfoResponse;
 import com.financetrackingbackend.services.MonzoAccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -82,6 +85,12 @@ public class MonzoAccountServiceImpl implements MonzoAccountService {
         monzoPots.setTotalPotsBalance(totalBalance.get());
 
         return monzoPots;
+    }
+
+    @Override
+    public List<MonzoTransaction> listTransactions(String accessToken, String accountId) {
+        MonzoTransactionsResponse response = monzoDao.getTransactions(accessToken, accountId);
+        return response != null ? monzoDao.getTransactions(accessToken, accountId).getTransactions() : Collections.emptyList();
     }
 
     private void addActivePotsToAccount(String accessToken, MonzoAccount account) {

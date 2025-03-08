@@ -5,7 +5,6 @@ import com.financetrackingbackend.schemas.monzo.MonzoAccessToken;
 import com.financetrackingbackend.schemas.monzo.MonzoAccount;
 import com.financetrackingbackend.schemas.monzo.MonzoAccounts;
 import com.financetrackingbackend.schemas.monzo.MonzoPots;
-import com.financetrackingbackend.schemas.monzo.MonzoTransaction;
 import com.financetrackingbackend.schemas.monzo.MonzoTransactionsResponse;
 import com.financetrackingbackend.schemas.monzo.WhoAmI;
 import io.github.cdimascio.dotenv.Dotenv;

@@ -1,6 +1,6 @@
 package com.financetrackingbackend.enums;
 
 public enum Currency {
-    GB,
+    GBP,
     USD,
 }

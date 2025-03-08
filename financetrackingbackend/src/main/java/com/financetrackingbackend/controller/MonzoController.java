@@ -3,6 +3,7 @@ package com.financetrackingbackend.controller;
 import com.financetrackingbackend.dao.MonzoDao;
 import com.financetrackingbackend.schemas.monzo.MonzoAccessToken;
 import com.financetrackingbackend.schemas.monzo.MonzoPots;
+import com.financetrackingbackend.schemas.monzo.MonzoTransaction;
 import com.financetrackingbackend.schemas.monzo.MonzoUserInfoResponse;
 import com.financetrackingbackend.schemas.monzo.WhoAmI;
 import com.financetrackingbackend.services.MonzoAccountService;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -87,6 +90,12 @@ public class MonzoController {
     public MonzoUserInfoResponse userInfo(@RequestHeader("accessToken") String accessToken) {
         accessToken = accessTokenEnvCheckTesting(accessToken);
         return monzoAccountService.getUserInfo(accessToken);
+    }
+
+    @GetMapping("/transactions/list")
+    public List<MonzoTransaction> transactions(@RequestHeader("accessToken") String accessToken, @RequestParam("accountId") String accountId) {
+        accessToken = accessTokenEnvCheckTesting(accessToken);
+        return monzoAccountService.listTransactions(accessToken, accountId);
     }
 
     private String accessTokenEnvCheckTesting(String accessToken) {
