@@ -1,0 +1,19 @@
+external:
+    services:
+        ulsterbank:
+            base-url: https://ob.sandbox.ulsterbank.co.uk
+            auth-url: https://api.sandbox.ulsterbank.co.uk/authorize
+            client-id: ${ULSTERBANK_CLIENT_ID}
+            client-secret: ${ULSTERBANK_CLIENT_SECRET}
+        monzo:
+            base-url: https://api.monzo.com
+            redirect-url: http://localhost:8080/monzo/oauth/callback
+            client-id: ${MONZO_CLIENT_ID}
+            client-secret: ${MONZO_CLIENT_SECRET}
+
+aws:
+    dynamodb:
+        endpoint: http://localhost:4566
+        region: eu-west-1
+        access-key: test
+        secret-key: test
