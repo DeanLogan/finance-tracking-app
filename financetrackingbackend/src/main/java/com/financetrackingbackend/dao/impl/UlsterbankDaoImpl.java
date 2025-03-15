@@ -5,7 +5,9 @@ import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccessToken;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccount;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankBalance;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankConsentResponse;
+import com.financetrackingbackend.schemas.ulsterbank.UlsterbankData;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankGeneralResponse;
+import com.financetrackingbackend.schemas.ulsterbank.UlsterbankTransaction;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
@@ -18,12 +20,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 @Component
 public class UlsterbankDaoImpl implements UlsterbankDao {
     private final WebClient webClient;
     private final Dotenv dotenv;
     private static final String BASE_URL = "https://ob.sandbox.ulsterbank.co.uk";
+    private static final String URL_PREFIX = "open-banking/v3.1/aisp/accounts/";
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER = "Bearer ";
 
@@ -97,23 +101,27 @@ public class UlsterbankDaoImpl implements UlsterbankDao {
 
     @Override
     public List<UlsterbankAccount> getAccounts(String accessToken) {
-        UlsterbankGeneralResponse response = webClient.get()
-                .uri("open-banking/v3.1/aisp/accounts")
-                .header(AUTHORIZATION, BEARER+ accessToken)
-                .retrieve()
-                .bodyToMono(UlsterbankGeneralResponse.class)
-                .block();
-        return response.getData().getAccounts();
+        return requestHelper(accessToken, "", "", UlsterbankData::getAccounts);
     }
-
+    
+    @Override
+    public List<UlsterbankTransaction> getTransactions(String accessToken, String accountId) {
+        return requestHelper(accessToken, accountId, "/transactions", UlsterbankData::getTransactions);
+    }
+    
     @Override
     public List<UlsterbankBalance> getBalances(String accessToken, String accountId) {
-        UlsterbankGeneralResponse response = webClient.get()
-                .uri("open-banking/v3.1/aisp/accounts/"+accountId+"/balances")
-                .header(AUTHORIZATION, BEARER+ accessToken)
+        return requestHelper(accessToken, accountId, "/balances", UlsterbankData::getBalances);
+    }
+    
+    private <T> T requestHelper(String accessToken, String accountId, String endpoint, Function<UlsterbankData, T> mapper) {
+        return webClient.get()
+                .uri(URL_PREFIX + accountId + endpoint)
+                .header(AUTHORIZATION, BEARER + accessToken)
                 .retrieve()
                 .bodyToMono(UlsterbankGeneralResponse.class)
+                .map(UlsterbankGeneralResponse::getData)
+                .map(mapper)
                 .block();
-        return response.getData().getBalances();
     }
 }

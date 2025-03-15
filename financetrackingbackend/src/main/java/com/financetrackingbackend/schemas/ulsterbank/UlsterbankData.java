@@ -29,4 +29,6 @@ public class UlsterbankData {
     private List<UlsterbankAccount> accounts;
     @JsonProperty("Balance")
     private List<UlsterbankBalance> balances;
+    @JsonProperty("Transaction")
+    private List<UlsterbankTransaction> transactions;
 }

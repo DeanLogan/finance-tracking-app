@@ -5,6 +5,7 @@ import com.financetrackingbackend.schemas.monzo.MonzoAccessToken;
 import com.financetrackingbackend.schemas.monzo.MonzoAccount;
 import com.financetrackingbackend.schemas.monzo.MonzoAccounts;
 import com.financetrackingbackend.schemas.monzo.MonzoPots;
+import com.financetrackingbackend.schemas.monzo.MonzoTransactionsResponse;
 import com.financetrackingbackend.schemas.monzo.WhoAmI;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.apache.commons.lang3.StringUtils;
@@ -15,14 +16,15 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientException;
 
+import java.util.Collections;
 import java.util.List;
 
 @Component
 public class MonzoDaoImpl implements MonzoDao {
-    private final String REFRESH_TOKEN = "refresh_token";
-    private final String AUTHORISATION_CODE = "authorization_code";
-    private final String HOST = "api.monzo.com";
-    private final String REDIRECT_URI = "http://localhost:8080/monzo/oauth/callback";
+    private static final String REFRESH_TOKEN = "refresh_token";
+    private static final String AUTHORISATION_CODE = "authorization_code";
+    private static final String HOST = "api.monzo.com";
+    private static final String REDIRECT_URI = "http://localhost:8080/monzo/oauth/callback";
 
     private final WebClient webClient;
     private final Dotenv dotenv;
@@ -54,48 +56,36 @@ public class MonzoDaoImpl implements MonzoDao {
 
     @Override
     public WhoAmI getWhoAmI(String accessToken) {
-        return webClient.get()
-                .uri(uriBuilder -> uriBuilder.path("/ping/whoami").build())
-                .headers(headers -> headers.setBearerAuth(accessToken))
-                .retrieve()
-                .bodyToMono(WhoAmI.class)
-                .block();
+        return requestHelper(accessToken, accessToken, "/ping/whoami", WhoAmI.class);
     }
 
     @Override
     public List<MonzoAccount> getAccounts(String accessToken) {
-        return webClient.get()
-                .uri(uriBuilder -> uriBuilder.path("/accounts").build())
-                .headers(headers -> headers.setBearerAuth(accessToken))
-                .retrieve()
-                .bodyToMono(MonzoAccounts.class)
-                .map(MonzoAccounts::getAccounts)
-                .block();
+        MonzoAccounts accounts = requestHelper(accessToken, accessToken, "/accounts", MonzoAccounts.class);
+        return accounts != null ? accounts.getAccounts() : Collections.emptyList();
     }
 
     @Override
     public MonzoPots getAllPots(String accessToken, String accountId) {
-        return webClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/pots")
-                        .queryParam("current_account_id", accountId)
-                        .build())
-                .headers(headers -> headers.setBearerAuth(accessToken))
-                .retrieve()
-                .bodyToMono(MonzoPots.class)
-                .block();
+        return requestHelper(accessToken, accountId, "/pots", MonzoPots.class);
     }
 
     @Override
     public MonzoAccount getBalanceForAccount(String accessToken, String accountId) {
+        return requestHelper(accessToken, accountId, "/balance", MonzoAccount.class);
+    }
+
+    @Override
+    public MonzoTransactionsResponse getTransactions(String accessToken, String accountId) {
+        return requestHelper(accessToken, accountId, "/transactions", MonzoTransactionsResponse.class);
+    }
+
+    private <T> T requestHelper(String accessToken, String accountId, String endpoint, Class<T> elementClass) {
         return webClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/balance")
-                        .queryParam("account_id", accountId)
-                        .build())
+                .uri(endpoint + "?account_id=" + accountId)
                 .headers(headers -> headers.setBearerAuth(accessToken))
                 .retrieve()
-                .bodyToMono(MonzoAccount.class)
+                .bodyToMono(elementClass)
                 .block();
     }
 
