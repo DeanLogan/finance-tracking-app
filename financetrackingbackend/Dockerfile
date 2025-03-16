@@ -1,6 +1,6 @@
 FROM openjdk:17-jdk-alpine
-ARG JAR_FILE=build/libs/financetrackingbackend-0.0.1-SNAPSHOT.jar
-COPY ${JAR_FILE} app.jar
+COPY build/libs/financetrackingbackend-0.0.1-SNAPSHOT.jar app.jar
 COPY .env .env
+COPY src/main/resources/application-docker.yaml application-docker.yaml
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","/app.jar", "--spring.profiles.active=docker"]

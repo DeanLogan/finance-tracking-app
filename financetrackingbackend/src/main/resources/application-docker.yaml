@@ -18,7 +18,7 @@ logging:
         com.financetrackingbackend: INFO
 
 test:
-    value: test
+    value: docker
 
 external:
     services:
@@ -35,7 +35,7 @@ external:
 
 aws:
     dynamodb:
-        endpoint: http://localhost:4566
+        endpoint: http://localstack:4566
         region: eu-west-1
         access-key: test
         secret-key: test
