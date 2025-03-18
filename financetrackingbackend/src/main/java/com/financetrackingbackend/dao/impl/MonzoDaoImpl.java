@@ -1,5 +1,6 @@
 package com.financetrackingbackend.dao.impl;
 
+import com.financetrackingbackend.configuration.MonzoConfig;
 import com.financetrackingbackend.dao.MonzoDao;
 import com.financetrackingbackend.schemas.monzo.MonzoAccessToken;
 import com.financetrackingbackend.schemas.monzo.MonzoAccount;
@@ -7,7 +8,6 @@ import com.financetrackingbackend.schemas.monzo.MonzoAccounts;
 import com.financetrackingbackend.schemas.monzo.MonzoPots;
 import com.financetrackingbackend.schemas.monzo.MonzoTransactionsResponse;
 import com.financetrackingbackend.schemas.monzo.WhoAmI;
-import io.github.cdimascio.dotenv.Dotenv;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -21,17 +21,15 @@ import java.util.List;
 
 @Component
 public class MonzoDaoImpl implements MonzoDao {
-    private static final String REFRESH_TOKEN = "refresh_token";
-    private static final String AUTHORISATION_CODE = "authorization_code";
-    private static final String HOST = "api.monzo.com";
-    private static final String REDIRECT_URI = "http://localhost:8080/monzo/oauth/callback";
+    private final String REFRESH_TOKEN = "refresh_token";
+    private final String AUTHORISATION_CODE = "authorization_code";
 
     private final WebClient webClient;
-    private final Dotenv dotenv;
+    private final MonzoConfig monzoConfig;
 
-    public MonzoDaoImpl(WebClient.Builder webClientBuilder, Dotenv dotenv) {
-        this.webClient = webClientBuilder.baseUrl("https://api.monzo.com").build();
-        this.dotenv = dotenv;
+    public MonzoDaoImpl(WebClient.Builder webClientBuilder, MonzoConfig monzoConfig) {
+        this.webClient = webClientBuilder.baseUrl(monzoConfig.getBaseUrl()).build();
+        this.monzoConfig = monzoConfig;
     }
 
     @Override
@@ -40,7 +38,7 @@ public class MonzoDaoImpl implements MonzoDao {
             throw new IllegalStateException("Required information for request is blank");
         }
 
-        MultiValueMap<String, String> formData = buildFormData(AUTHORISATION_CODE, authCode, REDIRECT_URI);
+        MultiValueMap<String, String> formData = buildFormData(AUTHORISATION_CODE, authCode, monzoConfig.getRedirectUrl());
         return fetchAccessToken(formData);
     }
 
@@ -91,8 +89,8 @@ public class MonzoDaoImpl implements MonzoDao {
 
     private MultiValueMap<String, String> buildFormData(String grantType, String code, String redirectUri) {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-        String clientId = dotenv.get("MONZO_CLIENT_ID");
-        String clientSecret = dotenv.get("MONZO_CLIENT_SECRET");
+        String clientId = monzoConfig.getClientId();
+        String clientSecret = monzoConfig.getClientSecret();
         formData.add("grant_type", grantType);
         formData.add("client_id", clientId);
         formData.add("client_secret", clientSecret);
@@ -109,7 +107,7 @@ public class MonzoDaoImpl implements MonzoDao {
             MonzoAccessToken monzoAccessToken = webClient.post()
                     .uri(uriBuilder -> uriBuilder
                             .scheme("https")
-                            .host(HOST)
+                            .host(monzoConfig.getBaseUrl())
                             .path("/oauth2/token")
                             .build())
                     .contentType(MediaType.APPLICATION_FORM_URLENCODED)
