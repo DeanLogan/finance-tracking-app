@@ -1,0 +1,45 @@
+openapi: 3.0.0
+info:
+  title: Finance Tracking API
+  version: 1.0.0
+paths:
+  /test:
+    get:
+      summary: Test endpoint
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+  /test/env:
+    get:
+      summary: Get environment variable
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+  /test/config:
+    get:
+      summary: Get config value
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+  /test/whoami:
+    get:
+      summary: Get current username
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: string
