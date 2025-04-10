@@ -1,11 +1,141 @@
 openapi: 3.0.0
+
 info:
   title: Finance Tracking API
   version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+    
+tags:
+  - name: Test
+    description: Useful endpoints to have in testing
+  - name: Account
+    description: Interaction with Acconts stored on DynamoDB
+
 paths:
+  /account/list:
+    get:
+      tags:
+        - Account
+      summary: List all user accounts
+      operationId: listAccounts
+      responses:
+        '200':
+          description: A list of user accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+  /account/get:
+    get:
+      tags:
+        - Account
+      summary: Get a specific account by ID
+      operationId: getAccount
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The ID of the account to retrieve
+      responses:
+        '200':
+          description: The requested account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+  /account/add:
+    post:
+      tags:
+        - Account
+      summary: Add a new account
+      operationId: addAccount
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '201':
+          description: The created account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+  /account/update:
+    put:
+      tags:
+        - Account
+      summary: Update an existing account
+      operationId: updateAccount
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The ID of the account to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '200':
+          description: The updated account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+  /account/delete:
+    delete:
+      tags:
+        - Account
+      summary: Delete an account by ID
+      operationId: deleteAccount
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The ID of the account to delete
+      responses:
+        '200':
+          description: The deleted account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+  /account/balance:
+    get:
+      tags:
+        - Account
+      summary: Get the total balance across all accounts
+      operationId: getBalance
+      responses:
+        '200':
+          description: The total balance
+          content:
+            application/json:
+              schema:
+                type: number
+                format: float
+
   /test:
     get:
-      summary: Test endpoint
+      tags:
+        - Test
+      summary: Test API
+      operationId: testApi
       responses:
         '200':
           description: Successful response
@@ -15,7 +145,10 @@ paths:
                 type: string
   /test/env:
     get:
-      summary: Get environment variable
+      tags:
+        - Test
+      summary: Test to make sure env is working
+      operationId: testEnv
       responses:
         '200':
           description: Successful response
@@ -25,7 +158,10 @@ paths:
                 type: string
   /test/config:
     get:
-      summary: Get config value
+      tags:
+        - Test
+      summary: See what config is being used
+      operationId: getConfigInfo
       responses:
         '200':
           description: Successful response
@@ -35,7 +171,10 @@ paths:
                 type: string
   /test/whoami:
     get:
+      tags:
+        - Test
       summary: Get current username
+      operationId: whoami
       responses:
         '200':
           description: Successful response
@@ -160,8 +299,8 @@ components:
           format: float
           description: Gains made from the stock.
         currency:
-          $ref: '#/components/schemas/Currency'
           description: Currency in which the stock is traded.
+          $ref: '#/components/schemas/Currency'
         tickerSymbol:
           type: string
           description: Ticker symbol of the stock.
