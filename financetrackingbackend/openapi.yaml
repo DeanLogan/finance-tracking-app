@@ -43,3 +43,160 @@ paths:
             application/json:
               schema:
                 type: string
+
+components:
+  schemas:
+    Account:
+      type: object
+      description: Represents an account stored in DynamoDB.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the account (DynamoDB partition key).
+        name:
+          type: string
+          description: Name of the account.
+        bank:
+          type: string
+          description: Name of the bank associated with the account.
+        accountNumber:
+          type: integer
+          description: Account number.
+        sortCode:
+          type: integer
+          description: Sort code of the account.
+        balance:
+          type: number
+          format: float
+          description: Current balance of the account.
+        stocks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stock'
+          description: List of stocks associated with the account.
+        currentGains:
+          type: number
+          format: float
+          description: Current gains from the account.
+        fees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Fee'
+          description: List of fees associated with the account.
+        dateCreatedOn:
+          type: string
+          format: date-time
+          description: Date when the account was created.
+        interestRate:
+          $ref: '#/components/schemas/InterestRate'
+          description: Interest rate details for the account.
+        user:
+          type: string
+          description: User associated with the account.
+      required:
+        - id
+        - name
+        - bank
+        - accountNumber
+        - sortCode
+        - balance
+        - user
+
+    Fee:
+      type: object
+      description: Represents a fee associated with an account.
+      properties:
+        type:
+          $ref: '#/components/schemas/AccountType'
+          description: Type of account the fee is associated with.
+        percentage:
+          type: number
+          format: float
+          description: Percentage of the fee.
+        amount:
+          type: number
+          format: float
+          description: Fixed amount of the fee.
+        frequency:
+          $ref: '#/components/schemas/PaymentRate'
+          description: Frequency at which the fee is charged (e.g., monthly, annually).
+
+    InterestRate:
+      type: object
+      description: Represents the interest rate details for an account.
+      properties:
+        aer:
+          type: number
+          format: float
+          description: Annual Equivalent Rate (AER) for the account.
+        type:
+          $ref: '#/components/schemas/AccountType'
+          description: Type of account associated with the interest rate.
+        paidTime:
+          type: string
+          description: Time when the interest is paid (e.g., monthly, annually).
+        startDate:
+          type: string
+          format: date
+          description: Start date of the interest rate period.
+        endDate:
+          type: string
+          format: date
+          description: End date of the interest rate period.
+
+    Stock:
+      type: object
+      description: Represents a stock associated with an account.
+      properties:
+        name:
+          type: string
+          description: Name of the stock.
+        currentAmount:
+          type: number
+          format: float
+          description: Current amount of the stock held.
+        gains:
+          type: number
+          format: float
+          description: Gains made from the stock.
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: Currency in which the stock is traded.
+        tickerSymbol:
+          type: string
+          description: Ticker symbol of the stock.
+        purchaseDate:
+          type: string
+          format: date
+          description: Date when the stock was purchased.
+        purchasePrice:
+          type: string
+          description: Purchase price of the stock.
+        currentPrice:
+          type: string
+          description: Current price of the stock.
+
+    Currency:
+      type: string
+      description: Represents the currency type.
+      enum:
+        - GBP
+        - USD
+
+    AccountType:
+      type: string
+      description: Represents the type of account.
+      enum:
+        - FIXED
+        - VARIABLE
+        - PERCENTAGE
+
+    PaymentRate:
+      type: string
+      description: Represents the frequency at which a payment is made.
+      enum:
+        - DAILY
+        - MONTHLY
+        - YEARLY
+        - QUARTERLY
+        - ONE_TIME
