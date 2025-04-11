@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'org.openapi.generator' version '6.2.1'
     id 'org.springframework.boot' version '3.4.3'
     id 'io.spring.dependency-management' version '1.1.7'
 }
@@ -20,16 +21,20 @@ configurations {
     }
 }
 
+ext {
+    basePkg = "com.financetrackingbackend"
+
+    openApiSpecDir = "$rootDir/openapi.yaml"
+    feignSpecDir = "$rootDir/src/main/resources/feign"
+    generatedSourcesDir = "$rootDir/build/generated/sources/openapi"
+
+}
+
 repositories {
     mavenCentral()
 }
 
-ext {
-    openApiSpecDir = "$rootDir/openapi.yaml"
-}
-
 dependencies {
-    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0"
     implementation 'software.amazon.awssdk:dynamodb:2.25.31'
     implementation 'software.amazon.awssdk:dynamodb-enhanced:2.25.31'
     implementation 'software.amazon.awssdk:core:2.25.31'
@@ -60,4 +65,39 @@ tasks.named('test') {
 
 application {
     mainClass = 'com.financetrackingbackend.FinancetrackingbackendApplication'
+}
+
+openApiGenerate {
+    generatorName = "spring"
+
+    inputSpec = openApiSpecDir
+    outputDir = generatedSourcesDir
+    apiPackage = "${project.basePkg}.api"
+    modelPackage = "${project.basePkg}.model"
+    modelFilesConstrainedTo = []
+
+    configOptions = [
+            dateLibrary         : "java8",
+            interfaceOnly       : "true",
+            serializableModel   : "true",
+            serializationLibrary: "jackson",
+            useBeanValidation   : "true",
+            useSpringBoot3      : "true",
+            useTags             : "true"
+    ]
+
+    globalProperties = [
+            apis           : '',
+            models         : '',
+            supportingFiles: ''
+    ]
+
+}
+
+sourceSets {
+    getByName("main") {
+        java {
+            srcDir("$generatedSourcesDir/src/main/java")
+        }
+    }
 }
