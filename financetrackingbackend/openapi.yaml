@@ -188,6 +188,7 @@ components:
     Account:
       type: object
       description: Represents an account stored in DynamoDB.
+      x-dynamodb: true
       properties:
         id:
           type: string

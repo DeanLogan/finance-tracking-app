@@ -1,10 +1,10 @@
 package com.financetrackingbackend.dao.impl;
 
+import com.example.model.Account;
 import com.financetrackingbackend.configuration.AwsConfig;
 import com.financetrackingbackend.dao.AccountDao;
 import com.financetrackingbackend.exceptions.ResourceConflictException;
 import com.financetrackingbackend.exceptions.ServiceUnavailableException;
-import com.financetrackingbackend.schemas.dynamodb.Account;
 import com.financetrackingbackend.util.AuthenticationUtil;
 
 import org.springframework.stereotype.Component;

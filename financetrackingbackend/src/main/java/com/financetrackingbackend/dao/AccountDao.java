@@ -1,6 +1,6 @@
 package com.financetrackingbackend.dao;
 
-import com.financetrackingbackend.schemas.dynamodb.Account;
+import com.example.model.Account;
 
 public interface AccountDao {
     Account getAccount(String id);

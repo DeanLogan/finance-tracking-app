@@ -2,9 +2,9 @@ package com.financetrackingbackend.services.impl;
 
 import java.util.List;
 
+import com.example.model.Account;
 import com.financetrackingbackend.dao.impl.AccountDaoImpl;
 import com.financetrackingbackend.exceptions.ResourceNotFoundException;
-import com.financetrackingbackend.schemas.dynamodb.Account;
 import com.financetrackingbackend.services.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
