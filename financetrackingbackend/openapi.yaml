@@ -193,6 +193,7 @@ components:
         id:
           type: string
           description: Unique identifier for the account (DynamoDB partition key).
+          x-partitionkey: true
         name:
           type: string
           description: Name of the account.
