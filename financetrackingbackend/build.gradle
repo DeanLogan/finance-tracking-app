@@ -69,6 +69,7 @@ application {
 
 openApiGenerate {
     generatorName = 'spring'
+    templateResourcePath = "$rootDir/src/main/resources/templates".toString()
     inputSpec = "$rootDir/openapi.yaml".toString()
     outputDir = "$rootDir/build/generated".toString()
     apiPackage = 'com.example.api'
@@ -79,8 +80,7 @@ openApiGenerate {
             serializableModel   : "true",
             serializationLibrary: "jackson",
             useBeanValidation   : "true",
-            useSpringBoot3      : "true",
-            useTags             : "true"
+            useSpringBoot3      : "true"
     ]
 }
 

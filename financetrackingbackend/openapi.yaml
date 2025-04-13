@@ -245,6 +245,7 @@ components:
     Fee:
       type: object
       description: Represents a fee associated with an account.
+      x-dynamodb: true
       properties:
         type:
           $ref: '#/components/schemas/AccountType'
@@ -264,6 +265,7 @@ components:
     InterestRate:
       type: object
       description: Represents the interest rate details for an account.
+      x-dynamodb: true
       properties:
         aer:
           type: number
@@ -287,6 +289,7 @@ components:
     Stock:
       type: object
       description: Represents a stock associated with an account.
+      x-dynamodb: true
       properties:
         name:
           type: string
