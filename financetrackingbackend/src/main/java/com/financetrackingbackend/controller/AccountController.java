@@ -1,10 +1,12 @@
 package com.financetrackingbackend.controller;
 
+import com.example.api.AccountApi;
 import com.example.model.Account;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +21,7 @@ import com.financetrackingbackend.services.AccountService;
 @RestController
 @RequestMapping("/account")
 @RequiredArgsConstructor
-public class AccountController {
+public class AccountController implements AccountApi {
     private final AccountService accountService;
 
     @GetMapping("/list")
@@ -28,8 +30,13 @@ public class AccountController {
     }
 
     @GetMapping("/get")
-    public Account getAccount(@RequestParam("id") String id) {
-        return accountService.getAccount(id);
+    public ResponseEntity<Account> getAccount(@RequestParam("id") String id) {
+        Account account = accountService.getAccount(id);
+        if (account != null) {
+            return ResponseEntity.ok(account);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/add")
