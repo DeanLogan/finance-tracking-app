@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.financetrackingbackend.services.AccountService;
@@ -30,7 +30,7 @@ public class AccountController implements AccountApi {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<Account> getAccount(@RequestParam("id") String id) {
+    public ResponseEntity<Account> getAccount(@RequestHeader("id") String id) {
         Account account = accountService.getAccount(id);
         if (account != null) {
             return ResponseEntity.ok(account);
@@ -45,12 +45,12 @@ public class AccountController implements AccountApi {
     }
 
     @PutMapping("/update")
-    public Account update(@RequestParam("id") String id, @RequestBody Account account) {
+    public Account update(@RequestHeader("id") String id, @RequestBody Account account) {
         return accountService.updateAccount(id, account);
     }
 
     @DeleteMapping("/delete")
-    public Account delete(@RequestParam("id") String id) {
+    public Account delete(@RequestHeader("id") String id) {
         return accountService.deleteAccount(id);
     }
 
