@@ -733,6 +733,249 @@ components:
             $ref: '#/components/schemas/MonzoAccount'
           description: List of accounts.
 
+    UlsterbankAccessToken:
+      type: object
+      description: Represents the access token response from the Ulsterbank API.
+      properties:
+        token_type:
+          type: string
+          description: The type of token issued (e.g., "Bearer").
+        access_token:
+          type: string
+          description: The access token issued by the Ulsterbank API.
+        expires_in:
+          type: string
+          description: The duration (in seconds) for which the access token is valid.
+        scope:
+          type: string
+          description: The scope of the access token.
+        refresh_token:
+          type: string
+          description: The refresh token that can be used to obtain a new access token.
+
+    UlsterbankServicer:
+      type: object
+      description: Represents the servicer details from the Ulsterbank API.
+      properties:
+        schemeName:
+          type: string
+          description: The name of the scheme associated with the servicer.
+        id:
+          type: string
+          description: The identification of the servicer.
+
+    UlsterbankAccount:
+      type: object
+      description: Represents an account from the Ulsterbank API.
+      properties:
+        accountId:
+          type: string
+          description: The unique identifier for the account.
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: The currency of the account.
+        accountType:
+          type: string
+          description: The type of the account.
+        accountSubType:
+          type: string
+          description: The subtype of the account.
+        description:
+          type: string
+          description: A description of the account.
+        nickname:
+          type: string
+          description: The nickname of the account.
+        account:
+          type: array
+          items:
+            $ref: '#/components/schemas/UlsterbankAccount'
+          description: A list of related accounts.
+        servicer:
+          $ref: '#/components/schemas/UlsterbankServicer'
+          description: The servicer details of the account.
+        switchStatus:
+          type: string
+          description: The switch status of the account.
+        schemeName:
+          type: string
+          description: The scheme name associated with the account.
+        id:
+          type: string
+          description: The identification of the account.
+        secondaryId:
+          type: string
+          description: The secondary identification of the account.
+        name:
+          type: string
+          description: The name of the account holder.
+
+    UlsterbankAmount:
+      type: object
+      description: Represents an amount with currency from the Ulsterbank API.
+      properties:
+        amount:
+          type: number
+          format: float
+          description: The amount value.
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: The currency of the amount.
+
+    UlsterBankCreditLine:
+      type: object
+      description: Represents a credit line from the Ulsterbank API.
+      properties:
+        included:
+          type: boolean
+          description: Indicates whether the credit line is included.
+        amount:
+          $ref: '#/components/schemas/UlsterbankAmount'
+          description: The amount associated with the credit line.
+        type:
+          type: string
+          description: The type of the credit line.
+
+    UlsterbankBalance:
+      type: object
+      description: Represents the balance details of an account from the Ulsterbank API.
+      properties:
+        accountId:
+          type: string
+          description: The unique identifier for the account.
+        amount:
+          $ref: '#/components/schemas/UlsterbankAmount'
+          description: The amount associated with the balance.
+        creditDebitIndicator:
+          type: string
+          description: Indicates whether the balance is a credit or debit.
+        type:
+          type: string
+          description: The type of balance.
+        dateTime:
+          type: string
+          format: date-time
+          description: The date and time of the balance.
+        creditLine:
+          type: array
+          items:
+            $ref: '#/components/schemas/UlsterBankCreditLine'
+          description: A list of credit lines associated with the balance.
+
+    UlsterbankMeta:
+      type: object
+      description: Represents metadata information from the Ulsterbank API.
+      properties:
+        totalPages:
+          type: integer
+          description: The total number of pages available.
+
+    UlsterbankLinks:
+      type: object
+      description: Represents pagination links from the Ulsterbank API.
+      properties:
+        self:
+          type: string
+          format: uri
+          description: The link to the current page.
+        prev:
+          type: string
+          format: uri
+          description: The link to the previous page.
+        next:
+          type: string
+          format: uri
+          description: The link to the next page.
+
+    UlsterbankTransaction:
+      type: object
+      description: Represents a transaction from the Ulsterbank API.
+      properties:
+        accountId:
+          type: string
+          description: The unique identifier for the account associated with the transaction.
+        transactionId:
+          type: string
+          description: The unique identifier for the transaction.
+        creditDebitIndicator:
+          type: boolean
+          description: Indicates whether the transaction is a credit or debit.
+        status:
+          type: string
+          description: The status of the transaction.
+        bookingDateTime:
+          type: string
+          format: date-time
+          description: The date and time when the transaction was booked.
+        amount:
+          $ref: '#/components/schemas/UlsterbankAmount'
+          description: The amount associated with the transaction.
+        transactionInformation:
+          type: string
+          description: Additional information about the transaction.
+        balance:
+          $ref: '#/components/schemas/UlsterbankBalance'
+          description: The balance details after the transaction.
+
+    UlsterbankData:
+      type: object
+      description: Represents data from the Ulsterbank API.
+      properties:
+        consentId:
+          type: string
+          description: The unique identifier for the consent.
+        creationDateTime:
+          type: string
+          format: date-time
+          description: The date and time when the data was created.
+        status:
+          type: string
+          description: The status of the data.
+        statusUpdateDateTime:
+          type: string
+          format: date-time
+          description: The date and time when the status was last updated.
+        permissions:
+          type: array
+          items:
+            type: string
+          description: A list of permissions associated with the data.
+        links:
+          $ref: '#/components/schemas/UlsterbankLinks'
+          description: The pagination links associated with the data.
+        meta:
+          $ref: '#/components/schemas/UlsterbankMeta'
+          description: Metadata information associated with the data.
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/UlsterbankAccount'
+          description: A list of accounts associated with the data.
+        balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/UlsterbankBalance'
+          description: A list of balances associated with the data.
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/UlsterbankTransaction'
+          description: A list of transactions associated with the data.
+
+    UlsterbankGeneralResponse:
+      type: object
+      description: Represents a general response from the Ulsterbank API.
+      properties:
+        data:
+          $ref: '#/components/schemas/UlsterbankData'
+          description: The data object containing detailed information.
+        links:
+          $ref: '#/components/schemas/UlsterbankLinks'
+          description: The pagination links associated with the response.
+        meta:
+          $ref: '#/components/schemas/UlsterbankMeta'
+          description: Metadata information associated with the response.
+
     Currency:
       type: string
       description: Represents the currency type.

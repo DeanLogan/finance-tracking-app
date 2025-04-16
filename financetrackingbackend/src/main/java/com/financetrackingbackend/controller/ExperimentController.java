@@ -19,7 +19,7 @@ public class ExperimentController implements TestApi {
     private final ExperimentConfig experimentConfig;
 
     @GetMapping("/")
-    public String test(){
+    public String test() {
         return "hello world";
     }
 

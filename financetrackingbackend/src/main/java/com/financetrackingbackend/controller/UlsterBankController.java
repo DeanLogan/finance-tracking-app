@@ -2,10 +2,10 @@ package com.financetrackingbackend.controller;
 
 import com.financetrackingbackend.dao.UlsterbankDao;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccount;
+import com.financetrackingbackend.schemas.ulsterbank.UlsterbankGeneralResponse;
 import com.financetrackingbackend.services.UlsterbankAccountService;
 import com.financetrackingbackend.services.UlsterbankAuthService;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccessToken;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankConsentResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +37,7 @@ public class UlsterBankController {
     @GetMapping("/consentId")
     public String getConsentId() {
         UlsterbankAccessToken accessToken = ulsterbankDao.tokenRequest("code", "client credentials");
-        UlsterbankConsentResponse consent = ulsterbankDao.getConsentResponse(accessToken.getAccessToken());
+        UlsterbankGeneralResponse consent = ulsterbankDao.getConsentResponse(accessToken.getAccessToken());
         return ulsterbankAuthService.extractConsentId(consent);
     }
 

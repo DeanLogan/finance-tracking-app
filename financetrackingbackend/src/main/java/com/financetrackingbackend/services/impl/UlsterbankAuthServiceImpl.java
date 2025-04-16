@@ -2,7 +2,7 @@ package com.financetrackingbackend.services.impl;
 
 import com.financetrackingbackend.dao.UlsterbankDao;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccessToken;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankConsentResponse;
+import com.financetrackingbackend.schemas.ulsterbank.UlsterbankGeneralResponse;
 import com.financetrackingbackend.services.UlsterbankAuthService;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class UlsterbankAuthServiceImpl implements UlsterbankAuthService {
     }
 
     @Override
-    public String extractConsentId(UlsterbankConsentResponse response) {
+    public String extractConsentId(UlsterbankGeneralResponse response) {
         return response.getData().getConsentId();
     }
 

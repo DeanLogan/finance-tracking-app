@@ -5,7 +5,6 @@ import com.financetrackingbackend.dao.UlsterbankDao;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccessToken;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccount;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankBalance;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankConsentResponse;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankData;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankGeneralResponse;
 import com.financetrackingbackend.schemas.ulsterbank.UlsterbankTransaction;
@@ -74,7 +73,7 @@ public class UlsterbankDaoImpl implements UlsterbankDao {
     }
 
     @Override
-    public UlsterbankConsentResponse getConsentResponse(String accountRequestAccessToken) {
+    public UlsterbankGeneralResponse getConsentResponse(String accountRequestAccessToken) {
         Map<String, Object> requestBody = new HashMap<>();
         Map<String, Object> data = new HashMap<>();
         data.put("Permissions", Arrays.asList(
@@ -93,7 +92,7 @@ public class UlsterbankDaoImpl implements UlsterbankDao {
                 .header("Content-Type", "application/json")
                 .body(BodyInserters.fromValue(requestBody))
                 .retrieve()
-                .bodyToMono(UlsterbankConsentResponse.class)
+                .bodyToMono(UlsterbankGeneralResponse.class)
                 .block();
     }
 
