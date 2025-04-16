@@ -1,6 +1,6 @@
 package com.financetrackingbackend.services.impl;
 
-import com.financetrackingbackend.schemas.monzo.MonzoAccessToken;
+import com.example.model.MonzoAccessToken;
 import com.financetrackingbackend.services.MonzoAuthService;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;

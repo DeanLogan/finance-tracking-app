@@ -1,11 +1,11 @@
 package com.financetrackingbackend.controller;
 
+import com.example.model.MonzoAccessToken;
+import com.example.model.MonzoPots;
+import com.example.model.MonzoTransaction;
+import com.example.model.MonzoUserInfoResponse;
+import com.example.model.WhoAmI;
 import com.financetrackingbackend.dao.MonzoDao;
-import com.financetrackingbackend.schemas.monzo.MonzoAccessToken;
-import com.financetrackingbackend.schemas.monzo.MonzoPots;
-import com.financetrackingbackend.schemas.monzo.MonzoTransaction;
-import com.financetrackingbackend.schemas.monzo.MonzoUserInfoResponse;
-import com.financetrackingbackend.schemas.monzo.WhoAmI;
 import com.financetrackingbackend.services.MonzoAccountService;
 import com.financetrackingbackend.services.MonzoAuthService;
 import com.financetrackingbackend.util.TokenUtil;

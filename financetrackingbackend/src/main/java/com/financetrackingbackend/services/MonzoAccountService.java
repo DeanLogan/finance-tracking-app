@@ -1,9 +1,9 @@
 package com.financetrackingbackend.services;
 
-import com.financetrackingbackend.schemas.monzo.MonzoAccount;
-import com.financetrackingbackend.schemas.monzo.MonzoPots;
-import com.financetrackingbackend.schemas.monzo.MonzoTransaction;
-import com.financetrackingbackend.schemas.monzo.MonzoUserInfoResponse;
+import com.example.model.MonzoAccount;
+import com.example.model.MonzoPots;
+import com.example.model.MonzoTransaction;
+import com.example.model.MonzoUserInfoResponse;
 
 import java.util.List;
 

@@ -525,6 +525,16 @@ components:
             $ref: '#/components/schemas/MonzoTransaction'
           description: List of transactions associated with the account.
 
+    MonzoAccounts:
+      type: object
+      description: Represents the response from the Monzo API containing a list of accounts.
+      properties:
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonzoAccount'
+          description: List of accounts.
+
     Currency:
       type: string
       description: Represents the currency type.
