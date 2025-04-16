@@ -1,7 +1,7 @@
 package com.financetrackingbackend.schemas.monzo;
 
+import com.example.model.Currency;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.financetrackingbackend.enums.Currency;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

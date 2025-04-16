@@ -320,6 +320,211 @@ components:
           type: string
           description: Current price of the stock.
 
+    ExchangeAuthCodeRequest:
+      type: object
+      description: Represents a request to exchange an authorization code for an access token.
+      properties:
+        grant_type:
+          type: string
+          description: The type of grant being used.
+        client_id:
+          type: string
+          description: The client ID of the application making the request.
+        client_secret:
+          type: string
+          description: The client secret of the application making the request.
+        redirect_uri:
+          type: string
+          description: The redirect URI used in the authorization request.
+        code:
+          type: string
+          description: The authorization code received from the authorization server.
+
+    WhoAmI:
+      type: object
+      description: Represents the response from the Monzo API for the "Who Am I" endpoint.
+      properties:
+        authenticated:
+          type: boolean
+          description: Indicates whether the user is authenticated.
+        client_id:
+          type: string
+          description: The client ID associated with the authenticated user.
+        user_id:
+          type: string
+          description: The user ID of the authenticated user.
+
+    MonzoPot:
+      type: object
+      description: Represents a pot in the Monzo API.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the pot.
+        name:
+          type: string
+          description: Name of the pot.
+        balance:
+          type: number
+          format: float
+          description: Current balance of the pot.
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: The currency of the pot.
+        deleted:
+          type: boolean
+          description: Indicates whether the pot has been deleted.
+
+    MonzoPots:
+      type: object
+      description: Represents the response from the Monzo API for pots and their total balance.
+      properties:
+        total_pots_balance:
+          type: number
+          format: float
+          description: The total balance across all pots.
+        pots:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonzoPot'
+          description: List of pots associated with the account.
+
+    MonzoAccount:
+      type: object
+      description: Represents an account in the Monzo API.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the account.
+        description:
+          type: string
+          description: Description of the account.
+        created:
+          type: string
+          format: date-time
+          description: The date and time when the account was created.
+        balance:
+          type: number
+          format: float
+          description: Current balance of the account.
+        total_balance:
+          type: number
+          format: float
+          description: Total balance of the account, including pots.
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: The currency of the account.
+        spend_today:
+          type: integer
+          description: Amount spent today from the account.
+        pots:
+          $ref: '#/components/schemas/MonzoPots'
+          description: Pots associated with the account.
+
+    MonzoUserInfoResponse:
+      type: object
+      description: Represents the response from the Monzo API containing user account information and total balance.
+      properties:
+        total_balance:
+          type: number
+          format: float
+          description: The total balance across all user accounts.
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonzoAccount'
+          description: List of accounts associated with the user.
+
+    MonzoAccessToken:
+      type: object
+      description: Represents the access token response from the Monzo API.
+      properties:
+        access_token:
+          type: string
+          description: The access token issued by the Monzo API.
+        client_id:
+          type: string
+          description: The client ID associated with the access token.
+        expires_in:
+          type: string
+          description: The duration (in seconds) for which the access token is valid.
+        refresh_token:
+          type: string
+          description: The refresh token that can be used to obtain a new access token.
+        token_type:
+          type: string
+          description: The type of token issued (e.g., "Bearer").
+        user_id:
+          type: string
+          description: The user ID associated with the access token.
+
+    MonzoBalance:
+      type: object
+      description: Represents the balance details of an account in the Monzo API.
+      properties:
+        balance:
+          type: number
+          format: float
+          description: The current balance of the account.
+        total_balance:
+          type: number
+          format: float
+          description: The total balance of the account, including pots.
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: The currency of the account.
+        spend_today:
+          type: integer
+          description: The amount spent today from the account.
+
+    MonzoTransaction:
+      type: object
+      description: Represents a transaction in the Monzo API.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the transaction.
+        amount:
+          type: number
+          format: float
+          description: The amount of the transaction.
+        created:
+          type: string
+          format: date-time
+          description: The date and time when the transaction was created.
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: The currency of the transaction.
+        description:
+          type: string
+          description: Description of the transaction.
+        merchant:
+          type: string
+          description: The merchant associated with the transaction.
+        notes:
+          type: string
+          description: Additional notes about the transaction.
+        is_load:
+          type: boolean
+          description: Indicates whether the transaction is a load transaction.
+        settled:
+          type: string
+          format: date-time
+          description: The date and time when the transaction was settled.
+        category:
+          type: string
+          description: The category of the transaction.
+
+    MonzoTransactionsResponse:
+      type: object
+      description: Represents the response from the Monzo API containing a list of transactions.
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonzoTransaction'
+          description: List of transactions associated with the account.
+
     Currency:
       type: string
       description: Represents the currency type.
