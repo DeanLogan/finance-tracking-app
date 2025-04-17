@@ -5,17 +5,13 @@ on:
     branches:
       - 'main'
       - 'openapi'
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -40,7 +36,7 @@ jobs:
           mkdir -p swagger-ui
           cp financetrackingbackend/openapi.yaml swagger-ui/openapi.yaml
           cp -r $(npm root -g)/swagger-ui-dist/* swagger-ui/
-          sed -i 's|https://petstore.swagger.io/v2/swagger.json|./openapi.yaml|' swagger-ui/index.html
+          sed -i 's|https://petstore.swagger.io/v2/swagger.json|./openapi.yaml|' swagger-ui/swagger-initializer.js
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
