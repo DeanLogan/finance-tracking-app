@@ -1,13 +1,16 @@
 package com.financetrackingbackend.controller;
 
+import com.example.api.UlsterbankApi;
+import com.example.model.UlsterbankAccessToken;
+import com.example.model.UlsterbankAccount;
+import com.example.model.UlsterbankGeneralResponse;
 import com.financetrackingbackend.dao.UlsterbankDao;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccount;
 import com.financetrackingbackend.services.UlsterbankAccountService;
 import com.financetrackingbackend.services.UlsterbankAuthService;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccessToken;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankConsentResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,15 +22,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/ulsterbank")
 @RequiredArgsConstructor
-public class UlsterBankController {
+public class UlsterBankController implements UlsterbankApi {
     private final UlsterbankDao ulsterbankDao;
     private final UlsterbankAccountService ulsterbankAccountService;
     private final UlsterbankAuthService ulsterbankAuthService;
-
-    @GetMapping("")
-    public String home() {
-        return "ulsterbank";
-    }
 
     @GetMapping("/auth")
     public String authoriseUser(@RequestHeader("code") String code) {
@@ -35,20 +33,23 @@ public class UlsterBankController {
     }
 
     @GetMapping("/consentId")
-    public String getConsentId() {
+    public ResponseEntity<String> getConsentId() {
         UlsterbankAccessToken accessToken = ulsterbankDao.tokenRequest("code", "client credentials");
-        UlsterbankConsentResponse consent = ulsterbankDao.getConsentResponse(accessToken.getAccessToken());
-        return ulsterbankAuthService.extractConsentId(consent);
+        UlsterbankGeneralResponse consent = ulsterbankDao.getConsentResponse(accessToken.getAccessToken());
+        String consentId = ulsterbankAuthService.extractConsentId(consent);
+        return ResponseEntity.ok(consentId);
     }
-
+    
     @GetMapping("/redirect")
-    public String getRedirect() {
-        return ulsterbankAuthService.getRedirectUrl(getConsentId());
+    public ResponseEntity<String> getRedirect() {
+        String redirectUrl = ulsterbankAuthService.getRedirectUrl(getConsentId().getBody());
+        return ResponseEntity.ok(redirectUrl);
     }
-
+    
     @GetMapping("/oauth/callback/extractcode")
-    public UlsterbankAccessToken callback(@RequestHeader("code") String code, @RequestHeader("id_token") String idToken) {
-        return ulsterbankAuthService.getAccessToken(code);
+    public ResponseEntity<UlsterbankAccessToken> callback(@RequestHeader("code") String code, @RequestHeader("id_token") String idToken) {
+        UlsterbankAccessToken accessToken = ulsterbankAuthService.getAccessToken(code);
+        return ResponseEntity.ok(accessToken);
     }
 
     @GetMapping("/oauth/refresh")

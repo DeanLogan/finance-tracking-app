@@ -1,12 +1,12 @@
 package com.financetrackingbackend.services.impl;
 
+import com.example.model.MonzoAccount;
+import com.example.model.MonzoPot;
+import com.example.model.MonzoPots;
+import com.example.model.MonzoTransaction;
+import com.example.model.MonzoTransactionsResponse;
+import com.example.model.MonzoUserInfoResponse;
 import com.financetrackingbackend.dao.MonzoDao;
-import com.financetrackingbackend.schemas.monzo.MonzoAccount;
-import com.financetrackingbackend.schemas.monzo.MonzoPot;
-import com.financetrackingbackend.schemas.monzo.MonzoPots;
-import com.financetrackingbackend.schemas.monzo.MonzoTransaction;
-import com.financetrackingbackend.schemas.monzo.MonzoTransactionsResponse;
-import com.financetrackingbackend.schemas.monzo.MonzoUserInfoResponse;
 import com.financetrackingbackend.services.MonzoAccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ public class MonzoAccountServiceImpl implements MonzoAccountService {
     public MonzoAccount getBalanceForAccount(String accessToken, MonzoAccount account) {
         MonzoAccount updatedFields = monzoDao.getBalanceForAccount(accessToken, account.getId());
         if (updatedFields != null) {
-            account.setAccountBalance(updatedFields.getAccountBalance() / 100);
+            account.balance(updatedFields.getBalance() / 100);
             account.setTotalBalance(updatedFields.getTotalBalance() / 100);
             account.setCurrency(updatedFields.getCurrency());
             account.setSpendToday(updatedFields.getSpendToday() / 100);
@@ -41,7 +41,7 @@ public class MonzoAccountServiceImpl implements MonzoAccountService {
         if (accounts != null) {
             for (MonzoAccount account : accounts) {
                 MonzoAccount monzoBalance = getBalanceForAccount(accessToken, account);
-                balance += monzoBalance.getAccountBalance();
+                balance += monzoBalance.getBalance();
             }
         }
         return balance;
@@ -71,7 +71,7 @@ public class MonzoAccountServiceImpl implements MonzoAccountService {
 
         List<MonzoPot> activePots = monzoDao.getAllPots(accessToken, accountId).getPots()
                 .stream()
-                .filter(pot -> !pot.isDeleted())
+                .filter(pot -> !pot.getDeleted())
                 .map(monzoPot -> {
                     float adjustedBalance = monzoPot.getBalance() / 100;
                     monzoPot.setBalance(monzoPot.getBalance() / 100);

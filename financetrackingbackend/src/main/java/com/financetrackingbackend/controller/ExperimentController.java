@@ -1,5 +1,6 @@
 package com.financetrackingbackend.controller;
 
+import com.example.api.TestApi;
 import com.financetrackingbackend.configuration.ExperimentConfig;
 import com.financetrackingbackend.exceptions.ResourceNotFoundException;
 import com.financetrackingbackend.util.AuthenticationUtil;
@@ -12,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/test")
 @RequiredArgsConstructor
-public class ExperimentController {
+public class ExperimentController implements TestApi {
     private final Dotenv dotenv;
     private final AuthenticationUtil authUtil;
     private final ExperimentConfig experimentConfig;
 
     @GetMapping("/")
-    public String test(){
+    public String test() {
         return "hello world";
     }
 

@@ -1,8 +1,8 @@
 package com.financetrackingbackend.services.impl;
 
+import com.example.model.UlsterbankAccount;
+import com.example.model.UlsterbankBalance;
 import com.financetrackingbackend.dao.UlsterbankDao;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccount;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankBalance;
 import com.financetrackingbackend.services.UlsterbankAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

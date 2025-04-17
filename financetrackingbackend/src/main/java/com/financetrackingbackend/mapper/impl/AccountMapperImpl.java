@@ -1,12 +1,14 @@
 package com.financetrackingbackend.mapper.impl;
 
+import com.example.model.Account;
+import com.example.model.Fee;
+import com.example.model.InterestRate;
+import com.example.model.Stock;
 import com.financetrackingbackend.mapper.AccountMapper;
-import com.financetrackingbackend.schemas.dynamodb.Account;
-import com.financetrackingbackend.schemas.dynamodb.Fee;
-import com.financetrackingbackend.schemas.dynamodb.InterestRate;
-import com.financetrackingbackend.schemas.dynamodb.Stock;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +26,7 @@ public class AccountMapperImpl implements AccountMapper {
         account.setSortCode(map.get("sortCode") != null ? ((Number) map.get("sortCode")).intValue() : null);
         account.setBalance(map.get("balance") != null ? ((Number) map.get("balance")).floatValue() : null);
         account.setCurrentGains(map.get("currentGains") != null ? ((Number) map.get("currentGains")).floatValue() : null);
-        account.setDateCreatedOn((String) map.get("dateCreatedOn"));
+        account.setDateCreatedOn(OffsetDateTime.parse((String) map.get("dateCreatedOn")));
         account.setInterestRate(mapToInterestRate(map));
         account.setStocks(mapToStocks(map));
         account.setFees(mapToFees(map));
@@ -38,8 +40,8 @@ public class AccountMapperImpl implements AccountMapper {
             InterestRate rate = new InterestRate();
             rate.setAer(interestMap.get("aer") != null ? ((Number) interestMap.get("aer")).floatValue() : 0.0f);
             rate.setPaidTime((String) interestMap.get("paidTime"));
-            rate.setStartDate((String) interestMap.get("startDate"));
-            rate.setEndDate((String) interestMap.get("endDate"));
+            rate.setStartDate(LocalDate.parse((String) interestMap.get("startDate")));
+            rate.setEndDate(LocalDate.parse((String) interestMap.get("endDate")));
             return rate;
         }
         return null;
@@ -56,7 +58,7 @@ public class AccountMapperImpl implements AccountMapper {
                             stock.setCurrentAmount(stockMap.get("currentAmount") != null ? ((Number) stockMap.get("currentAmount")).floatValue() : 0.0f);
                             stock.setGains(stockMap.get("gains") != null ? ((Number) stockMap.get("gains")).floatValue() : 0.0f);
                             stock.setTickerSymbol((String) stockMap.get("tickerSymbol"));
-                            stock.setPurchaseDate((String) stockMap.get("purchaseDate"));
+                            stock.setPurchaseDate(LocalDate.parse((String) stockMap.get("purchaseDate")));
                             stock.setPurchasePrice((String) stockMap.get("purchasePrice"));
                             stock.setCurrentPrice((String) stockMap.get("currentPrice"));
                             return stock;

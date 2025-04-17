@@ -1,6 +1,6 @@
 package com.financetrackingbackend.services;
 
-import com.financetrackingbackend.schemas.monzo.MonzoAccessToken;
+import com.example.model.MonzoAccessToken;
 
 public interface MonzoAuthService {
     String buildMonzoAuthUrl(String state);

@@ -1,11 +1,12 @@
 package com.financetrackingbackend.controller;
 
+import com.example.api.MonzoApi;
+import com.example.model.MonzoAccessToken;
+import com.example.model.MonzoPots;
+import com.example.model.MonzoTransaction;
+import com.example.model.MonzoUserInfoResponse;
+import com.example.model.WhoAmI;
 import com.financetrackingbackend.dao.MonzoDao;
-import com.financetrackingbackend.schemas.monzo.MonzoAccessToken;
-import com.financetrackingbackend.schemas.monzo.MonzoPots;
-import com.financetrackingbackend.schemas.monzo.MonzoTransaction;
-import com.financetrackingbackend.schemas.monzo.MonzoUserInfoResponse;
-import com.financetrackingbackend.schemas.monzo.WhoAmI;
 import com.financetrackingbackend.services.MonzoAccountService;
 import com.financetrackingbackend.services.MonzoAuthService;
 import com.financetrackingbackend.util.TokenUtil;
@@ -29,18 +30,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/monzo")
 @RequiredArgsConstructor
-public class MonzoController {
+public class MonzoController implements MonzoApi {
     private static final String STATE_TOKEN = "stateToken";
 
     private final MonzoAuthService monzoAuthService;
     private final Dotenv dotenv;
     private final MonzoDao monzoDao;
     private final MonzoAccountService monzoAccountService;
-
-    @GetMapping("")
-    public String home() {
-        return "monzo";
-    }
 
     @GetMapping("/auth")
     public String authoriseUser(HttpSession session) {
@@ -64,42 +60,71 @@ public class MonzoController {
     }
 
     @GetMapping("/oauth/refresh")
-    public MonzoAccessToken refreshAccessToken(@RequestHeader("refreshToken") String refreshToken) {
-        return monzoDao.refreshAccessToken(refreshToken);
+    public ResponseEntity<MonzoAccessToken> refreshAccessToken(@RequestHeader("refreshToken") String refreshToken) {
+        if (refreshToken == null || refreshToken.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        MonzoAccessToken accessToken = monzoDao.refreshAccessToken(refreshToken);
+        return ResponseEntity.ok(accessToken);
     }
-
+    
     @GetMapping("/whoami")
-    public WhoAmI getWhoAmI(@RequestHeader("accessToken") String accessToken) {
+    public ResponseEntity<WhoAmI> getWhoAmI(@RequestHeader("accessToken") String accessToken) {
         accessToken = accessTokenEnvCheckTesting(accessToken);
-        return monzoDao.getWhoAmI(accessToken);
+        if (accessToken == null || accessToken.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        WhoAmI whoAmI = monzoDao.getWhoAmI(accessToken);
+        return ResponseEntity.ok(whoAmI);
     }
-
+    
     @GetMapping("/balance")
-    public float getAccounts(@RequestHeader("accessToken") String accessToken) {
+    public ResponseEntity<Float> getAccounts(@RequestHeader("accessToken") String accessToken) {
         accessToken = accessTokenEnvCheckTesting(accessToken);
-        return monzoAccountService.getBalanceForAllAccounts(accessToken);
+        if (accessToken == null || accessToken.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        Float balance = monzoAccountService.getBalanceForAllAccounts(accessToken);
+        return ResponseEntity.ok(balance);
     }
-
+    
     @GetMapping("/pots")
-    public MonzoPots getPots(@RequestHeader("accessToken") String accessToken, @RequestParam("accountId") String accountId) {
+    public ResponseEntity<MonzoPots> getPots(@RequestHeader("accessToken") String accessToken, @RequestHeader("accountId") String accountId) {
         accessToken = accessTokenEnvCheckTesting(accessToken);
-        return monzoAccountService.getAllActivePotsForAccount(accessToken, accountId);
+        if (accessToken == null || accessToken.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        if (accountId == null || accountId.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        MonzoPots pots = monzoAccountService.getAllActivePotsForAccount(accessToken, accountId);
+        return ResponseEntity.ok(pots);
     }
-
+    
     @GetMapping("/userInfo")
-    public MonzoUserInfoResponse userInfo(@RequestHeader("accessToken") String accessToken) {
+    public ResponseEntity<MonzoUserInfoResponse> userInfo(@RequestHeader("accessToken") String accessToken) {
         accessToken = accessTokenEnvCheckTesting(accessToken);
-        return monzoAccountService.getUserInfo(accessToken);
+        if (accessToken == null || accessToken.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        MonzoUserInfoResponse userInfo = monzoAccountService.getUserInfo(accessToken);
+        return ResponseEntity.ok(userInfo);
     }
-
+    
     @GetMapping("/transactions/list")
-    public List<MonzoTransaction> transactions(@RequestHeader("accessToken") String accessToken, @RequestParam("accountId") String accountId) {
+    public ResponseEntity<List<MonzoTransaction>> transactions(@RequestHeader("accessToken") String accessToken, @RequestHeader("accountId") String accountId) {
         accessToken = accessTokenEnvCheckTesting(accessToken);
-        return monzoAccountService.listTransactions(accessToken, accountId);
+        if (accessToken == null || accessToken.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        if (accountId == null || accountId.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        List<MonzoTransaction> transactions = monzoAccountService.listTransactions(accessToken, accountId);
+        return ResponseEntity.ok(transactions);
     }
 
     private String accessTokenEnvCheckTesting(String accessToken) {
-        log.info("access token=test:{}", accessToken);
         if(accessToken == null || accessToken.equalsIgnoreCase("testing")) {
             accessToken = dotenv.get("MONZO_ACCESSTOKEN");
         }

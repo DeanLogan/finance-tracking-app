@@ -1,0 +1,1132 @@
+openapi: 3.0.0
+
+info:
+  title: Finance Tracking API
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+    
+tags:
+  - name: Account
+    description: Interaction with Acconts stored on DynamoDB
+  - name: Monzo
+    description: Interactions with Monzos API
+  - name: Ulsterbank
+    description: Interactions with Ulsterbank (NatWest) API
+  - name: Test
+    description: Useful endpoints to have in testing
+
+paths:
+  /account/list:
+    get:
+      tags:
+        - Account
+      summary: List all user accounts
+      operationId: listAccounts
+      responses:
+        '200':
+          description: A list of user accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+  /account/get:
+    get:
+      tags:
+        - Account
+      summary: Get a specific account by ID
+      operationId: getAccount
+      parameters:
+        - name: id
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The ID of the account to retrieve
+      responses:
+        '200':
+          description: The requested account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+  /account/add:
+    post:
+      tags:
+        - Account
+      summary: Add a new account
+      operationId: addAccount
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '201':
+          description: The created account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+  /account/update:
+    put:
+      tags:
+        - Account
+      summary: Update an existing account
+      operationId: updateAccount
+      parameters:
+        - name: id
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The ID of the account to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '200':
+          description: The updated account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+  /account/delete:
+    delete:
+      tags:
+        - Account
+      summary: Delete an account by ID
+      operationId: deleteAccount
+      parameters:
+        - name: id
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The ID of the account to delete
+      responses:
+        '200':
+          description: The deleted account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+  /account/balance:
+    get:
+      tags:
+        - Account
+      summary: Get the total balance across all accounts
+      operationId: getBalance
+      responses:
+        '200':
+          description: The total balance
+          content:
+            application/json:
+              schema:
+                type: number
+                format: float
+
+  /monzo/auth:
+    get:
+      tags:
+        - Monzo
+      summary: Authorise user with Monzo
+      operationId: authoriseMonzoUser
+      responses:
+        '200':
+          description: Redirects to Monzo authorisation URL
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /monzo/oauth/callback:
+    get:
+      tags:
+        - Monzo
+      summary: Handle Monzo OAuth callback
+      operationId: handleMonzoCallback
+      parameters:
+        - name: code
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The authorisation code from Monzo
+        - name: state
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The state token for validation
+      responses:
+        '200':
+          description: Monzo OAuth callback response
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /monzo/oauth/refresh:
+    get:
+      tags:
+        - Monzo
+      summary: Refresh Monzo access token
+      operationId: refreshMonzoAccessToken
+      parameters:
+        - name: refreshToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The refresh token to obtain a new access token
+      responses:
+        '200':
+          description: The refreshed access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonzoAccessToken'
+
+  /monzo/whoami:
+    get:
+      tags:
+        - Monzo
+      summary: Get Monzo user information
+      operationId: getWhoAmI
+      parameters:
+        - name: accessToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The access token for authentication
+      responses:
+        '200':
+          description: User information from Monzo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WhoAmI'
+
+  /monzo/balance:
+    get:
+      tags:
+        - Monzo
+      summary: Get total balance across all Monzo accounts
+      operationId: getAccounts
+      parameters:
+        - name: accessToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The access token for authentication
+      responses:
+        '200':
+          description: Total balance across all accounts
+          content:
+            application/json:
+              schema:
+                type: number
+                format: float
+
+  /monzo/pots:
+    get:
+      tags:
+        - Monzo
+      summary: Get all active pots for a Monzo account
+      operationId: getPots
+      parameters:
+        - name: accessToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The access token for authentication
+        - name: accountId
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The ID of the Monzo account
+      responses:
+        '200':
+          description: List of active pots for the account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonzoPots'
+
+  /monzo/userInfo:
+    get:
+      tags:
+        - Monzo
+      summary: Get user information from Monzo
+      operationId: userInfo
+      parameters:
+        - name: accessToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The access token for authentication
+      responses:
+        '200':
+          description: User information response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonzoUserInfoResponse'
+
+  /monzo/transactions/list:
+    get:
+      tags:
+        - Monzo
+      summary: List transactions for a Monzo account
+      operationId: transactions
+      parameters:
+        - name: accessToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The access token for authentication
+        - name: accountId
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The ID of the Monzo account
+      responses:
+        '200':
+          description: List of transactions for the account
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MonzoTransaction'
+
+  /ulsterbank/auth:
+    get:
+      tags:
+        - Ulsterbank
+      summary: Authorise user with Ulsterbank
+      operationId: authoriseUlsterbankUser
+      parameters:
+        - name: code
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The authorisation code from Ulsterbank
+      responses:
+        '200':
+          description: Authorisation response
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /ulsterbank/consentId:
+    get:
+      tags:
+        - Ulsterbank
+      summary: Get consent ID from Ulsterbank
+      operationId: getConsentId
+      responses:
+        '200':
+          description: The consent ID
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /ulsterbank/redirect:
+    get:
+      tags:
+        - Ulsterbank
+      summary: Get redirect URL for Ulsterbank
+      operationId: getRedirect
+      responses:
+        '200':
+          description: The redirect URL
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /ulsterbank/oauth/callback/extractcode:
+    get:
+      tags:
+        - Ulsterbank
+      summary: Extract access token from callback
+      operationId: callback
+      parameters:
+        - name: code
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The authorisation code from Ulsterbank
+        - name: id_token
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The ID token from Ulsterbank
+      responses:
+        '200':
+          description: The access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UlsterbankAccessToken'
+
+  /ulsterbank/oauth/refresh:
+    get:
+      tags:
+        - Ulsterbank
+      summary: Refresh Ulsterbank access token
+      operationId: refreshUlsterbankAccessToken
+      parameters:
+        - name: refreshToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The refresh token to obtain a new access token
+      responses:
+        '200':
+          description: The refreshed access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UlsterbankAccessToken'
+
+  /ulsterbank/accounts:
+    get:
+      tags:
+        - Ulsterbank
+      summary: Get all accounts from Ulsterbank
+      operationId: getUlsterbankAccounts
+      parameters:
+        - name: accessToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The access token for authentication
+      responses:
+        '200':
+          description: List of accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UlsterbankAccount'
+
+  /ulsterbank/balance:
+    get:
+      tags:
+        - Ulsterbank
+      summary: Get total balance across all Ulsterbank accounts
+      operationId: getUlsterbankBalance
+      parameters:
+        - name: accessToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The access token for authentication
+      responses:
+        '200':
+          description: Total balance across all accounts
+          content:
+            application/json:
+              schema:
+                type: number
+                format: float
+
+  /test:
+    get:
+      tags:
+        - Test
+      summary: Test API
+      operationId: testApi
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+  /test/env:
+    get:
+      tags:
+        - Test
+      summary: Test to make sure env is working
+      operationId: testEnv
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+  /test/config:
+    get:
+      tags:
+        - Test
+      summary: See what config is being used
+      operationId: getConfigInfo
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+  /test/whoami:
+    get:
+      tags:
+        - Test
+      summary: Get current username
+      operationId: whoami
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+
+components:
+  schemas:
+    Account:
+      type: object
+      description: Represents an account stored in DynamoDB.
+      x-dynamodb: true
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the account (DynamoDB partition key).
+          x-partitionkey: true
+        name:
+          type: string
+          description: Name of the account.
+        bank:
+          type: string
+          description: Name of the bank associated with the account.
+        accountNumber:
+          type: integer
+          description: Account number.
+        sortCode:
+          type: integer
+          description: Sort code of the account.
+        balance:
+          type: number
+          format: float
+          description: Current balance of the account.
+        stocks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stock'
+          description: List of stocks associated with the account.
+        currentGains:
+          type: number
+          format: float
+          description: Current gains from the account.
+        fees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Fee'
+          description: List of fees associated with the account.
+        dateCreatedOn:
+          type: string
+          format: date-time
+          description: Date when the account was created.
+        interestRate:
+          $ref: '#/components/schemas/InterestRate'
+          description: Interest rate details for the account.
+        user:
+          type: string
+          description: User associated with the account.
+      required:
+        - id
+        - name
+        - bank
+        - accountNumber
+        - sortCode
+        - balance
+        - user
+
+    Fee:
+      type: object
+      description: Represents a fee associated with an account.
+      x-dynamodb: true
+      properties:
+        type:
+          $ref: '#/components/schemas/AccountType'
+          description: Type of account the fee is associated with.
+        percentage:
+          type: number
+          format: float
+          description: Percentage of the fee.
+        amount:
+          type: number
+          format: float
+          description: Fixed amount of the fee.
+        frequency:
+          $ref: '#/components/schemas/PaymentRate'
+          description: Frequency at which the fee is charged (e.g., monthly, annually).
+
+    InterestRate:
+      type: object
+      description: Represents the interest rate details for an account.
+      x-dynamodb: true
+      properties:
+        aer:
+          type: number
+          format: float
+          description: Annual Equivalent Rate (AER) for the account.
+        type:
+          $ref: '#/components/schemas/AccountType'
+          description: Type of account associated with the interest rate.
+        paidTime:
+          type: string
+          description: Time when the interest is paid (e.g., monthly, annually).
+        startDate:
+          type: string
+          format: date
+          description: Start date of the interest rate period.
+        endDate:
+          type: string
+          format: date
+          description: End date of the interest rate period.
+
+    Stock:
+      type: object
+      description: Represents a stock associated with an account.
+      x-dynamodb: true
+      properties:
+        name:
+          type: string
+          description: Name of the stock.
+        currentAmount:
+          type: number
+          format: float
+          description: Current amount of the stock held.
+        gains:
+          type: number
+          format: float
+          description: Gains made from the stock.
+        currency:
+          description: Currency in which the stock is traded.
+          $ref: '#/components/schemas/Currency'
+        tickerSymbol:
+          type: string
+          description: Ticker symbol of the stock.
+        purchaseDate:
+          type: string
+          format: date
+          description: Date when the stock was purchased.
+        purchasePrice:
+          type: string
+          description: Purchase price of the stock.
+        currentPrice:
+          type: string
+          description: Current price of the stock.
+
+    ExchangeAuthCodeRequest:
+      type: object
+      description: Represents a request to exchange an authorization code for an access token.
+      properties:
+        grant_type:
+          type: string
+          description: The type of grant being used.
+        client_id:
+          type: string
+          description: The client ID of the application making the request.
+        client_secret:
+          type: string
+          description: The client secret of the application making the request.
+        redirect_uri:
+          type: string
+          description: The redirect URI used in the authorization request.
+        code:
+          type: string
+          description: The authorization code received from the authorization server.
+
+    WhoAmI:
+      type: object
+      description: Represents the response from the Monzo API for the "Who Am I" endpoint.
+      properties:
+        authenticated:
+          type: boolean
+          description: Indicates whether the user is authenticated.
+        client_id:
+          type: string
+          description: The client ID associated with the authenticated user.
+        user_id:
+          type: string
+          description: The user ID of the authenticated user.
+
+    MonzoPot:
+      type: object
+      description: Represents a pot in the Monzo API.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the pot.
+        name:
+          type: string
+          description: Name of the pot.
+        balance:
+          type: number
+          format: float
+          description: Current balance of the pot.
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: The currency of the pot.
+        deleted:
+          type: boolean
+          description: Indicates whether the pot has been deleted.
+
+    MonzoPots:
+      type: object
+      description: Represents the response from the Monzo API for pots and their total balance.
+      properties:
+        total_pots_balance:
+          type: number
+          format: float
+          description: The total balance across all pots.
+        pots:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonzoPot'
+          description: List of pots associated with the account.
+
+    MonzoAccount:
+      type: object
+      description: Represents an account in the Monzo API.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the account.
+        description:
+          type: string
+          description: Description of the account.
+        created:
+          type: string
+          format: date-time
+          description: The date and time when the account was created.
+        balance:
+          type: number
+          format: float
+          description: Current balance of the account.
+        total_balance:
+          type: number
+          format: float
+          description: Total balance of the account, including pots.
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: The currency of the account.
+        spend_today:
+          type: integer
+          description: Amount spent today from the account.
+        pots:
+          $ref: '#/components/schemas/MonzoPots'
+          description: Pots associated with the account.
+
+    MonzoUserInfoResponse:
+      type: object
+      description: Represents the response from the Monzo API containing user account information and total balance.
+      properties:
+        total_balance:
+          type: number
+          format: float
+          description: The total balance across all user accounts.
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonzoAccount'
+          description: List of accounts associated with the user.
+
+    MonzoAccessToken:
+      type: object
+      description: Represents the access token response from the Monzo API.
+      properties:
+        access_token:
+          type: string
+          description: The access token issued by the Monzo API.
+        client_id:
+          type: string
+          description: The client ID associated with the access token.
+        expires_in:
+          type: string
+          description: The duration (in seconds) for which the access token is valid.
+        refresh_token:
+          type: string
+          description: The refresh token that can be used to obtain a new access token.
+        token_type:
+          type: string
+          description: The type of token issued (e.g., "Bearer").
+        user_id:
+          type: string
+          description: The user ID associated with the access token.
+
+    MonzoBalance:
+      type: object
+      description: Represents the balance details of an account in the Monzo API.
+      properties:
+        balance:
+          type: number
+          format: float
+          description: The current balance of the account.
+        total_balance:
+          type: number
+          format: float
+          description: The total balance of the account, including pots.
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: The currency of the account.
+        spend_today:
+          type: integer
+          description: The amount spent today from the account.
+
+    MonzoTransaction:
+      type: object
+      description: Represents a transaction in the Monzo API.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the transaction.
+        amount:
+          type: number
+          format: float
+          description: The amount of the transaction.
+        created:
+          type: string
+          format: date-time
+          description: The date and time when the transaction was created.
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: The currency of the transaction.
+        description:
+          type: string
+          description: Description of the transaction.
+        merchant:
+          type: string
+          description: The merchant associated with the transaction.
+        notes:
+          type: string
+          description: Additional notes about the transaction.
+        is_load:
+          type: boolean
+          description: Indicates whether the transaction is a load transaction.
+        settled:
+          type: string
+          format: date-time
+          description: The date and time when the transaction was settled.
+        category:
+          type: string
+          description: The category of the transaction.
+
+    MonzoTransactionsResponse:
+      type: object
+      description: Represents the response from the Monzo API containing a list of transactions.
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonzoTransaction'
+          description: List of transactions associated with the account.
+
+    MonzoAccounts:
+      type: object
+      description: Represents the response from the Monzo API containing a list of accounts.
+      properties:
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonzoAccount'
+          description: List of accounts.
+
+    UlsterbankAccessToken:
+      type: object
+      description: Represents the access token response from the Ulsterbank API.
+      properties:
+        token_type:
+          type: string
+          description: The type of token issued (e.g., "Bearer").
+        access_token:
+          type: string
+          description: The access token issued by the Ulsterbank API.
+        expires_in:
+          type: string
+          description: The duration (in seconds) for which the access token is valid.
+        scope:
+          type: string
+          description: The scope of the access token.
+        refresh_token:
+          type: string
+          description: The refresh token that can be used to obtain a new access token.
+
+    UlsterbankServicer:
+      type: object
+      description: Represents the servicer details from the Ulsterbank API.
+      properties:
+        schemeName:
+          type: string
+          description: The name of the scheme associated with the servicer.
+        id:
+          type: string
+          description: The identification of the servicer.
+
+    UlsterbankAccount:
+      type: object
+      description: Represents an account from the Ulsterbank API.
+      properties:
+        accountId:
+          type: string
+          description: The unique identifier for the account.
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: The currency of the account.
+        accountType:
+          type: string
+          description: The type of the account.
+        accountSubType:
+          type: string
+          description: The subtype of the account.
+        description:
+          type: string
+          description: A description of the account.
+        nickname:
+          type: string
+          description: The nickname of the account.
+        account:
+          type: array
+          items:
+            $ref: '#/components/schemas/UlsterbankAccount'
+          description: A list of related accounts.
+        servicer:
+          $ref: '#/components/schemas/UlsterbankServicer'
+          description: The servicer details of the account.
+        switchStatus:
+          type: string
+          description: The switch status of the account.
+        schemeName:
+          type: string
+          description: The scheme name associated with the account.
+        id:
+          type: string
+          description: The identification of the account.
+        secondaryId:
+          type: string
+          description: The secondary identification of the account.
+        name:
+          type: string
+          description: The name of the account holder.
+
+    UlsterbankAmount:
+      type: object
+      description: Represents an amount with currency from the Ulsterbank API.
+      properties:
+        amount:
+          type: number
+          format: float
+          description: The amount value.
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: The currency of the amount.
+
+    UlsterBankCreditLine:
+      type: object
+      description: Represents a credit line from the Ulsterbank API.
+      properties:
+        included:
+          type: boolean
+          description: Indicates whether the credit line is included.
+        amount:
+          $ref: '#/components/schemas/UlsterbankAmount'
+          description: The amount associated with the credit line.
+        type:
+          type: string
+          description: The type of the credit line.
+
+    UlsterbankBalance:
+      type: object
+      description: Represents the balance details of an account from the Ulsterbank API.
+      properties:
+        accountId:
+          type: string
+          description: The unique identifier for the account.
+        amount:
+          $ref: '#/components/schemas/UlsterbankAmount'
+          description: The amount associated with the balance.
+        creditDebitIndicator:
+          type: string
+          description: Indicates whether the balance is a credit or debit.
+        type:
+          type: string
+          description: The type of balance.
+        dateTime:
+          type: string
+          format: date-time
+          description: The date and time of the balance.
+        creditLine:
+          type: array
+          items:
+            $ref: '#/components/schemas/UlsterBankCreditLine'
+          description: A list of credit lines associated with the balance.
+
+    UlsterbankMeta:
+      type: object
+      description: Represents metadata information from the Ulsterbank API.
+      properties:
+        totalPages:
+          type: integer
+          description: The total number of pages available.
+
+    UlsterbankLinks:
+      type: object
+      description: Represents pagination links from the Ulsterbank API.
+      properties:
+        self:
+          type: string
+          format: uri
+          description: The link to the current page.
+        prev:
+          type: string
+          format: uri
+          description: The link to the previous page.
+        next:
+          type: string
+          format: uri
+          description: The link to the next page.
+
+    UlsterbankTransaction:
+      type: object
+      description: Represents a transaction from the Ulsterbank API.
+      properties:
+        accountId:
+          type: string
+          description: The unique identifier for the account associated with the transaction.
+        transactionId:
+          type: string
+          description: The unique identifier for the transaction.
+        creditDebitIndicator:
+          type: boolean
+          description: Indicates whether the transaction is a credit or debit.
+        status:
+          type: string
+          description: The status of the transaction.
+        bookingDateTime:
+          type: string
+          format: date-time
+          description: The date and time when the transaction was booked.
+        amount:
+          $ref: '#/components/schemas/UlsterbankAmount'
+          description: The amount associated with the transaction.
+        transactionInformation:
+          type: string
+          description: Additional information about the transaction.
+        balance:
+          $ref: '#/components/schemas/UlsterbankBalance'
+          description: The balance details after the transaction.
+
+    UlsterbankData:
+      type: object
+      description: Represents data from the Ulsterbank API.
+      properties:
+        consentId:
+          type: string
+          description: The unique identifier for the consent.
+        creationDateTime:
+          type: string
+          format: date-time
+          description: The date and time when the data was created.
+        status:
+          type: string
+          description: The status of the data.
+        statusUpdateDateTime:
+          type: string
+          format: date-time
+          description: The date and time when the status was last updated.
+        permissions:
+          type: array
+          items:
+            type: string
+          description: A list of permissions associated with the data.
+        links:
+          $ref: '#/components/schemas/UlsterbankLinks'
+          description: The pagination links associated with the data.
+        meta:
+          $ref: '#/components/schemas/UlsterbankMeta'
+          description: Metadata information associated with the data.
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/UlsterbankAccount'
+          description: A list of accounts associated with the data.
+        balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/UlsterbankBalance'
+          description: A list of balances associated with the data.
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/UlsterbankTransaction'
+          description: A list of transactions associated with the data.
+
+    UlsterbankGeneralResponse:
+      type: object
+      description: Represents a general response from the Ulsterbank API.
+      properties:
+        data:
+          $ref: '#/components/schemas/UlsterbankData'
+          description: The data object containing detailed information.
+        links:
+          $ref: '#/components/schemas/UlsterbankLinks'
+          description: The pagination links associated with the response.
+        meta:
+          $ref: '#/components/schemas/UlsterbankMeta'
+          description: Metadata information associated with the response.
+
+    Currency:
+      type: string
+      description: Represents the currency type.
+      enum:
+        - GBP
+        - USD
+
+    AccountType:
+      type: string
+      description: Represents the type of account.
+      enum:
+        - FIXED
+        - VARIABLE
+        - PERCENTAGE
+
+    PaymentRate:
+      type: string
+      description: Represents the frequency at which a payment is made.
+      enum:
+        - DAILY
+        - MONTHLY
+        - YEARLY
+        - QUARTERLY
+        - ONE_TIME
