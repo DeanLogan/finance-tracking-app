@@ -1,10 +1,12 @@
 name: Deploy Swagger UI to Pages
 
 on:
-  push:
+  pull_request:
     branches:
       - 'main'
-      - 'openapi'
+    types:
+      - closed
+
   workflow_dispatch:
 
 permissions:
