@@ -1,5 +1,6 @@
 .idea
 .vscode
+financetrackingbackend/bin/
 
 # Compiled class file
 *.class
