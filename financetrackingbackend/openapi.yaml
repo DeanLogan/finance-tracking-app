@@ -9,12 +9,14 @@ servers:
     description: Local development server
     
 tags:
-  - name: Test
-    description: Useful endpoints to have in testing
   - name: Account
     description: Interaction with Acconts stored on DynamoDB
   - name: Monzo
     description: Interactions with Monzos API
+  - name: Ulsterbank
+    description: Interactions with Ulsterbank (NatWest) API
+  - name: Test
+    description: Useful endpoints to have in testing
 
 paths:
   /account/list:
@@ -132,26 +134,12 @@ paths:
                 type: number
                 format: float
 
-  /monzo:
-    get:
-      tags:
-        - Monzo
-      summary: Monzo home endpoint
-      operationId: monzoHome
-      responses:
-        '200':
-          description: Monzo home endpoint response
-          content:
-            text/plain:
-              schema:
-                type: string
-
   /monzo/auth:
     get:
       tags:
         - Monzo
       summary: Authorise user with Monzo
-      operationId: authoriseUser
+      operationId: authoriseMonzoUser
       responses:
         '200':
           description: Redirects to Monzo authorisation URL
@@ -192,7 +180,7 @@ paths:
       tags:
         - Monzo
       summary: Refresh Monzo access token
-      operationId: refreshAccessToken
+      operationId: refreshMonzoAccessToken
       parameters:
         - name: refreshToken
           in: header
@@ -327,6 +315,148 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/MonzoTransaction'
+
+  /ulsterbank/auth:
+    get:
+      tags:
+        - Ulsterbank
+      summary: Authorise user with Ulsterbank
+      operationId: authoriseUlsterbankUser
+      parameters:
+        - name: code
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The authorisation code from Ulsterbank
+      responses:
+        '200':
+          description: Authorisation response
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /ulsterbank/consentId:
+    get:
+      tags:
+        - Ulsterbank
+      summary: Get consent ID from Ulsterbank
+      operationId: getConsentId
+      responses:
+        '200':
+          description: The consent ID
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /ulsterbank/redirect:
+    get:
+      tags:
+        - Ulsterbank
+      summary: Get redirect URL for Ulsterbank
+      operationId: getRedirect
+      responses:
+        '200':
+          description: The redirect URL
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /ulsterbank/oauth/callback/extractcode:
+    get:
+      tags:
+        - Ulsterbank
+      summary: Extract access token from callback
+      operationId: callback
+      parameters:
+        - name: code
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The authorisation code from Ulsterbank
+        - name: id_token
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The ID token from Ulsterbank
+      responses:
+        '200':
+          description: The access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UlsterbankAccessToken'
+
+  /ulsterbank/oauth/refresh:
+    get:
+      tags:
+        - Ulsterbank
+      summary: Refresh Ulsterbank access token
+      operationId: refreshUlsterbankAccessToken
+      parameters:
+        - name: refreshToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The refresh token to obtain a new access token
+      responses:
+        '200':
+          description: The refreshed access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UlsterbankAccessToken'
+
+  /ulsterbank/accounts:
+    get:
+      tags:
+        - Ulsterbank
+      summary: Get all accounts from Ulsterbank
+      operationId: getUlsterbankAccounts
+      parameters:
+        - name: accessToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The access token for authentication
+      responses:
+        '200':
+          description: List of accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UlsterbankAccount'
+
+  /ulsterbank/balance:
+    get:
+      tags:
+        - Ulsterbank
+      summary: Get total balance across all Ulsterbank accounts
+      operationId: getUlsterbankBalance
+      parameters:
+        - name: accessToken
+          in: header
+          required: true
+          schema:
+            type: string
+          description: The access token for authentication
+      responses:
+        '200':
+          description: Total balance across all accounts
+          content:
+            application/json:
+              schema:
+                type: number
+                format: float
 
   /test:
     get:

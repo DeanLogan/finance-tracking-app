@@ -38,11 +38,6 @@ public class MonzoController implements MonzoApi {
     private final MonzoDao monzoDao;
     private final MonzoAccountService monzoAccountService;
 
-    @GetMapping("")
-    public String home() {
-        return "monzo";
-    }
-
     @GetMapping("/auth")
     public String authoriseUser(HttpSession session) {
         String expectedStateToken = TokenUtil.generateStateToken();
