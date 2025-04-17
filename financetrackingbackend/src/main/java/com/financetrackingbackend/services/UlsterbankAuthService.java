@@ -1,7 +1,7 @@
 package com.financetrackingbackend.services;
 
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccessToken;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankGeneralResponse;
+import com.example.model.UlsterbankAccessToken;
+import com.example.model.UlsterbankGeneralResponse;
 
 public interface UlsterbankAuthService {
     UlsterbankAccessToken refreshAccessToken(String refreshToken);

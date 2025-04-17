@@ -1,11 +1,11 @@
 package com.financetrackingbackend.controller;
 
+import com.example.model.UlsterbankAccessToken;
+import com.example.model.UlsterbankAccount;
+import com.example.model.UlsterbankGeneralResponse;
 import com.financetrackingbackend.dao.UlsterbankDao;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccount;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankGeneralResponse;
 import com.financetrackingbackend.services.UlsterbankAccountService;
 import com.financetrackingbackend.services.UlsterbankAuthService;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccessToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

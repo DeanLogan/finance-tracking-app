@@ -1,13 +1,13 @@
 package com.financetrackingbackend.dao.impl;
 
+import com.example.model.UlsterbankAccessToken;
+import com.example.model.UlsterbankData;
+import com.example.model.UlsterbankGeneralResponse;
+import com.example.model.UlsterbankTransaction;
+import com.example.model.UlsterbankBalance;
+import com.example.model.UlsterbankAccount;
 import com.financetrackingbackend.configuration.UlsterbankConfig;
 import com.financetrackingbackend.dao.UlsterbankDao;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccessToken;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccount;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankBalance;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankData;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankGeneralResponse;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankTransaction;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;

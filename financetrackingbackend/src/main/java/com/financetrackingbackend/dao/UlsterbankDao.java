@@ -1,10 +1,10 @@
 package com.financetrackingbackend.dao;
 
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccessToken;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccount;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankBalance;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankGeneralResponse;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankTransaction;
+import com.example.model.UlsterbankAccessToken;
+import com.example.model.UlsterbankAccount;
+import com.example.model.UlsterbankBalance;
+import com.example.model.UlsterbankGeneralResponse;
+import com.example.model.UlsterbankTransaction;
 
 import java.util.List;
 

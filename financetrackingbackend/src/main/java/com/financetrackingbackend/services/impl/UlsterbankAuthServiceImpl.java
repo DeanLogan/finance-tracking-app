@@ -1,8 +1,8 @@
 package com.financetrackingbackend.services.impl;
 
+import com.example.model.UlsterbankAccessToken;
+import com.example.model.UlsterbankGeneralResponse;
 import com.financetrackingbackend.dao.UlsterbankDao;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankAccessToken;
-import com.financetrackingbackend.schemas.ulsterbank.UlsterbankGeneralResponse;
 import com.financetrackingbackend.services.UlsterbankAuthService;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
