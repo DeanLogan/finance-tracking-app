@@ -39,6 +39,7 @@ jobs:
           cp financetrackingbackend/openapi.yaml swagger-ui/openapi.yaml
           cp -r $(npm root -g)/swagger-ui-dist/* swagger-ui/
           sed -i 's|https://petstore.swagger.io/v2/swagger.json|./openapi.yaml|' swagger-ui/swagger-initializer.js
+          sed -i 's|<title>Swagger UI</title>|<title>Finance Tracking API Spec</title>|' swagger-ui/index.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
