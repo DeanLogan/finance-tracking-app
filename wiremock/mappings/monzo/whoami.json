@@ -1,0 +1,18 @@
+{
+    "mappings": [
+        {
+            "request": {
+                "method": "GET",
+                "url": "/ping/whoami"
+            },
+            "response": {
+                "status": 200,
+                "bodyFileName": "monzo/whoami/{{request.headers.test2.[0]}}.json",
+                "transformers": ["response-template"],
+                "headers": {
+                    "Content-Type": "application/json"
+                }
+            }
+        }
+    ]
+}
