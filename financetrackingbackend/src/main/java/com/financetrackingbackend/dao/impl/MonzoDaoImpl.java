@@ -54,7 +54,7 @@ public class MonzoDaoImpl implements MonzoDao {
 
     @Override
     public WhoAmI getWhoAmI(String accessToken) {
-        return requestHelper(accessToken, accessToken, "/ping/whoami", WhoAmI.class);
+        return requestHelper(accessToken, "", "/ping/whoami", WhoAmI.class);
     }
 
     @Override
@@ -105,11 +105,7 @@ public class MonzoDaoImpl implements MonzoDao {
     private MonzoAccessToken fetchAccessToken(MultiValueMap<String, String> formData) {
         try {
             MonzoAccessToken monzoAccessToken = webClient.post()
-                    .uri(uriBuilder -> uriBuilder
-                            .scheme("https")
-                            .host(monzoConfig.getBaseUrl())
-                            .path("/oauth2/token")
-                            .build())
+                    .uri("/oauth2/token")
                     .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                     .bodyValue(formData)
                     .retrieve()

@@ -30,7 +30,6 @@ public class WebClientConfig {
                         }
                     )
             ))
-            .baseUrl("https://ob.sandbox.ulsterbank.co.uk")
             .build();
     }
 }
