@@ -3,11 +3,16 @@
         {
             "request": {
                 "method": "GET",
-                "url": "/ping/whoami"
+                "url": "/ping/whoami",
+                "headers": {
+                    "Authorization": {
+                        "matches": "^Bearer\\s+(.+)$"
+                    }
+                }
             },
             "response": {
                 "status": 200,
-                "bodyFileName": "monzo/whoami/{{request.headers.test2.[0]}}.json",
+                "bodyFileName": "monzo/whoami/{{request.headers.Authorization.0}}.json",
                 "transformers": ["response-template"],
                 "headers": {
                     "Content-Type": "application/json"
