@@ -1,7 +1,7 @@
 {
   "accounts": [
     {
-      "id": "acc_1132jlkdahuifdasGdfHtg",
+      "id": "acc_1",
       "closed": false,
       "created": "2025-04-20T12:26:14.737Z",
       "description": "user_test",
@@ -32,7 +32,7 @@
           "unformatted": "GB44WOWZ01010112345678",
           "formatted": "GB44WOWZ01010112345678",
           "bic": "WOWZGB44",
-          "usage_description": "Receive international payments in over 40 currencies. We charge a currency conversion fee. [Learn more...](monzo://backend_screen?id=international-payment-views:bank-transfer-info&instance_params_id=acc_1132jlkdahuifdasGdfHtg)",
+          "usage_description": "Receive international payments in over 40 currencies. We charge a currency conversion fee. [Learn more...](monzo://backend_screen?id=international-payment-views:bank-transfer-info&instance_params_id=acc_1)",
           "usage_description_web": "IBAN is currently only for receiving payments in Euros."
         }
       }
