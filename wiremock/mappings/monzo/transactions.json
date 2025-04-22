@@ -5,7 +5,7 @@
         "method": "GET",
         "urlPath": "/transactions",
         "queryParameters": {
-          "current_account_id": {
+          "account_id": {
             "matches": ".*"
           }
         }
