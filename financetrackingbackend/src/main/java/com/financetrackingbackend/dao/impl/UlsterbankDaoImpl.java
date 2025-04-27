@@ -43,7 +43,7 @@ public class UlsterbankDaoImpl implements UlsterbankDao {
         formData.add("client_secret", clientSecret);
 
         switch (grantType) {
-            case "client credentials":
+            case "client_credentials":
                 formData.add("scope", "accounts");
                 break;
 
@@ -113,7 +113,7 @@ public class UlsterbankDaoImpl implements UlsterbankDao {
     
     private <T> T requestHelper(String accessToken, String accountId, String endpoint, Function<UlsterbankData, T> mapper) {
         return webClient.get()
-                .uri(config.getBaseUrl() + accountId + endpoint)
+                .uri(config.getAccountsUrl() + "/"+ accountId + endpoint)
                 .header(AUTHORIZATION, BEARER + accessToken)
                 .retrieve()
                 .bodyToMono(UlsterbankGeneralResponse.class)
