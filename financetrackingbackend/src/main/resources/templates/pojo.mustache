@@ -237,8 +237,17 @@ public {{>sealed}}class {{classname}}{{#parent}} extends {{{parent}}}{{/parent}}
   {{#swagger1AnnotationLibrary}}
   @ApiModelProperty({{#example}}example = "{{{.}}}", {{/example}}{{#required}}required = {{required}}, {{/required}}{{#isReadOnly}}readOnly = {{{isReadOnly}}}, {{/isReadOnly}}value = "{{{description}}}")
   {{/swagger1AnnotationLibrary}}
-  {{#jackson}}
+
+  {{#vendorExtensions.x-jsonproperty}}
+  @JsonProperty("{{vendorExtensions.x-jsonproperty}}")
+  {{/vendorExtensions.x-jsonproperty}}
+  {{^vendorExtensions.x-jsonproperty}}
+  {{#baseName}}
   @JsonProperty("{{baseName}}")
+  {{/baseName}}
+  {{/vendorExtensions.x-jsonproperty}}
+  
+  {{#jackson}}
   {{#withXml}}
   @JacksonXmlProperty(localName = "{{items.xmlName}}{{^items.xmlName}}{{xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}{{/items.xmlName}}"{{#isXmlAttribute}}, isAttribute = true{{/isXmlAttribute}}{{#xmlNamespace}}, namespace = "{{.}}"{{/xmlNamespace}})
     {{#isContainer}}
