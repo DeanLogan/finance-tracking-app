@@ -113,7 +113,7 @@ public class UlsterbankDaoImpl implements UlsterbankDao {
     
     private <T> T requestHelper(String accessToken, String accountId, String endpoint, Function<UlsterbankData, T> mapper) {
         return webClient.get()
-                .uri(config.getAccountsUrl() + accountId + endpoint)
+                .uri(config.getAccountsUrl() + "/"+ accountId + endpoint)
                 .header(AUTHORIZATION, BEARER + accessToken)
                 .retrieve()
                 .bodyToMono(UlsterbankGeneralResponse.class)
