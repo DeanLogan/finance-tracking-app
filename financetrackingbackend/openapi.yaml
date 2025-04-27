@@ -888,9 +888,11 @@ components:
       description: Represents the servicer details from the Ulsterbank API.
       properties:
         schemeName:
+          x-jsonproperty: SchemeName
           type: string
           description: The name of the scheme associated with the servicer.
         id:
+          x-jsonproperty: Identification
           type: string
           description: The identification of the servicer.
 
@@ -899,44 +901,59 @@ components:
       description: Represents an account from the Ulsterbank API.
       properties:
         accountId:
+          x-jsonproperty: AccountId
           type: string
           description: The unique identifier for the account.
         currency:
+          x-jsonproperty: Currency
           $ref: '#/components/schemas/Currency'
           description: The currency of the account.
         accountType:
+          x-jsonproperty: AccountType
           type: string
           description: The type of the account.
         accountSubType:
+          x-jsonproperty: AccountSubType
           type: string
           description: The subtype of the account.
         description:
+          x-jsonproperty: Description
           type: string
           description: A description of the account.
         nickname:
+          x-jsonproperty: Nickname
           type: string
           description: The nickname of the account.
-        account:
+        accounts:
+          x-jsonproperty: Account
           type: array
           items:
-            $ref: '#/components/schemas/UlsterbankAccount'
+            allOf:
+            - $ref: '#/components/schemas/UlsterbankAccount'
           description: A list of related accounts.
         servicer:
-          $ref: '#/components/schemas/UlsterbankServicer'
+          x-jsonproperty: Servicer
+          allOf:
+            - $ref: '#/components/schemas/UlsterbankServicer'
           description: The servicer details of the account.
         switchStatus:
+          x-jsonproperty: SwitchStatus
           type: string
           description: The switch status of the account.
         schemeName:
+          x-jsonproperty: SchemeName
           type: string
           description: The scheme name associated with the account.
         id:
+          x-jsonproperty: Identification
           type: string
           description: The identification of the account.
         secondaryId:
+          x-jsonproperty: SecondaryIdentification
           type: string
           description: The secondary identification of the account.
         name:
+          x-jsonproperty: Name
           type: string
           description: The name of the account holder.
 
@@ -945,10 +962,12 @@ components:
       description: Represents an amount with currency from the Ulsterbank API.
       properties:
         amount:
+          x-jsonproperty: Amount
           type: number
           format: float
           description: The amount value.
         currency:
+          x-jsonproperty: Currency
           $ref: '#/components/schemas/Currency'
           description: The currency of the amount.
 
@@ -957,12 +976,16 @@ components:
       description: Represents a credit line from the Ulsterbank API.
       properties:
         included:
+          x-jsonproperty: Included
           type: boolean
           description: Indicates whether the credit line is included.
         amount:
-          $ref: '#/components/schemas/UlsterbankAmount'
+          x-jsonproperty: Amount
+          allOf:
+            - $ref: '#/components/schemas/UlsterbankAmount'
           description: The amount associated with the credit line.
         type:
+          x-jsonproperty: Type
           type: string
           description: The type of the credit line.
 
@@ -971,22 +994,29 @@ components:
       description: Represents the balance details of an account from the Ulsterbank API.
       properties:
         accountId:
+          x-jsonproperty: AccountId
           type: string
           description: The unique identifier for the account.
         amount:
-          $ref: '#/components/schemas/UlsterbankAmount'
+          x-jsonproperty: Amount
+          allOf:
+            - $ref: '#/components/schemas/UlsterbankAmount'
           description: The amount associated with the balance.
         creditDebitIndicator:
+          x-jsonproperty: CreditDebitIndicator
           type: string
           description: Indicates whether the balance is a credit or debit.
         type:
+          x-jsonproperty: Type
           type: string
           description: The type of balance.
         dateTime:
+          x-jsonproperty: DateTime
           type: string
           format: date-time
           description: The date and time of the balance.
         creditLine:
+          x-jsonproperty: CreditLine
           type: array
           items:
             $ref: '#/components/schemas/UlsterBankCreditLine'
@@ -997,6 +1027,7 @@ components:
       description: Represents metadata information from the Ulsterbank API.
       properties:
         totalPages:
+          x-jsonproperty: TotalPages
           type: integer
           description: The total number of pages available.
 
@@ -1005,14 +1036,17 @@ components:
       description: Represents pagination links from the Ulsterbank API.
       properties:
         self:
+          x-jsonproperty: Self
           type: string
           format: uri
           description: The link to the current page.
         prev:
+          x-jsonproperty: Prev
           type: string
           format: uri
           description: The link to the previous page.
         next:
+          x-jsonproperty: Next
           type: string
           format: uri
           description: The link to the next page.
@@ -1022,29 +1056,39 @@ components:
       description: Represents a transaction from the Ulsterbank API.
       properties:
         accountId:
+          x-jsonproperty: AccountId
           type: string
           description: The unique identifier for the account associated with the transaction.
         transactionId:
+          x-jsonproperty: TransactionId
           type: string
           description: The unique identifier for the transaction.
         creditDebitIndicator:
+          x-jsonproperty: CreditDebitIndicator
           type: boolean
           description: Indicates whether the transaction is a credit or debit.
         status:
+          x-jsonproperty: Status
           type: string
           description: The status of the transaction.
         bookingDateTime:
+          x-jsonproperty: BookingDateTime
           type: string
           format: date-time
           description: The date and time when the transaction was booked.
         amount:
-          $ref: '#/components/schemas/UlsterbankAmount'
+          x-jsonproperty: Amount
+          allOf:
+            - $ref: '#/components/schemas/UlsterbankAmount'
           description: The amount associated with the transaction.
         transactionInformation:
+          x-jsonproperty: TransactionInformation
           type: string
           description: Additional information about the transaction.
         balance:
-          $ref: '#/components/schemas/UlsterbankBalance'
+          allOf:
+            - $ref: '#/components/schemas/UlsterbankBalance'
+          x-jsonproperty: Balance
           description: The balance details after the transaction.
 
     UlsterbankData:
@@ -1052,44 +1096,59 @@ components:
       description: Represents data from the Ulsterbank API.
       properties:
         consentId:
+          x-jsonproperty: ConsentId
           type: string
           description: The unique identifier for the consent.
         creationDateTime:
+          x-jsonproperty: CreationDateTime
           type: string
           format: date-time
           description: The date and time when the data was created.
         status:
+          x-jsonproperty: Status
           type: string
           description: The status of the data.
         statusUpdateDateTime:
+          x-jsonproperty: StatusUpdateDateTime
           type: string
           format: date-time
           description: The date and time when the status was last updated.
         permissions:
+          x-jsonproperty: Permissions
           type: array
           items:
             type: string
           description: A list of permissions associated with the data.
         links:
-          $ref: '#/components/schemas/UlsterbankLinks'
+          x-jsonproperty: Links
+          allOf:
+            - $ref: '#/components/schemas/UlsterbankLinks'
           description: The pagination links associated with the data.
         meta:
-          $ref: '#/components/schemas/UlsterbankMeta'
+          x-jsonproperty: Meta
+          allOf:
+            - $ref: '#/components/schemas/UlsterbankMeta'
           description: Metadata information associated with the data.
         accounts:
+          x-jsonproperty: Account
           type: array
           items:
-            $ref: '#/components/schemas/UlsterbankAccount'
+            allOf:
+            - $ref: '#/components/schemas/UlsterbankAccount'
           description: A list of accounts associated with the data.
         balances:
+          x-jsonproperty: Balance
           type: array
           items:
-            $ref: '#/components/schemas/UlsterbankBalance'
+            allOf:
+            - $ref: '#/components/schemas/UlsterbankBalance'
           description: A list of balances associated with the data.
         transactions:
+          x-jsonproperty: Transaction
           type: array
           items:
-            $ref: '#/components/schemas/UlsterbankTransaction'
+            allOf:
+            - $ref: '#/components/schemas/UlsterbankTransaction'
           description: A list of transactions associated with the data.
 
     UlsterbankGeneralResponse:
@@ -1097,13 +1156,19 @@ components:
       description: Represents a general response from the Ulsterbank API.
       properties:
         data:
-          $ref: '#/components/schemas/UlsterbankData'
+          x-jsonproperty: Data
+          allOf:
+            - $ref: '#/components/schemas/UlsterbankData'
           description: The data object containing detailed information.
         links:
-          $ref: '#/components/schemas/UlsterbankLinks'
+          x-jsonproperty: Links
+          allOf:
+            - $ref: '#/components/schemas/UlsterbankLinks'
           description: The pagination links associated with the response.
         meta:
-          $ref: '#/components/schemas/UlsterbankMeta'
+          x-jsonproperty: Meta
+          allOf:
+            - $ref: '#/components/schemas/UlsterbankMeta'
           description: Metadata information associated with the response.
 
     Currency:
