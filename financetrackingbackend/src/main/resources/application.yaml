@@ -24,6 +24,7 @@ external:
     services:
         ulsterbank:
             base-url: https://ob.sandbox.ulsterbank.co.uk
+            accounts-url: open-banking/v3.1/aisp/accounts
             auth-url: https://api.sandbox.ulsterbank.co.uk/authorize
             client-id: ${ULSTERBANK_CLIENT_ID}
             client-secret: ${ULSTERBANK_CLIENT_SECRET}

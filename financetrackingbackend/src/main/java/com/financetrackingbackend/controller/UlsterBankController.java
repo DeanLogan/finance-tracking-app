@@ -29,12 +29,12 @@ public class UlsterBankController implements UlsterbankApi {
 
     @GetMapping("/auth")
     public String authoriseUser(@RequestHeader("code") String code) {
-        return ulsterbankDao.tokenRequest(code, "client credentials").toString();
+        return ulsterbankDao.tokenRequest(code, "client_credentials").toString();
     }
 
     @GetMapping("/consentId")
     public ResponseEntity<String> getConsentId() {
-        UlsterbankAccessToken accessToken = ulsterbankDao.tokenRequest("code", "client credentials");
+        UlsterbankAccessToken accessToken = ulsterbankDao.tokenRequest("code", "client_credentials");
         UlsterbankGeneralResponse consent = ulsterbankDao.getConsentResponse(accessToken.getAccessToken());
         String consentId = ulsterbankAuthService.extractConsentId(consent);
         return ResponseEntity.ok(consentId);
