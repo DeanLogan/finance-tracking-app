@@ -1,0 +1,51 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "url": "/open-banking/v3.1/aisp/accounts",
+        "headers": {
+          "Authorization": {
+            "matches": "^Bearer\\s+(.+)$"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "ulsterbank/account-info/accounts/{{request.headers.Authorization.0}}.json",
+        "transformers": ["response-template"],
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPattern": "/open-banking/v3.1/aisp/accounts/[^/]+/balances"
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "ulsterbank/account-info/balances/{{request.path.[4]}}.json",
+        "transformers": ["response-template"],
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPattern": "/open-banking/v3.1/aisp/accounts/[^/]+/transactions"
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "ulsterbank/account-info/transactions/{{request.path.[4]}}.json",
+        "transformers": ["response-template"],
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

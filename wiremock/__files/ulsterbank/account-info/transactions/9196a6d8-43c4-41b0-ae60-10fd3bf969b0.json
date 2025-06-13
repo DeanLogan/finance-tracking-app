@@ -1,0 +1,60 @@
+{
+    "Data": {
+        "Transaction": [
+            {
+                "AccountId": "9196a6d8-43c4-41b0-ae60-10fd3bf969b0",
+                "TransactionId": "54c4fef0-269f-45ab-9aea-340a7d3aae94",
+                "CreditDebitIndicator": "Credit",
+                "Status": "Booked",
+                "BookingDateTime": "2024-12-29T11:46:00.000Z",
+                "Amount": {
+                    "Amount": "250.00",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Monthly savings",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "125930.92",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "9196a6d8-43c4-41b0-ae60-10fd3bf969b0",
+                "TransactionId": "1fe058ac-2a06-497d-9298-ca4061aa16fb",
+                "CreditDebitIndicator": "Credit",
+                "Status": "Booked",
+                "BookingDateTime": "2024-11-05T15:32:00.000Z",
+                "Amount": {
+                    "Amount": "250.00",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Monthly savings",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "125680.92",
+                        "Currency": "GBP"
+                    }
+                }
+            }
+        ]
+    },
+    "Links": {
+        "Self": "https://ob.sandbox.ulsterbank.co.uk/open-banking/v3.1/aisp/accounts/9196a6d8-43c4-41b0-ae60-10fd3bf969b0/transactions?page=0",
+        "First": "https://ob.sandbox.ulsterbank.co.uk/open-banking/v3.1/aisp/accounts/9196a6d8-43c4-41b0-ae60-10fd3bf969b0/transactions?page=0",
+        "Last": "https://ob.sandbox.ulsterbank.co.uk/open-banking/v3.1/aisp/accounts/9196a6d8-43c4-41b0-ae60-10fd3bf969b0/transactions?page=0"
+    },
+    "Meta": {
+        "TotalPages": 1
+    }
+}

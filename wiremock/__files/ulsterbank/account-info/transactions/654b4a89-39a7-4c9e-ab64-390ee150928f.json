@@ -1,0 +1,1670 @@
+{
+    "Data": {
+        "Transaction": [
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "37983e03-5fc2-4214-98cb-59b0d618736e",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-06-10T15:34:07.412Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Ref2",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "17576.43",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "7357d1d4-718f-4ccb-92a0-aecdd39cede0",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-06-10T11:47:43.801Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Ref2",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "17602.91",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "34066ae8-1814-4438-9fca-5174e1f1280d",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-06-09T15:35:43.036Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "17629.39",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "b84fda34-99a9-40be-a04d-4a354d4c29b6",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-06-09T11:49:19.163Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "17655.87",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "022eab6c-fa59-4f0e-9da7-23a8ebc450dd",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-06-02T15:34:41.857Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "17682.35",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "2ca769d1-863d-42ae-a9e3-5493cae7e7fc",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-06-02T11:48:03.465Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "17708.83",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "dde75dbf-6a59-4f1e-8e6c-c65877ec2d1a",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-05-26T15:36:55.237Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "17735.31",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "7548fa82-1d85-4b2c-afa3-592ad66d4ef6",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-05-26T11:50:12.697Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "17761.79",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "e1910f13-daf7-4b55-8ba1-7a51a4db80f5",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-05-19T15:33:49.461Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "17788.27",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "c9511b69-0a96-4f58-a208-a07d465efb91",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-05-19T11:47:07.647Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "17814.75",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "d56582c0-2d8c-42e5-bbce-a33a8843da34",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-05-12T15:35:17.421Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "17841.23",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "b90fc719-c00b-4713-a174-13d22c823cee",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-05-12T11:48:34.386Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "17867.71",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "8a9ae736-5657-4096-a158-6db0fd374bfe",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-05-10T15:34:14.689Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Ref2",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "17894.19",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "e4005677-0ddc-4d63-b73f-ea7beac345fe",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-05-10T11:48:52.989Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Ref2",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "17920.67",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "1cf6cc98-3ccd-4db3-b498-353592d36b2c",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-05-05T15:35:47.999Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "17947.15",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "b2867f93-c7dc-468f-ab41-343a960d7cb5",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-05-05T11:49:11.466Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "17973.63",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "964c75be-7015-46ea-8c36-0c3668b4100f",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-04-28T15:33:13.106Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18000.11",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "f3df9330-51cc-45cc-a217-213ee61f1ddf",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-04-28T11:46:43.254Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18026.59",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "a92c5614-ae0c-4256-90d7-dee622d4a5a2",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-04-21T15:35:27.643Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18053.07",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "4ba8a997-76c1-4a7d-b164-3fedde9f945c",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-04-21T11:48:49.201Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18079.55",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "d2c9a705-db48-4283-b34b-9c49519e02c0",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-04-14T15:32:54.799Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18106.03",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "d304fb84-056b-4250-9630-cb7a80bf460f",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-04-14T11:46:20.210Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18132.51",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "fdc6841e-6d93-43df-9a64-1792a337fee0",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-04-10T15:32:10.311Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Ref2",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18158.99",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "9f3382c8-2721-443b-9f09-09e5c5552b5a",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-04-10T11:46:47.184Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Ref2",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18185.47",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "4c35a1c1-f07d-43b6-a399-f5160a1ecdcd",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-04-07T15:33:46.963Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18211.95",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "967cbd64-d3d4-4a4f-be4a-e48f7a54a802",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-04-07T11:47:05.844Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18238.43",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "cf38fef0-3cec-44c0-9980-b19b79760457",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-03-31T15:34:16.440Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18264.91",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "511d86ee-1f49-4ca8-972c-8c46310f554d",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-03-31T11:47:08.821Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18291.39",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "8e1b8d07-5a05-4fe1-b905-544dd2178a5f",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-03-24T15:34:31.431Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18317.87",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "af24ff90-8663-4ebb-a0ac-046cf38920ea",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-03-24T11:47:38.965Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18344.35",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "7e8760a4-70a4-4262-84f5-9f58004cee4f",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-03-17T15:35:51.502Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18370.83",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "a2dcc209-a19a-4e07-9814-33135e14771e",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-03-17T11:47:44.870Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18397.31",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "df03fe4d-58de-43f4-be72-0ba8b37913c0",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-03-10T15:36:18.879Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Ref2",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18423.79",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "926f643c-a766-48e6-b175-0b3badb9d554",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-03-10T15:36:18.652Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18450.27",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "e66f262f-5d3a-4741-9931-45e60a70fb1a",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-03-10T11:51:11.818Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Ref2",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18476.75",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "255dbb76-d0c2-4e84-8644-bd982112e5c7",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-03-10T11:51:11.684Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18503.23",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "e9320c71-0c3f-4e47-8bc6-83289efb1df0",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-03-03T15:36:21.442Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18529.71",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "0b50efcf-8b7c-4d54-a487-9c998154f3a2",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-03-03T11:48:48.629Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18556.19",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "9408010c-6817-42f0-8c4c-2cb68878a752",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-02-24T15:36:56.136Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18582.67",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "dc274f7e-cd6a-4f4c-9c4b-7e42a91dc862",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-02-24T11:49:31.395Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18609.15",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "911bf84d-e79d-43b3-a546-1480e389ff6d",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-02-17T15:33:04.322Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18635.63",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "e70a1731-6ad4-43d0-b596-10482fe5d974",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-02-17T11:50:26.314Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18662.11",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "db1169a6-17e4-4948-8630-cb0a19d5bf4a",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-02-10T15:35:05.674Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Ref2",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18688.59",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "56294db0-99fb-473d-9f48-cce5cf10e590",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-02-10T15:35:05.607Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18715.07",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "ddbc0597-2b38-4549-b51f-9fbd5d5e6d7e",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-02-10T11:47:40.796Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Ref2",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18741.55",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "9060becf-0a69-4377-aafc-ff60a1559bab",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-02-10T11:47:40.686Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18768.03",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "d57578e5-88b4-4f9e-9cf0-437aa32cb0cd",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-02-03T15:33:44.995Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18794.51",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "7a6a6a2a-13fb-44ed-8b68-b2ab8ee5cd25",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-02-03T11:46:48.924Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18820.99",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "90c362b7-a5df-426c-a4a6-fc9c58be7d45",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-01-27T15:34:34.042Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18847.47",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "d9128d1f-a846-4461-a6be-ac53421d703b",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-01-27T11:47:39.496Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18873.95",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "32ecd1c4-3efd-4743-8a23-5041344bc04b",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-01-20T15:35:31.258Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18900.43",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "2c166669-09f5-4020-9cee-a4bf0293ef38",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-01-20T11:48:23.796Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18926.91",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "f42e03e3-4d05-4550-9449-c48a7e3e25cb",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-01-13T15:36:24.145Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18953.39",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "31e7902f-2f10-4f54-a333-96d7ea41b486",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-01-13T11:49:27.515Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "18979.87",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "9d436fb0-f313-403c-abe0-58bc13a75fdd",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-01-10T15:34:54.505Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Ref2",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "19006.35",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "55ee0ac7-1a19-408d-b5d2-812085979ebe",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-01-06T15:34:46.184Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "19032.83",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "61e4e9c4-8860-44d1-af49-3dfe30d709fb",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-01-06T11:47:47.218Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Ref2",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "19059.31",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "74091c66-495b-4fec-bbe4-0b823537d2ac",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2025-01-06T11:47:47.200Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "19085.79",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "587dc1f9-aa09-4033-be5d-a4d6d8d4f20e",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2024-12-31T11:46:00.000Z",
+                "Amount": {
+                    "Amount": "72.14",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Pizzeria Mama Roma",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "19112.27",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "190934f8-461c-4f6b-8177-804d25139e52",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2024-12-29T11:46:00.000Z",
+                "Amount": {
+                    "Amount": "250.00",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Monthly savings",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "19184.41",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "b4a00284-8fa2-46c3-aeb3-79956c2ddb01",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2024-12-30T15:34:04.967Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "19434.41",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "fc76a965-1497-43de-9d01-5d990e28e102",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2024-12-23T15:33:56.104Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "19460.89",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "4902aedf-581e-4ee8-bfd8-07b01f6f9ab7",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2024-12-16T15:33:24.212Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "19487.37",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "88052c4d-0b79-414e-a6bb-94c1897692ec",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2024-12-10T15:33:29.754Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Ref2",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "19513.85",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "1542c2c0-bcac-4fc9-8f99-d84580b14a01",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2024-12-09T15:35:04.776Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "19540.33",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "45d7cb01-aaa8-42f4-a4dc-20e1978dfc19",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2024-12-02T15:35:27.722Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "19566.81",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "652907c7-9a7f-4f09-bd0c-ac08cdcba62f",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2024-11-25T15:32:49.999Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "19593.29",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "5aa4c5ac-b92f-4f9a-9486-b0d9508671b2",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2024-11-18T15:36:42.855Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "19619.77",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "3d907649-8d0a-44bf-bc83-238449fb166e",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2024-11-13T15:35:59.994Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Ref2",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "19646.25",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "7237e145-0049-45d0-9844-dd83bc27e4e2",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2024-11-13T15:35:59.980Z",
+                "Amount": {
+                    "Amount": "26.48",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Standing order to ULSB80540122222222",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "19672.73",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "5d7e5e94-1ca5-4f86-bce9-2f1a5c52e1ef",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2024-11-07T15:32:00.000Z",
+                "Amount": {
+                    "Amount": "72.14",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Pizzeria Mama Roma",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "19699.21",
+                        "Currency": "GBP"
+                    }
+                }
+            },
+            {
+                "AccountId": "654b4a89-39a7-4c9e-ab64-390ee150928f",
+                "TransactionId": "b0b3c5ef-041c-4ccb-808c-9009e7f060e6",
+                "CreditDebitIndicator": "Debit",
+                "Status": "Booked",
+                "BookingDateTime": "2024-11-05T15:32:00.000Z",
+                "Amount": {
+                    "Amount": "250.00",
+                    "Currency": "GBP"
+                },
+                "ProprietaryBankTransactionCode": {
+                    "Code": "TFR"
+                },
+                "TransactionInformation": "Monthly savings",
+                "Balance": {
+                    "CreditDebitIndicator": "Credit",
+                    "Type": "Information",
+                    "Amount": {
+                        "Amount": "19771.35",
+                        "Currency": "GBP"
+                    }
+                }
+            }
+        ]
+    },
+    "Links": {
+        "Self": "https://ob.sandbox.ulsterbank.co.uk/open-banking/v3.1/aisp/accounts/654b4a89-39a7-4c9e-ab64-390ee150928f/transactions?page=0",
+        "First": "https://ob.sandbox.ulsterbank.co.uk/open-banking/v3.1/aisp/accounts/654b4a89-39a7-4c9e-ab64-390ee150928f/transactions?page=0",
+        "Last": "https://ob.sandbox.ulsterbank.co.uk/open-banking/v3.1/aisp/accounts/654b4a89-39a7-4c9e-ab64-390ee150928f/transactions?page=0"
+    },
+    "Meta": {
+        "TotalPages": 1
+    }
+}

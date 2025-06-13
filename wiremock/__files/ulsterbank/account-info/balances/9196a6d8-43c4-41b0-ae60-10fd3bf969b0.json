@@ -1,0 +1,32 @@
+{
+    "Data": {
+        "Balance": [
+            {
+                "AccountId": "9196a6d8-43c4-41b0-ae60-10fd3bf969b0",
+                "CreditDebitIndicator": "Credit",
+                "Type": "Expected",
+                "DateTime": "2024-12-29T11:46:00.000Z",
+                "Amount": {
+                    "Amount": "125930.92",
+                    "Currency": "GBP"
+                }
+            },
+            {
+                "AccountId": "9196a6d8-43c4-41b0-ae60-10fd3bf969b0",
+                "CreditDebitIndicator": "Credit",
+                "Type": "ForwardAvailable",
+                "DateTime": "2024-12-29T11:46:00.000Z",
+                "Amount": {
+                    "Amount": "125930.92",
+                    "Currency": "GBP"
+                }
+            }
+        ]
+    },
+    "Links": {
+        "Self": "https://ob.sandbox.ulsterbank.co.uk/open-banking/v3.1/aisp/accounts/9196a6d8-43c4-41b0-ae60-10fd3bf969b0/balances"
+    },
+    "Meta": {
+        "TotalPages": 1
+    }
+}
