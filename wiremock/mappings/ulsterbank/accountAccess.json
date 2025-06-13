@@ -1,0 +1,23 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "POST",
+        "url": "/open-banking/v3.1/aisp/account-access-consents",
+        "headers": {
+          "Authorization": {
+            "matches": ".*"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "ulsterbank/auth/accountAccess/{{request.headers.Authorization.0}}.json",
+        "transformers": ["response-template"],
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}
