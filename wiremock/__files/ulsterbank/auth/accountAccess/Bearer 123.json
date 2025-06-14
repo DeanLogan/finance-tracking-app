@@ -1,0 +1,22 @@
+{
+  "Data": {
+    "ConsentId": "e3b1c2d4-5f67-4a9e-9b2a-1f8c3e7d9a21",
+    "CreationDateTime": "2025-06-13T17:09:27.956Z",
+    "Status": "AwaitingAuthorisation",
+    "StatusUpdateDateTime": "2025-06-13T17:09:27.964Z",
+    "Permissions": [
+      "ReadAccountsDetail",
+      "ReadBalances",
+      "ReadTransactionsCredits",
+      "ReadTransactionsDebits",
+      "ReadTransactionsDetail"
+    ]
+  },
+  "Risk": {},
+  "Links": {
+    "Self": "https://ob.sandbox.ulsterbank.co.uk/open-banking/v3.1/aisp/account-access-consents/e3b1c2d4-5f67-4a9e-9b2a-1f8c3e7d9a21"
+  },
+  "Meta": {
+    "TotalPages": 1
+  }
+}

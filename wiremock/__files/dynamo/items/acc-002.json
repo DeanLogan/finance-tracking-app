@@ -1,0 +1,95 @@
+{
+  "Item": {
+    "id": { "S": "acc-002" },
+    "name": { "S": "Investment Account" },
+    "bank": { "S": "HSBC" },
+    "accountNumber": { "N": "87654321" },
+    "sortCode": { "N": "654321" },
+    "balance": { "N": "10000.00" },
+    "stocks": {
+      "L": [
+        {
+          "M": {
+            "name": { "S": "Google" },
+            "currentAmount": { "N": "8" },
+            "gains": { "N": "132.40" },
+            "currency": { "S": "USD" },
+            "tickerSymbol": { "S": "GOOGL" },
+            "purchaseDate": { "S": "2023-09-10" },
+            "purchasePrice": { "N": "125.75" },
+            "currentPrice": { "N": "142.30" }
+          }
+        },
+        {
+          "M": {
+            "name": { "S": "Amazon" },
+            "currentAmount": { "N": "15" },
+            "gains": { "N": "384.25" },
+            "currency": { "S": "USD" },
+            "tickerSymbol": { "S": "AMZN" },
+            "purchaseDate": { "S": "2023-07-05" },
+            "purchasePrice": { "N": "130.25" },
+            "currentPrice": { "N": "155.80" }
+          }
+        },
+        {
+          "M": {
+            "name": { "S": "Tesla" },
+            "currentAmount": { "N": "12" },
+            "gains": { "N": "303.00" },
+            "currency": { "S": "USD" },
+            "tickerSymbol": { "S": "TSLA" },
+            "purchaseDate": { "S": "2023-10-15" },
+            "purchasePrice": { "N": "200.50" },
+            "currentPrice": { "N": "225.75" }
+          }
+        }
+      ]
+    },
+    "currentGains": { "N": "832.40" },
+    "fees": {
+      "L": [
+        {
+          "M": {
+            "type": { "S": "FIXED" },
+            "percentage": { "N": "0" },
+            "amount": { "N": "25.00" },
+            "frequency": { "S": "QUARTERLY" },
+            "date": { "S": "2023-12-31" },
+            "description": { "S": "Quarterly account maintenance fee" }
+          }
+        },
+        {
+          "M": {
+            "type": { "S": "FIXED" },
+            "percentage": { "N": "0" },
+            "amount": { "N": "12.99" },
+            "frequency": { "S": "ONE_TIME" },
+            "date": { "S": "2023-09-10" },
+            "description": { "S": "Stock purchase commission - GOOGL" }
+          }
+        },
+        {
+          "M": {
+            "type": { "S": "FIXED" },
+            "percentage": { "N": "0" },
+            "amount": { "N": "15.50" },
+            "frequency": { "S": "ONE_TIME" },
+            "date": { "S": "2023-07-05" },
+            "description": { "S": "FX conversion fee" }
+          }
+        }
+      ]
+    },
+    "interestRate": {
+      "M": {
+        "aer": { "N": "4.2" },
+        "type": { "S": "VARIABLE" },
+        "paidTime": { "S": "MONTHLY" },
+        "startDate": { "S": "2024-01-17" },
+        "endDate": { "S": "2025-01-17" }
+      }
+    },
+    "user": { "S": "admin" }
+  }
+}

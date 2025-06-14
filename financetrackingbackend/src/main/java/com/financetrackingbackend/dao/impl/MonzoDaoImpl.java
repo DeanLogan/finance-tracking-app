@@ -54,33 +54,33 @@ public class MonzoDaoImpl implements MonzoDao {
 
     @Override
     public WhoAmI getWhoAmI(String accessToken) {
-        return requestHelper(accessToken, accessToken, "/ping/whoami", WhoAmI.class);
+        return requestHelper(accessToken, "", "", "/ping/whoami", WhoAmI.class);
     }
 
     @Override
     public List<MonzoAccount> getAccounts(String accessToken) {
-        MonzoAccounts accounts = requestHelper(accessToken, accessToken, "/accounts", MonzoAccounts.class);
+        MonzoAccounts accounts = requestHelper(accessToken, "", "", "/accounts", MonzoAccounts.class);
         return accounts != null ? accounts.getAccounts() : Collections.emptyList();
     }
 
     @Override
     public MonzoPots getAllPots(String accessToken, String accountId) {
-        return requestHelper(accessToken, accountId, "/pots", MonzoPots.class);
+        return requestHelper(accessToken, "current_account_id", accountId, "/pots", MonzoPots.class);
     }
 
     @Override
     public MonzoAccount getBalanceForAccount(String accessToken, String accountId) {
-        return requestHelper(accessToken, accountId, "/balance", MonzoAccount.class);
+        return requestHelper(accessToken, "account_id", accountId, "/balance", MonzoAccount.class);
     }
 
     @Override
     public MonzoTransactionsResponse getTransactions(String accessToken, String accountId) {
-        return requestHelper(accessToken, accountId, "/transactions", MonzoTransactionsResponse.class);
+        return requestHelper(accessToken, "account_id", accountId, "/transactions", MonzoTransactionsResponse.class);
     }
 
-    private <T> T requestHelper(String accessToken, String accountId, String endpoint, Class<T> elementClass) {
+    private <T> T requestHelper(String accessToken, String queryParam, String paramValue, String endpoint, Class<T> elementClass) {
         return webClient.get()
-                .uri(endpoint + "?account_id=" + accountId)
+                .uri(endpoint + "?"+queryParam+"=" + paramValue)
                 .headers(headers -> headers.setBearerAuth(accessToken))
                 .retrieve()
                 .bodyToMono(elementClass)
@@ -105,11 +105,7 @@ public class MonzoDaoImpl implements MonzoDao {
     private MonzoAccessToken fetchAccessToken(MultiValueMap<String, String> formData) {
         try {
             MonzoAccessToken monzoAccessToken = webClient.post()
-                    .uri(uriBuilder -> uriBuilder
-                            .scheme("https")
-                            .host(monzoConfig.getBaseUrl())
-                            .path("/oauth2/token")
-                            .build())
+                    .uri("/oauth2/token")
                     .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                     .bodyValue(formData)
                     .retrieve()

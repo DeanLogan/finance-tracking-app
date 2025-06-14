@@ -1,0 +1,83 @@
+{
+  "Item": {
+    "id": { "S": "acc-003" },
+    "name": { "S": "ETF Portfolio" },
+    "bank": { "S": "Nationwide" },
+    "accountNumber": { "N": "11223344" },
+    "sortCode": { "N": "112233" },
+    "balance": { "N": "5000.75" },
+    "stocks": {
+      "L": [
+        {
+          "M": {
+            "name": { "S": "Vanguard S&P 500 ETF" },
+            "currentAmount": { "N": "20" },
+            "gains": { "N": "510.75" },
+            "currency": { "S": "USD" },
+            "tickerSymbol": { "S": "VOO" },
+            "purchaseDate": { "S": "2023-05-20" },
+            "purchasePrice": { "N": "350.25" },
+            "currentPrice": { "N": "375.80" }
+          }
+        },
+        {
+          "M": {
+            "name": { "S": "Vanguard Total Stock Market ETF" },
+            "currentAmount": { "N": "15" },
+            "gains": { "N": "300.00" },
+            "currency": { "S": "USD" },
+            "tickerSymbol": { "S": "VTI" },
+            "purchaseDate": { "S": "2023-11-15" },
+            "purchasePrice": { "N": "200.75" },
+            "currentPrice": { "N": "220.50" }
+          }
+        }
+      ]
+    },
+    "currentGains": { "N": "810.75" },
+    "fees": {
+      "L": [
+        {
+          "M": {
+            "type": { "S": "FIXED" },
+            "percentage": { "N": "0" },
+            "amount": { "N": "5.99" },
+            "frequency": { "S": "MONTHLY" },
+            "date": { "S": "2024-01-01" },
+            "description": { "S": "Monthly platform fee" }
+          }
+        },
+        {
+          "M": {
+            "type": { "S": "FIXED" },
+            "percentage": { "N": "0" },
+            "amount": { "N": "8.99" },
+            "frequency": { "S": "ONE_TIME" },
+            "date": { "S": "2023-05-20" },
+            "description": { "S": "ETF purchase commission - VOO" }
+          }
+        },
+        {
+          "M": {
+            "type": { "S": "FIXED" },
+            "percentage": { "N": "0" },
+            "amount": { "N": "8.99" },
+            "frequency": { "S": "ONE_TIME" },
+            "date": { "S": "2023-11-15" },
+            "description": { "S": "ETF purchase commission - VTI" }
+          }
+        }
+      ]
+    },
+    "interestRate": {
+      "M": {
+        "aer": { "N": "2.8" },
+        "type": { "S": "FIXED" },
+        "paidTime": { "S": "MONTHLY" },
+        "startDate": { "S": "2024-01-17" },
+        "endDate": { "S": "2025-01-17" }
+      }
+    },
+    "user": { "S": "user" }
+  }
+}

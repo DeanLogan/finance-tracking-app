@@ -1,0 +1,7 @@
+{
+  "tokenType": "Bearer",
+  "accessToken": "123",
+  "expiresIn": 600,
+  "scope": "accounts openid",
+  "refreshToken": "1234"
+}

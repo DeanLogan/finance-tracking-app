@@ -1,0 +1,6 @@
+{
+  "access_token": "123",
+  "token_type": "Bearer",
+  "expires_in": 600,
+  "scope": "accounts"
+}

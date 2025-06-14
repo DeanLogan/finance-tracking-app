@@ -1,0 +1,23 @@
+{
+  "Item": {
+    "id": { "S": "acc-005" },
+    "name": { "S": "gg Account" },
+    "balance": { "N": "999.0" },
+    "bank": { "S": "Natwest" },
+    "fees": { "L": [] },
+    "currentGains": { "N": "0.0" },
+    "accountNumber": { "N": "5497280" },
+    "sortCode": { "N": "883388" },
+    "user": { "S": "admin" },
+    "stocks": { "L": [] },
+    "interestRate": {
+      "M": {
+        "endDate": { "S": "2025-01-17" },
+        "paidTime": { "S": "MONTHLY" },
+        "type": { "S": "VARIABLE" },
+        "startDate": { "S": "2024-01-17" },
+        "aer": { "N": "4.2" }
+      }
+    }
+  }
+}
