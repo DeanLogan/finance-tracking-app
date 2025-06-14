@@ -23,20 +23,22 @@ test:
 external:
     services:
         ulsterbank:
-            base-url: https://ob.sandbox.ulsterbank.co.uk
+            base-url: ${wiremock-host}
             accounts-url: open-banking/v3.1/aisp/accounts
             auth-url: https://api.sandbox.ulsterbank.co.uk/authorize
             client-id: ${ULSTERBANK_CLIENT_ID}
             client-secret: ${ULSTERBANK_CLIENT_SECRET}
         monzo:
-            base-url: https://api.monzo.com
+            base-url: ${wiremock-host}
             redirect-url: http://localhost:8080/monzo/oauth/callback
             client-id: ${MONZO_CLIENT_ID}
             client-secret: ${MONZO_CLIENT_SECRET}
 
 aws:
     dynamodb:
-        endpoint: http://localstack:4566
+        endpoint: ${wiremock-host}
         region: eu-west-1
         access-key: test
         secret-key: test
+
+wiremock-host: http://localhost:1080
