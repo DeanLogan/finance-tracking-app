@@ -19,6 +19,25 @@
         }
       }
     },
+        {
+      "request": {
+        "method": "GET",
+        "url": "/open-banking/v3.1/aisp/accounts/",
+        "headers": {
+          "Authorization": {
+            "matches": "^Bearer\\s+(.+)$"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "ulsterbank/account-info/accounts/{{request.headers.Authorization.0}}.json",
+        "transformers": ["response-template"],
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
     {
       "request": {
         "method": "GET",
