@@ -1,0 +1,68 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "POST",
+        "url": "/",
+        "headers": {
+          "X-Amz-Target": {
+            "equalTo": "DynamoDB_20120810.PutItem"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "dynamo/items/{{jsonPath request.body '$.Item.id.S'}}.json",
+        "transformers": ["response-template"]
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/",
+        "headers": {
+          "X-Amz-Target": {
+            "equalTo": "DynamoDB_20120810.GetItem"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "dynamo/items/{{jsonPath request.body '$.Key.id.S'}}.json",
+        "transformers": ["response-template"]
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/",
+        "headers": {
+          "X-Amz-Target": {
+            "equalTo": "DynamoDB_20120810.DeleteItem"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "dynamo/attributes/{{jsonPath request.body '$.Key.id.S'}}.json",
+        "transformers": ["response-template"]
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/",
+        "headers": {
+          "X-Amz-Target": {
+            "equalTo": "DynamoDB_20120810.UpdateItem"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "dynamo/attributes/{{jsonPath request.body '$.Key.id.S'}}.json",
+        "transformers": ["response-template"]
+      }
+    }
+  ]
+}
