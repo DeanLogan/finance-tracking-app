@@ -8,13 +8,16 @@ import com.example.model.WhoAmI;
 import com.example.model.MonzoAccounts;
 import com.financetrackingbackend.configuration.MonzoConfig;
 import com.financetrackingbackend.dao.MonzoDao;
+import com.financetrackingbackend.exceptions.ServiceUnavailableException;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientException;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,7 +26,6 @@ import java.util.List;
 public class MonzoDaoImpl implements MonzoDao {
     private final String REFRESH_TOKEN = "refresh_token";
     private final String AUTHORISATION_CODE = "authorization_code";
-
     private final WebClient webClient;
     private final MonzoConfig monzoConfig;
 
@@ -79,12 +81,16 @@ public class MonzoDaoImpl implements MonzoDao {
     }
 
     private <T> T requestHelper(String accessToken, String queryParam, String paramValue, String endpoint, Class<T> elementClass) {
-        return webClient.get()
-                .uri(endpoint + "?"+queryParam+"=" + paramValue)
-                .headers(headers -> headers.setBearerAuth(accessToken))
-                .retrieve()
-                .bodyToMono(elementClass)
-                .block();
+        try {
+            return webClient.get()
+                    .uri(endpoint + "?"+queryParam+"=" + paramValue)
+                    .headers(headers -> headers.setBearerAuth(accessToken))
+                    .retrieve()
+                    .bodyToMono(elementClass)
+                    .block();
+        } catch(WebClientResponseException e) {
+            throw new ServiceUnavailableException("Monzo request failed: "+e.getMessage());
+        }
     }
 
     private MultiValueMap<String, String> buildFormData(String grantType, String code, String redirectUri) {
@@ -114,6 +120,12 @@ public class MonzoDaoImpl implements MonzoDao {
 
             System.out.println("\n\n\n\n" + monzoAccessToken + "\n\n\n\n");
             return monzoAccessToken;
+        } catch (WebClientResponseException e) {
+            String message = "Monzo request failed: ";
+            if (e.getStatusCode() == HttpStatusCode.valueOf(401)) {
+                message = "Incorrect token: ";
+            }
+            throw new ServiceUnavailableException(message+e.getMessage());
         } catch (WebClientException e) {
             throw new IllegalStateException("Failed to connect to Monzo authorization endpoint", e);
         }
