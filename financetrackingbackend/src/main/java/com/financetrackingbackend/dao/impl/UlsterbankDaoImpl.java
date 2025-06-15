@@ -27,7 +27,7 @@ import static com.financetrackingbackend.util.AppConstants.ACCOUNT_ACCESS_CONSEN
 import static com.financetrackingbackend.util.AppConstants.APPLICATION_JSON;
 import static com.financetrackingbackend.util.AppConstants.AUTHORIZATION;
 import static com.financetrackingbackend.util.AppConstants.AUTHORIZATION_CODE;
-import static com.financetrackingbackend.util.AppConstants.BALANCES_ENDPOINT;
+import static com.financetrackingbackend.util.AppConstants.BALANCES_PATH;
 import static com.financetrackingbackend.util.AppConstants.BEARER;
 import static com.financetrackingbackend.util.AppConstants.CLIENT_CREDENTIALS;
 import static com.financetrackingbackend.util.AppConstants.CLIENT_ID;
@@ -46,7 +46,7 @@ import static com.financetrackingbackend.util.AppConstants.RISK;
 import static com.financetrackingbackend.util.AppConstants.SCOPE;
 import static com.financetrackingbackend.util.AppConstants.CODE;
 import static com.financetrackingbackend.util.AppConstants.TOKEN_PATH;
-import static com.financetrackingbackend.util.AppConstants.TRANSACTIONS_ENDPOINT;
+import static com.financetrackingbackend.util.AppConstants.TRANSACTIONS_PATH;
 import static com.financetrackingbackend.util.AppConstants.UB_ERROR_MSG;
 
 @Component
@@ -130,12 +130,12 @@ public class UlsterbankDaoImpl implements UlsterbankDao {
     
     @Override
     public List<UlsterbankTransaction> getTransactions(String accessToken, String accountId) {
-        return requestHelper(accessToken, accountId, TRANSACTIONS_ENDPOINT, UlsterbankData::getTransactions);
+        return requestHelper(accessToken, accountId, TRANSACTIONS_PATH, UlsterbankData::getTransactions);
     }
     
     @Override
     public List<UlsterbankBalance> getBalances(String accessToken, String accountId) {
-        return requestHelper(accessToken, accountId, BALANCES_ENDPOINT, UlsterbankData::getBalances);
+        return requestHelper(accessToken, accountId, BALANCES_PATH, UlsterbankData::getBalances);
     }
     
     private <T> T requestHelper(String accessToken, String accountId, String endpoint, Function<UlsterbankData, T> mapper) {

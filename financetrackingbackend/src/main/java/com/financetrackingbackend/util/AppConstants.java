@@ -16,6 +16,8 @@ public final class AppConstants {
     public static final String APPLICATION_JSON = "application/json";
     public static final String CLIENT_ID = "client_id";
     public static final String CLIENT_SECRET = "client_secret";
+    public static final String CURRENT_ACCOUNT_ID = "current_account_id";
+    public static final String ACCOUNT_ID = "account_id";
     public static final String SCOPE = "scope";
     public static final String ACCOUNTS_SCOPE = "accounts";
     public static final String OPENID_ACCOUNTS_SCOPE = "openid accounts";
@@ -25,10 +27,21 @@ public final class AppConstants {
     public static final String DATA = "Data";
     public static final String RISK = "Risk";
     public static final String PERMISSIONS = "Permissions";
-    public static final String TRANSACTIONS_ENDPOINT = "/transactions";
-    public static final String BALANCES_ENDPOINT = "/balances";
+    public static final String TRANSACTIONS_PATH = "/transactions";
+    public static final String BALANCES_PATH = "/balances";
+    public static final String BALANCE_PATH = "/balance";
+    public static final String ACCOUNTS_PATH = "/accounts";
+    public static final String MONZO_WHO_AM_I_PATH = "/ping/whoami";
+    public static final String POTS_PATH = "/pots";
+    public static final String AUTH_TOKEN_PATH = "/oauth2/token";
     public static final String CLIENT_CREDENTIALS = "client_credentials";
     public static final String AUTHORIZATION_CODE = "authorization_code";
+    public static final String REDIRECT_URI = "redirect_uri";
+    public static final String REQUIRED_INFO_BLANK_ERROR_MSG = "Required information for request is blank";
+    public static final String MONZO_REQUEST_FAIL = "Monzo request failed: ";
+    public static final String INCORRECT_TOKEN = "Incorrect token: ";
+    public static final String QUESTION_MARK = "?";
+    public static final String EQUALS_SIGN = "=";
 
     public static final List<String> PERMISSION_ARR = Arrays.asList(
             "ReadAccountsDetail",
