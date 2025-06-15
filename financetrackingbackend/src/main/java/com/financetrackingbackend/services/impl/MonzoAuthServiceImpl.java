@@ -1,38 +1,42 @@
 package com.financetrackingbackend.services.impl;
 
 import com.example.model.MonzoAccessToken;
+import com.financetrackingbackend.configuration.MonzoConfig;
 import com.financetrackingbackend.services.MonzoAuthService;
-import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
+
+import static com.financetrackingbackend.util.AppConstants.CLIENT_ID;
+import static com.financetrackingbackend.util.AppConstants.CODE;
+import static com.financetrackingbackend.util.AppConstants.FAILED_TO_GENERATE_STATE;
+import static com.financetrackingbackend.util.AppConstants.REDIRECT_URI;
+import static com.financetrackingbackend.util.AppConstants.RESPONSE_TYPE;
+import static com.financetrackingbackend.util.AppConstants.STATE;
 
 @Service
 @RequiredArgsConstructor
 public class MonzoAuthServiceImpl implements MonzoAuthService {
-    private final Dotenv dotenv;
+    private final MonzoConfig config;
 
     @Override
     public String buildMonzoAuthUrl(String state) {
-        String clientId = dotenv.get("MONZO_CLIENT_ID");
-        String redirectUri = dotenv.get("MONZO_REDIRECT_URI");
-
-        if (!StringUtils.isNoneBlank(clientId, redirectUri)) {
-            throw new IllegalStateException("Environment variables are not configured");
-        }
+        String clientId = config.getClientId();
+        String redirectUri = config.getRedirectUrl();
+        String authUri = config.getAuthUrl();
 
         if (state == null) {
-            throw new IllegalStateException("Failed to generate state token");
+            throw new IllegalStateException(FAILED_TO_GENERATE_STATE);
         }
 
         return UriComponentsBuilder.newInstance()
-                .scheme("https")
-                .host("auth.monzo.com")
-                .queryParam("client_id", clientId)
-                .queryParam("redirect_uri", redirectUri)
-                .queryParam("response_type", "code")
-                .queryParam("state", state)
+                .uri(URI.create(authUri))
+                .queryParam(CLIENT_ID, clientId)
+                .queryParam(REDIRECT_URI, redirectUri)
+                .queryParam(RESPONSE_TYPE, CODE)
+                .queryParam(STATE, state)
                 .build()
                 .toUriString();
     }

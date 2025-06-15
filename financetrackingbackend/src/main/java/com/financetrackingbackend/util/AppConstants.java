@@ -37,6 +37,8 @@ public final class AppConstants {
     public static final String CLIENT_CREDENTIALS = "client_credentials";
     public static final String AUTH_CODE = "authorization_code";
     public static final String REDIRECT_URI = "redirect_uri";
+    public static final String RESPONSE_TYPE = "response_type";
+    public static final String STATE = "state";
     public static final String REQUIRED_INFO_BLANK_ERROR_MSG = "Required information for request is blank";
     public static final String MONZO_REQUEST_FAIL = "Monzo request failed: ";
     public static final String INCORRECT_TOKEN = "Incorrect token: ";
@@ -59,6 +61,7 @@ public final class AppConstants {
     public static final String OPENID_ACCOUNTS = "openid accounts";
     public static final String AUTH_URL_TEMPLATE = "%s?client_id=%s&response_type=%s&scope=%s&redirect_uri=%s&request=%s";
     public static final String UB_NULL_RESPONSE_ERROR_MSG = "UB Response is null";
+    public static final String FAILED_TO_GENERATE_STATE = "Failed to generate state token";
 
     public static final List<String> PERMISSION_ARR = Arrays.asList(
             "ReadAccountsDetail",

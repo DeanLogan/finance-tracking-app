@@ -30,6 +30,7 @@ external:
             client-secret: ${ULSTERBANK_CLIENT_SECRET}
         monzo:
             base-url: https://api.monzo.com
+            auth-url: https://auth.monzo.com
             redirect-url: http://localhost:8080/monzo/oauth/callback
             client-id: ${MONZO_CLIENT_ID}
             client-secret: ${MONZO_CLIENT_SECRET}

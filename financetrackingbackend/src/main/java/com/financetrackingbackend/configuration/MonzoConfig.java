@@ -10,6 +10,7 @@ import lombok.Data;
 @ConfigurationProperties(prefix = "external.services.monzo")
 public class MonzoConfig {
     private String baseUrl;
+    private String authUrl;
     private String clientId;
     private String clientSecret;
     private String redirectUrl;
