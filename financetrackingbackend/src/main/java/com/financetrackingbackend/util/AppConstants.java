@@ -42,6 +42,16 @@ public final class AppConstants {
     public static final String INCORRECT_TOKEN = "Incorrect token: ";
     public static final String QUESTION_MARK = "?";
     public static final String EQUALS_SIGN = "=";
+    public static final String ACCOUNTS = "Accounts";
+    public static final String UPDATE_EXPRESSION = "attribute_exists(id)";
+    public static final String CHECK_ID_EXISTS_EXPRESSION = "attribute_not_exists(id)";
+    public static final String CONFLICT_MSG = "Account already exists with id: ";
+    public static final String CHECK_USER_EXPRESSION = "#usr = :username";
+    public static final String USER_ATTR = "user";
+    public static final String USER_ALIAS = "#usr";
+    public static final String USERNAME_VALUE_ALIAS = ":username";
+    public static final String CONNECTION_ERROR_MSG = "Could not connect the database";
+    public static final String AUTH_ERROR_MSG = "Problem authenticating user";
 
     public static final List<String> PERMISSION_ARR = Arrays.asList(
             "ReadAccountsDetail",
