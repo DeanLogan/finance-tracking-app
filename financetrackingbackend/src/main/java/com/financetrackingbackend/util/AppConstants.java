@@ -35,7 +35,7 @@ public final class AppConstants {
     public static final String POTS_PATH = "/pots";
     public static final String AUTH_TOKEN_PATH = "/oauth2/token";
     public static final String CLIENT_CREDENTIALS = "client_credentials";
-    public static final String AUTHORIZATION_CODE = "authorization_code";
+    public static final String AUTH_CODE = "authorization_code";
     public static final String REDIRECT_URI = "redirect_uri";
     public static final String REQUIRED_INFO_BLANK_ERROR_MSG = "Required information for request is blank";
     public static final String MONZO_REQUEST_FAIL = "Monzo request failed: ";
@@ -52,6 +52,13 @@ public final class AppConstants {
     public static final String USERNAME_VALUE_ALIAS = ":username";
     public static final String CONNECTION_ERROR_MSG = "Could not connect the database";
     public static final String AUTH_ERROR_MSG = "Problem authenticating user";
+
+    public static final String UB_REDIRECT_URI = "http://localhost:8080/ulsterbank/oauth/callback.html";
+    public static final String UB_BASE_URL = "https://api.sandbox.ulsterbank.co.uk/authorize";
+    public static final String CODE_ID_TOKEN = "code id_token";
+    public static final String OPENID_ACCOUNTS = "openid accounts";
+    public static final String AUTH_URL_TEMPLATE = "%s?client_id=%s&response_type=%s&scope=%s&redirect_uri=%s&request=%s";
+    public static final String UB_NULL_RESPONSE_ERROR_MSG = "UB Response is null";
 
     public static final List<String> PERMISSION_ARR = Arrays.asList(
             "ReadAccountsDetail",

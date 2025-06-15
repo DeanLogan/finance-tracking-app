@@ -24,7 +24,7 @@ import java.util.List;
 
 import static com.financetrackingbackend.util.AppConstants.ACCOUNTS_PATH;
 import static com.financetrackingbackend.util.AppConstants.ACCOUNT_ID;
-import static com.financetrackingbackend.util.AppConstants.AUTHORIZATION_CODE;
+import static com.financetrackingbackend.util.AppConstants.AUTH_CODE;
 import static com.financetrackingbackend.util.AppConstants.AUTH_TOKEN_PATH;
 import static com.financetrackingbackend.util.AppConstants.BALANCE_PATH;
 import static com.financetrackingbackend.util.AppConstants.CLIENT_ID;
@@ -60,7 +60,7 @@ public class MonzoDaoImpl implements MonzoDao {
             throw new IllegalStateException(REQUIRED_INFO_BLANK_ERROR_MSG);
         }
 
-        MultiValueMap<String, String> formData = buildFormData(AUTHORIZATION_CODE, authCode, monzoConfig.getRedirectUrl());
+        MultiValueMap<String, String> formData = buildFormData(AUTH_CODE, authCode, monzoConfig.getRedirectUrl());
         return fetchAccessToken(formData);
     }
 

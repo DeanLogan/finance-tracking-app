@@ -26,7 +26,7 @@ import static com.financetrackingbackend.util.AppConstants.ACCOUNTS_SCOPE;
 import static com.financetrackingbackend.util.AppConstants.ACCOUNT_ACCESS_CONSENTS_PATH;
 import static com.financetrackingbackend.util.AppConstants.APPLICATION_JSON;
 import static com.financetrackingbackend.util.AppConstants.AUTHORIZATION;
-import static com.financetrackingbackend.util.AppConstants.AUTHORIZATION_CODE;
+import static com.financetrackingbackend.util.AppConstants.AUTH_CODE;
 import static com.financetrackingbackend.util.AppConstants.BALANCES_PATH;
 import static com.financetrackingbackend.util.AppConstants.BEARER;
 import static com.financetrackingbackend.util.AppConstants.CLIENT_CREDENTIALS;
@@ -73,7 +73,7 @@ public class UlsterbankDaoImpl implements UlsterbankDao {
                 formData.add(SCOPE, ACCOUNTS_SCOPE);
                 break;
 
-            case AUTHORIZATION_CODE:
+            case AUTH_CODE:
                 formData.add(SCOPE, OPENID_ACCOUNTS_SCOPE);
                 formData.add(CODE, code);
                 break;
