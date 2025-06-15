@@ -8,11 +8,16 @@ import com.example.model.UlsterbankBalance;
 import com.example.model.UlsterbankAccount;
 import com.financetrackingbackend.configuration.UlsterbankConfig;
 import com.financetrackingbackend.dao.UlsterbankDao;
+import com.financetrackingbackend.exceptions.ServiceUnavailableException;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
@@ -62,14 +67,17 @@ public class UlsterbankDaoImpl implements UlsterbankDao {
 
         formData.add("grant_type", grantType);
 
-        Mono<UlsterbankAccessToken> response = webClient.post()
-                .uri("/token")
-                .header("Content-Type", "application/x-www-form-urlencoded")
-                .body(BodyInserters.fromFormData(formData))
-                .retrieve()
-                .bodyToMono(UlsterbankAccessToken.class);
-
-        return response.block();
+        try {
+            return webClient.post()
+                    .uri("/token")
+                    .header("Content-Type", "application/x-www-form-urlencoded")
+                    .body(BodyInserters.fromFormData(formData))
+                    .retrieve()
+                    .bodyToMono(UlsterbankAccessToken.class)
+                    .block();
+        } catch(WebClientResponseException e) {
+            throw new ServiceUnavailableException("UB request failed: "+e.getMessage());
+        }
     }
 
     @Override
@@ -86,14 +94,18 @@ public class UlsterbankDaoImpl implements UlsterbankDao {
         requestBody.put("Data", data);
         requestBody.put("Risk", new HashMap<>());
 
-        return webClient.post()
-                .uri("open-banking/v3.1/aisp/account-access-consents")
-                .header(AUTHORIZATION, BEARER + accountRequestAccessToken)
-                .header("Content-Type", "application/json")
-                .body(BodyInserters.fromValue(requestBody))
-                .retrieve()
-                .bodyToMono(UlsterbankGeneralResponse.class)
-                .block();
+        try {
+            return webClient.post()
+                    .uri("open-banking/v3.1/aisp/account-access-consents")
+                    .header(AUTHORIZATION, BEARER + accountRequestAccessToken)
+                    .header("Content-Type", "application/json")
+                    .body(BodyInserters.fromValue(requestBody))
+                    .retrieve()
+                    .bodyToMono(UlsterbankGeneralResponse.class)
+                    .block();
+        } catch(WebClientResponseException e) {
+            throw new ServiceUnavailableException("UB: "+e.getMessage());
+        }
     }
 
     @Override
@@ -112,13 +124,17 @@ public class UlsterbankDaoImpl implements UlsterbankDao {
     }
     
     private <T> T requestHelper(String accessToken, String accountId, String endpoint, Function<UlsterbankData, T> mapper) {
-        return webClient.get()
-                .uri(config.getAccountsUrl() + "/"+ accountId + endpoint)
-                .header(AUTHORIZATION, BEARER + accessToken)
-                .retrieve()
-                .bodyToMono(UlsterbankGeneralResponse.class)
-                .map(UlsterbankGeneralResponse::getData)
-                .map(mapper)
-                .block();
+        try {
+            return webClient.get()
+                    .uri(config.getAccountsUrl() + "/"+ accountId + endpoint)
+                    .header(AUTHORIZATION, BEARER + accessToken)
+                    .retrieve()
+                    .bodyToMono(UlsterbankGeneralResponse.class)
+                    .map(UlsterbankGeneralResponse::getData)
+                    .map(mapper)
+                    .block();
+        } catch(WebClientResponseException e) {
+            throw new ServiceUnavailableException("UB request failed: "+e.getMessage());
+        }
     }
 }
