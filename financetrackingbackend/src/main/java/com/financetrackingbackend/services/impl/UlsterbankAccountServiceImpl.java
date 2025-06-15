@@ -19,13 +19,18 @@ public class UlsterbankAccountServiceImpl implements UlsterbankAccountService {
         List<UlsterbankAccount> accountList = ulsterbankDao.getAccounts(accessToken);
         float amount = 0;
         for(UlsterbankAccount account : accountList) {
-            UlsterbankBalance balance = getBalanceForAccount(accessToken, account.getAccountId());
-            amount += balance.getAmount().getAmount();
+            amount += (float) getBalanceForAccount(accessToken, account.getAccountId());
         }
         return amount;
     }
 
-    private UlsterbankBalance getBalanceForAccount(String accessToken, String accountId) {
-        return ulsterbankDao.getBalances(accessToken, accountId).get(0);
+    private double getBalanceForAccount(String accessToken, String accountId) {
+        List<UlsterbankBalance> balances = ulsterbankDao.getBalances(accessToken, accountId);
+        return balances.stream()
+                .filter(balance -> balance != null
+                        && balance.getAmount() != null
+                        && balance.getAmount().getAmount() != null)
+                .mapToDouble(balance -> balance.getAmount().getAmount())
+                .sum();
     }
 }
