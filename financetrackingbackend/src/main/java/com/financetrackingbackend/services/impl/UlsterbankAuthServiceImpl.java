@@ -2,9 +2,9 @@ package com.financetrackingbackend.services.impl;
 
 import com.example.model.UlsterbankAccessToken;
 import com.example.model.UlsterbankGeneralResponse;
+import com.financetrackingbackend.configuration.UlsterbankConfig;
 import com.financetrackingbackend.dao.UlsterbankDao;
 import com.financetrackingbackend.services.UlsterbankAuthService;
-import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 @Service
 @RequiredArgsConstructor
 public class UlsterbankAuthServiceImpl implements UlsterbankAuthService {
-    private final Dotenv dotenv;
+    private final UlsterbankConfig config;
     private final UlsterbankDao ulsterbankDao;
     @Override
     public UlsterbankAccessToken refreshAccessToken(String refreshToken) {
@@ -28,7 +28,7 @@ public class UlsterbankAuthServiceImpl implements UlsterbankAuthService {
 
     @Override
     public String getRedirectUrl(String consentId) {
-        String clientId = dotenv.get("ULSTER_BANK_CLIENT_ID");
+        String clientId = config.getClientId();
         return formAuthorizationUrl(clientId, "http://localhost:8080/ulsterbank/oauth/callback.html", consentId);
     }
 
