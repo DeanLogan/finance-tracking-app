@@ -8,25 +8,51 @@ import com.example.model.UlsterbankBalance;
 import com.example.model.UlsterbankAccount;
 import com.financetrackingbackend.configuration.UlsterbankConfig;
 import com.financetrackingbackend.dao.UlsterbankDao;
+import com.financetrackingbackend.exceptions.ServiceUnavailableException;
+
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import static com.financetrackingbackend.util.AppConstants.ACCOUNTS_SCOPE;
+import static com.financetrackingbackend.util.AppConstants.ACCOUNT_ACCESS_CONSENTS_PATH;
+import static com.financetrackingbackend.util.AppConstants.APPLICATION_JSON;
+import static com.financetrackingbackend.util.AppConstants.AUTHORIZATION;
+import static com.financetrackingbackend.util.AppConstants.AUTH_CODE;
+import static com.financetrackingbackend.util.AppConstants.BALANCES_PATH;
+import static com.financetrackingbackend.util.AppConstants.BEARER;
+import static com.financetrackingbackend.util.AppConstants.CLIENT_CREDENTIALS;
+import static com.financetrackingbackend.util.AppConstants.CLIENT_ID;
+import static com.financetrackingbackend.util.AppConstants.CLIENT_SECRET;
+import static com.financetrackingbackend.util.AppConstants.CONTENT_TYPE;
+import static com.financetrackingbackend.util.AppConstants.DATA;
+import static com.financetrackingbackend.util.AppConstants.EMPTY_STRING;
+import static com.financetrackingbackend.util.AppConstants.FORM_URLENCODED;
+import static com.financetrackingbackend.util.AppConstants.GRANT_TYPE;
+import static com.financetrackingbackend.util.AppConstants.GRANT_TYPE_ERROR;
+import static com.financetrackingbackend.util.AppConstants.OPENID_ACCOUNTS_SCOPE;
+import static com.financetrackingbackend.util.AppConstants.PERMISSIONS;
+import static com.financetrackingbackend.util.AppConstants.PERMISSION_ARR;
+import static com.financetrackingbackend.util.AppConstants.REFRESH_TOKEN;
+import static com.financetrackingbackend.util.AppConstants.RISK;
+import static com.financetrackingbackend.util.AppConstants.SCOPE;
+import static com.financetrackingbackend.util.AppConstants.CODE;
+import static com.financetrackingbackend.util.AppConstants.TOKEN_PATH;
+import static com.financetrackingbackend.util.AppConstants.TRANSACTIONS_PATH;
+import static com.financetrackingbackend.util.AppConstants.UB_ERROR_MSG;
+
 @Component
 public class UlsterbankDaoImpl implements UlsterbankDao {
     private final WebClient webClient;
     private final UlsterbankConfig config;
-    private static final String AUTHORIZATION = "Authorization";
-    private static final String BEARER = "Bearer ";
 
     public UlsterbankDaoImpl(WebClient.Builder webClientBuilder, UlsterbankConfig config) {
         this.webClient = webClientBuilder.baseUrl(config.getBaseUrl()).build();
@@ -39,86 +65,91 @@ public class UlsterbankDaoImpl implements UlsterbankDao {
         String clientSecret = config.getClientSecret();
 
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-        formData.add("client_id", clientId);
-        formData.add("client_secret", clientSecret);
+        formData.add(CLIENT_ID, clientId);
+        formData.add(CLIENT_SECRET, clientSecret);
 
         switch (grantType) {
-            case "client_credentials":
-                formData.add("scope", "accounts");
+            case CLIENT_CREDENTIALS:
+                formData.add(SCOPE, ACCOUNTS_SCOPE);
                 break;
 
-            case "authorization_code":
-                formData.add("scope", "openid accounts");
-                formData.add("code", code);
+            case AUTH_CODE:
+                formData.add(SCOPE, OPENID_ACCOUNTS_SCOPE);
+                formData.add(CODE, code);
                 break;
 
-            case "refresh_token":
-                formData.add("refresh_token", code);
+            case REFRESH_TOKEN:
+                formData.add(REFRESH_TOKEN, code);
                 break;
 
             default:
-                throw new IllegalArgumentException("Unsupported grant type: " + grantType);
+                throw new IllegalArgumentException(GRANT_TYPE_ERROR + grantType);
         }
 
-        formData.add("grant_type", grantType);
+        formData.add(GRANT_TYPE, grantType);
 
-        Mono<UlsterbankAccessToken> response = webClient.post()
-                .uri("/token")
-                .header("Content-Type", "application/x-www-form-urlencoded")
-                .body(BodyInserters.fromFormData(formData))
-                .retrieve()
-                .bodyToMono(UlsterbankAccessToken.class);
-
-        return response.block();
+        try {
+            return webClient.post()
+                    .uri(TOKEN_PATH)
+                    .header(CONTENT_TYPE, FORM_URLENCODED)
+                    .body(BodyInserters.fromFormData(formData))
+                    .retrieve()
+                    .bodyToMono(UlsterbankAccessToken.class)
+                    .block();
+        } catch(WebClientResponseException e) {
+            throw new ServiceUnavailableException(UB_ERROR_MSG + e.getMessage());
+        }
     }
 
     @Override
     public UlsterbankGeneralResponse getConsentResponse(String accountRequestAccessToken) {
         Map<String, Object> requestBody = new HashMap<>();
         Map<String, Object> data = new HashMap<>();
-        data.put("Permissions", Arrays.asList(
-                "ReadAccountsDetail",
-                "ReadBalances",
-                "ReadTransactionsCredits",
-                "ReadTransactionsDebits",
-                "ReadTransactionsDetail"
-        ));
-        requestBody.put("Data", data);
-        requestBody.put("Risk", new HashMap<>());
+        data.put(PERMISSIONS, PERMISSION_ARR);
+        requestBody.put(DATA, data);
+        requestBody.put(RISK, new HashMap<>());
 
-        return webClient.post()
-                .uri("open-banking/v3.1/aisp/account-access-consents")
-                .header(AUTHORIZATION, BEARER + accountRequestAccessToken)
-                .header("Content-Type", "application/json")
-                .body(BodyInserters.fromValue(requestBody))
-                .retrieve()
-                .bodyToMono(UlsterbankGeneralResponse.class)
-                .block();
+        try {
+            return webClient.post()
+                    .uri(ACCOUNT_ACCESS_CONSENTS_PATH)
+                    .header(AUTHORIZATION, BEARER + accountRequestAccessToken)
+                    .header(CONTENT_TYPE, APPLICATION_JSON)
+                    .body(BodyInserters.fromValue(requestBody))
+                    .retrieve()
+                    .bodyToMono(UlsterbankGeneralResponse.class)
+                    .block();
+        } catch(WebClientResponseException e) {
+            throw new ServiceUnavailableException(UB_ERROR_MSG + e.getMessage());
+        }
     }
 
     @Override
     public List<UlsterbankAccount> getAccounts(String accessToken) {
-        return requestHelper(accessToken, "", "", UlsterbankData::getAccounts);
+        return requestHelper(accessToken, EMPTY_STRING, EMPTY_STRING, UlsterbankData::getAccounts);
     }
     
     @Override
     public List<UlsterbankTransaction> getTransactions(String accessToken, String accountId) {
-        return requestHelper(accessToken, accountId, "/transactions", UlsterbankData::getTransactions);
+        return requestHelper(accessToken, accountId, TRANSACTIONS_PATH, UlsterbankData::getTransactions);
     }
     
     @Override
     public List<UlsterbankBalance> getBalances(String accessToken, String accountId) {
-        return requestHelper(accessToken, accountId, "/balances", UlsterbankData::getBalances);
+        return requestHelper(accessToken, accountId, BALANCES_PATH, UlsterbankData::getBalances);
     }
     
     private <T> T requestHelper(String accessToken, String accountId, String endpoint, Function<UlsterbankData, T> mapper) {
-        return webClient.get()
-                .uri(config.getAccountsUrl() + "/"+ accountId + endpoint)
-                .header(AUTHORIZATION, BEARER + accessToken)
-                .retrieve()
-                .bodyToMono(UlsterbankGeneralResponse.class)
-                .map(UlsterbankGeneralResponse::getData)
-                .map(mapper)
-                .block();
+        try {
+            return webClient.get()
+                    .uri(config.getAccountsUrl() + "/" + accountId + endpoint)
+                    .header(AUTHORIZATION, BEARER + accessToken)
+                    .retrieve()
+                    .bodyToMono(UlsterbankGeneralResponse.class)
+                    .map(UlsterbankGeneralResponse::getData)
+                    .map(mapper)
+                    .block();
+        } catch(WebClientResponseException e) {
+            throw new ServiceUnavailableException(UB_ERROR_MSG + e.getMessage());
+        }
     }
 }

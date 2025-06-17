@@ -26,10 +26,10 @@ public class MonzoAccountServiceImpl implements MonzoAccountService {
     public MonzoAccount getBalanceForAccount(String accessToken, MonzoAccount account) {
         MonzoAccount updatedFields = monzoDao.getBalanceForAccount(accessToken, account.getId());
         if (updatedFields != null) {
-            account.balance(updatedFields.getBalance() / 100);
-            account.setTotalBalance(updatedFields.getTotalBalance() / 100);
+            account.balance(updatedFields.getBalance() != null ? updatedFields.getBalance() / 100 : 0);
+            account.setTotalBalance(updatedFields.getTotalBalance() != null ? updatedFields.getTotalBalance() / 100 : 0);
             account.setCurrency(updatedFields.getCurrency());
-            account.setSpendToday(updatedFields.getSpendToday() / 100);
+            account.setSpendToday(updatedFields.getSpendToday() != null ? updatedFields.getSpendToday() / 100 : 0);
         }
         return account;
     }
@@ -41,7 +41,7 @@ public class MonzoAccountServiceImpl implements MonzoAccountService {
         if (accounts != null) {
             for (MonzoAccount account : accounts) {
                 MonzoAccount monzoBalance = getBalanceForAccount(accessToken, account);
-                balance += monzoBalance.getBalance();
+                balance += monzoBalance.getBalance() != null ? monzoBalance.getBalance() : 0;
             }
         }
         return balance;
@@ -57,7 +57,7 @@ public class MonzoAccountServiceImpl implements MonzoAccountService {
         for (MonzoAccount account : accounts) {
             getBalanceForAccount(accessToken, account);
             addActivePotsToAccount(accessToken, account);
-            totalBalance += account.getTotalBalance();
+            totalBalance += account.getTotalBalance() != null ? account.getTotalBalance() : 0;
         }
         response.setAccounts(accounts);
         response.setTotalBalance(totalBalance);
@@ -71,9 +71,9 @@ public class MonzoAccountServiceImpl implements MonzoAccountService {
 
         List<MonzoPot> activePots = monzoDao.getAllPots(accessToken, accountId).getPots()
                 .stream()
-                .filter(pot -> !pot.getDeleted())
+                .filter(pot -> Boolean.FALSE.equals(pot.getDeleted()))
                 .map(monzoPot -> {
-                    float adjustedBalance = monzoPot.getBalance() / 100;
+                    float adjustedBalance = monzoPot.getBalance() != null ? monzoPot.getBalance() / 100 : 0;
                     monzoPot.setBalance(monzoPot.getBalance() / 100);
                     totalBalance.updateAndGet(currentTotal -> currentTotal + adjustedBalance);
                     return monzoPot;

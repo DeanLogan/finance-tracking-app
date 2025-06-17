@@ -28,18 +28,20 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.Map;
 
+import static com.financetrackingbackend.util.AppConstants.ACCOUNTS;
+import static com.financetrackingbackend.util.AppConstants.CHECK_ID_EXISTS_EXPRESSION;
+import static com.financetrackingbackend.util.AppConstants.CHECK_USER_EXPRESSION;
+import static com.financetrackingbackend.util.AppConstants.CONFLICT_MSG;
+import static com.financetrackingbackend.util.AppConstants.CONNECTION_ERROR_MSG;
+import static com.financetrackingbackend.util.AppConstants.UPDATE_EXPRESSION;
+import static com.financetrackingbackend.util.AppConstants.USERNAME_VALUE_ALIAS;
+import static com.financetrackingbackend.util.AppConstants.USER_ALIAS;
+import static com.financetrackingbackend.util.AppConstants.USER_ATTR;
+
 @Component
 public class AccountDaoImpl implements AccountDao {
     private final DynamoDbTable<Account> accountDynamoDbTable;
     private final AuthenticationUtil authUtil;
-    private static final String UPDATE_EXPRESSION = "attribute_exists(id)";
-    private static final String CHECK_ID_EXISTS_EXPRESSION = "attribute_not_exists(id)";
-    private static final String CONFLICT_MSG = "Account already exists with id: ";
-    private static final String CHECK_USER_EXPRESSION = "#usr = :username";
-    private static final String USER_ATTR = "user";
-    private static final String USER_ALIAS = "#usr";
-    private static final String USERNAME_VALUE_ALIAS = ":username";
-    private static final String CONNECTION_ERROR_MSG = "Could not connect the database";
 
     public AccountDaoImpl(AwsConfig awsConfig) {
         this.authUtil = new AuthenticationUtil();
@@ -52,7 +54,7 @@ public class AccountDaoImpl implements AccountDao {
         DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder()
                 .dynamoDbClient(dynamoDbClient)
                 .build();
-        this.accountDynamoDbTable = enhancedClient.table("Accounts", TableSchema.fromBean(Account.class));
+        this.accountDynamoDbTable = enhancedClient.table(ACCOUNTS, TableSchema.fromBean(Account.class));
     }
 
     @Override
