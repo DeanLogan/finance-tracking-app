@@ -25,6 +25,7 @@ class AuthenticationUtilTest {
     private AuthenticationUtil authenticationUtil;
 
     private static final String AUTH_ERROR_MSG = "Problem authenticating user";
+    private static final String EXPECTED_USERNAME = "testUser";
 
     @BeforeEach
     void setUp() {
@@ -33,14 +34,13 @@ class AuthenticationUtilTest {
 
     @Test
     void getCurrentUsername_returnsUsernameWhenAuthenticated() {
-        String expectedUsername = "testUser";
         when(authentication.isAuthenticated()).thenReturn(true);
-        when(authentication.getName()).thenReturn(expectedUsername);
+        when(authentication.getName()).thenReturn(EXPECTED_USERNAME);
         when(securityContext.getAuthentication()).thenReturn(authentication);
         SecurityContextHolder.setContext(securityContext);
 
         String actualUsername = authenticationUtil.getCurrentUsername();
-        assertEquals(expectedUsername, actualUsername);
+        assertEquals(EXPECTED_USERNAME, actualUsername);
     }
 
     @Test
