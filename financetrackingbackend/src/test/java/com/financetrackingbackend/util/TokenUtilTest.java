@@ -53,25 +53,21 @@ class TokenUtilTest {
 
     @Test
     void validateStateToken_trueWhenStateTokensAreTheSame() {
-        boolean valid = TokenUtil.validateStateToken(TOKEN, TOKEN);
-        assertTrue(valid);
+        assertTrue(TokenUtil.validateStateToken(TOKEN, TOKEN));
     }
 
     @Test
     void validateStateToken_falseWhenStateTokensAreDifferent() {
-        boolean valid = TokenUtil.validateStateToken(TOKEN, "");
-        assertFalse(valid);
+        assertFalse(TokenUtil.validateStateToken(TOKEN, ""));
     }
 
     @Test
     void validateStateToken_falseWhenOneIsNull() {
-        boolean valid = TokenUtil.validateStateToken(TOKEN, null);
-        assertFalse(valid);
+        assertFalse(TokenUtil.validateStateToken(TOKEN, null));
     }
 
     @Test
     void validateStateToken_falseWhenBothIsNull() {
-        boolean valid = TokenUtil.validateStateToken(null, null);
-        assertFalse(valid);
+        assertFalse(TokenUtil.validateStateToken(null, null));
     }
 }
