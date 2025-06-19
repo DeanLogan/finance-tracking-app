@@ -2,6 +2,10 @@ package com.financetrackingbackend.util;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,27 +13,29 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-
+@ExtendWith(MockitoExtension.class)
 class AuthenticationUtilTest {
-    private final AuthenticationUtil authenticationUtil = new AuthenticationUtil();
+    @Mock
+    private SecurityContext securityContext;
+    @Mock
+    private Authentication authentication;
+    @InjectMocks
+    private AuthenticationUtil authenticationUtil;
+
     private static final String AUTH_ERROR_MSG = "Problem authenticating user";
 
     @BeforeEach
-    void clearContext() {
+    void setUp() {
         SecurityContextHolder.clearContext();
     }
 
     @Test
-    void getCurrentUsername_returnsUsername_whenAuthenticated() {
+    void getCurrentUsername_returnsUsernameWhenAuthenticated() {
         String expectedUsername = "testUser";
-        Authentication authentication = mock(Authentication.class);
         when(authentication.isAuthenticated()).thenReturn(true);
         when(authentication.getName()).thenReturn(expectedUsername);
-
-        SecurityContext securityContext = mock(SecurityContext.class);
         when(securityContext.getAuthentication()).thenReturn(authentication);
         SecurityContextHolder.setContext(securityContext);
 
@@ -38,8 +44,7 @@ class AuthenticationUtilTest {
     }
 
     @Test
-    void getCurrentUsername_throwsException_whenAuthenticationIsNull() {
-        SecurityContext securityContext = mock(SecurityContext.class);
+    void getCurrentUsername_throwsExceptionWhenAuthenticationIsNull() {
         when(securityContext.getAuthentication()).thenReturn(null);
         SecurityContextHolder.setContext(securityContext);
 
@@ -51,11 +56,8 @@ class AuthenticationUtilTest {
     }
 
     @Test
-    void getCurrentUsername_throwsException_whenNotAuthenticated() {
-        Authentication authentication = mock(Authentication.class);
+    void getCurrentUsername_throwsExceptionWhenNotAuthenticated() {
         when(authentication.isAuthenticated()).thenReturn(false);
-
-        SecurityContext securityContext = mock(SecurityContext.class);
         when(securityContext.getAuthentication()).thenReturn(authentication);
         SecurityContextHolder.setContext(securityContext);
 
@@ -65,4 +67,24 @@ class AuthenticationUtilTest {
         );
         assertEquals(AUTH_ERROR_MSG, exception.getMessage());
     }
+
+    @Test
+    void getCurrentUsername_throwsExceptionWhenSecurityContextIsNull() {
+        SecurityContextHolder.clearContext();
+
+        UsernameNotFoundException exception = assertThrows(
+                UsernameNotFoundException.class,
+                authenticationUtil::getCurrentUsername
+        );
+        assertEquals(AUTH_ERROR_MSG, exception.getMessage());
+    }
+
+    @Test
+    void getCurrentUsername_throwsExceptionWhenAuthenticationThrowsException() {
+        when(securityContext.getAuthentication()).thenThrow(new RuntimeException("Unexpected error"));
+        SecurityContextHolder.setContext(securityContext);
+
+        assertThrows(RuntimeException.class, authenticationUtil::getCurrentUsername);
+    }
+    
 }
