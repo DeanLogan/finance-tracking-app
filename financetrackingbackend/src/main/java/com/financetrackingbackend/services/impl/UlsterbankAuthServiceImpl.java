@@ -17,9 +17,7 @@ import static com.financetrackingbackend.util.AppConstants.AUTH_URL_TEMPLATE;
 import static com.financetrackingbackend.util.AppConstants.CODE_ID_TOKEN;
 import static com.financetrackingbackend.util.AppConstants.OPENID_ACCOUNTS;
 import static com.financetrackingbackend.util.AppConstants.REFRESH_TOKEN;
-import static com.financetrackingbackend.util.AppConstants.UB_BASE_URL;
 import static com.financetrackingbackend.util.AppConstants.UB_NULL_RESPONSE_ERROR_MSG;
-import static com.financetrackingbackend.util.AppConstants.UB_REDIRECT_URI;
 
 @Service
 @RequiredArgsConstructor
@@ -39,14 +37,12 @@ public class UlsterbankAuthServiceImpl implements UlsterbankAuthService {
 
     @Override
     public String getRedirectUrl(String consentId) {
-        String clientId = config.getClientId();
-
         return String.format(AUTH_URL_TEMPLATE,
-                UB_BASE_URL,
-                URLEncoder.encode(clientId, StandardCharsets.UTF_8),
+                config.getAuthUrl(),
+                URLEncoder.encode(config.getClientId(), StandardCharsets.UTF_8),
                 URLEncoder.encode(CODE_ID_TOKEN, StandardCharsets.UTF_8),
                 URLEncoder.encode(OPENID_ACCOUNTS, StandardCharsets.UTF_8),
-                URLEncoder.encode(UB_REDIRECT_URI, StandardCharsets.UTF_8),
+                URLEncoder.encode(config.getRedirectUrl(), StandardCharsets.UTF_8),
                 URLEncoder.encode(consentId, StandardCharsets.UTF_8)
         );
     }

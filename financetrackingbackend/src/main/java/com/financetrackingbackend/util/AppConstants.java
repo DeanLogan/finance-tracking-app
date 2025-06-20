@@ -54,8 +54,6 @@ public final class AppConstants {
     public static final String USERNAME_VALUE_ALIAS = ":username";
     public static final String CONNECTION_ERROR_MSG = "Could not connect the database";
     public static final String AUTH_ERROR_MSG = "Problem authenticating user";
-    public static final String UB_REDIRECT_URI = "http://localhost:8080/ulsterbank/oauth/callback.html";
-    public static final String UB_BASE_URL = "https://api.sandbox.ulsterbank.co.uk/authorize";
     public static final String CODE_ID_TOKEN = "code id_token";
     public static final String OPENID_ACCOUNTS = "openid accounts";
     public static final String AUTH_URL_TEMPLATE = "%s?client_id=%s&response_type=%s&scope=%s&redirect_uri=%s&request=%s";

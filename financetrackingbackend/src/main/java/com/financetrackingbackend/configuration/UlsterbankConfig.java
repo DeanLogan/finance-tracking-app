@@ -14,4 +14,5 @@ public class UlsterbankConfig {
     private String clientSecret;
     private String authUrl;
     private String accountsUrl;
+    private String redirectUrl;
 }

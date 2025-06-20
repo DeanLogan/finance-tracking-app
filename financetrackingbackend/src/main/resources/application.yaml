@@ -26,12 +26,13 @@ external:
             base-url: https://ob.sandbox.ulsterbank.co.uk
             accounts-url: open-banking/v3.1/aisp/accounts
             auth-url: https://api.sandbox.ulsterbank.co.uk/authorize
+            redirect-url: ${app-host}/ulsterbank/oauth/callback.html
             client-id: ${ULSTERBANK_CLIENT_ID}
             client-secret: ${ULSTERBANK_CLIENT_SECRET}
         monzo:
             base-url: https://api.monzo.com
             auth-url: https://auth.monzo.com
-            redirect-url: http://localhost:8080/monzo/oauth/callback
+            redirect-url: ${app-host}/monzo/oauth/callback
             client-id: ${MONZO_CLIENT_ID}
             client-secret: ${MONZO_CLIENT_SECRET}
 
@@ -41,3 +42,5 @@ aws:
         region: eu-west-1
         access-key: test
         secret-key: test
+
+app-host: http://localhost:8080
