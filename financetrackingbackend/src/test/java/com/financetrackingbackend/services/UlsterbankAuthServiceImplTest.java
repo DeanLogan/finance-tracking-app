@@ -86,12 +86,15 @@ class UlsterbankAuthServiceImplTest {
                 .set(field(UlsterbankGeneralResponse::getData), null)
                 .create();
 
-        assertThrows(ServiceUnavailableException.class, () -> ulsterbankAuthService.extractConsentId(response));
+        ServiceUnavailableException e = assertThrows(ServiceUnavailableException.class, () -> ulsterbankAuthService.extractConsentId(response));
+        assertEquals(UB_NULL_RESPONSE_ERROR_MSG, e.getMessage());
+
     }
 
     @Test
     void extractConsentId_handlesNullUlsterbankresponse() {
-        assertThrows(ServiceUnavailableException.class, () -> ulsterbankAuthService.extractConsentId(null));
+        ServiceUnavailableException e =assertThrows(ServiceUnavailableException.class, () -> ulsterbankAuthService.extractConsentId(null));
+        assertEquals(UB_NULL_RESPONSE_ERROR_MSG, e.getMessage());
     }
     
 }
