@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
@@ -69,12 +70,15 @@ public class MonzoAccountServiceImpl implements MonzoAccountService {
     public MonzoPots getAllActivePotsForAccount(String accessToken, String accountId) {
         AtomicReference<Float> totalBalance = new AtomicReference<>(0.0F);
 
-        List<MonzoPot> activePots = monzoDao.getAllPots(accessToken, accountId).getPots()
-                .stream()
+        List<MonzoPot> allPots = Optional.ofNullable(monzoDao.getAllPots(accessToken, accountId))
+                .map(MonzoPots::getPots)
+                .orElse(Collections.emptyList());
+        
+        List<MonzoPot> activePots = allPots.stream()
                 .filter(pot -> Boolean.FALSE.equals(pot.getDeleted()))
                 .map(monzoPot -> {
                     float adjustedBalance = monzoPot.getBalance() != null ? monzoPot.getBalance() / 100 : 0;
-                    monzoPot.setBalance(monzoPot.getBalance() / 100);
+                    monzoPot.setBalance(adjustedBalance);
                     totalBalance.updateAndGet(currentTotal -> currentTotal + adjustedBalance);
                     return monzoPot;
                 })
