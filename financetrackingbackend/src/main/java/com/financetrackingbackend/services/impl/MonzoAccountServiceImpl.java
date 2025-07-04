@@ -26,7 +26,7 @@ public class MonzoAccountServiceImpl implements MonzoAccountService {
 
     @Override
     public MonzoAccount getBalanceForAccount(String accessToken, MonzoAccount account) {
-        MonzoAccount updatedFields = monzoDao.getBalanceForAccount(accessToken, account.getId());
+        MonzoAccount updatedFields = monzoDao.getAccount(accessToken, account.getId());
         if (updatedFields != null) {
             account.balance(updatedFields.getBalance() != null ? updatedFields.getBalance() / 100 : 0);
             account.setTotalBalance(updatedFields.getTotalBalance() != null ? updatedFields.getTotalBalance() / 100 : 0);

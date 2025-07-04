@@ -91,7 +91,7 @@ public class MonzoDaoImpl implements MonzoDao {
     }
 
     @Override
-    public MonzoAccount getBalanceForAccount(String accessToken, String accountId) {
+    public MonzoAccount getAccount(String accessToken, String accountId) {
         return requestHelper(accessToken, ACCOUNT_ID, accountId, BALANCE_PATH, MonzoAccount.class);
     }
 
