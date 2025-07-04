@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -52,6 +53,9 @@ public class MonzoAccountServiceImpl implements MonzoAccountService {
     public MonzoUserInfoResponse getUserInfo(String accessToken) {
         MonzoUserInfoResponse response = new MonzoUserInfoResponse();
         List<MonzoAccount> accounts = monzoDao.getAccounts(accessToken);
+            accounts = accounts.stream()
+            .filter(Objects::nonNull)
+            .toList();
 
         float totalBalance = 0.0F;
 
@@ -94,7 +98,9 @@ public class MonzoAccountServiceImpl implements MonzoAccountService {
     @Override
     public List<MonzoTransaction> listTransactions(String accessToken, String accountId) {
         MonzoTransactionsResponse response = monzoDao.getTransactions(accessToken, accountId);
-        return response != null ? monzoDao.getTransactions(accessToken, accountId).getTransactions() : Collections.emptyList();
+        return response != null && response.getTransactions() != null
+                ? response.getTransactions()
+                : Collections.emptyList();
     }
 
     private void addActivePotsToAccount(String accessToken, MonzoAccount account) {
