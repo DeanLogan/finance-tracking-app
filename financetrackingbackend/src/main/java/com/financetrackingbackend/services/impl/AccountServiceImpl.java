@@ -3,7 +3,7 @@ package com.financetrackingbackend.services.impl;
 import java.util.List;
 
 import com.example.model.Account;
-import com.financetrackingbackend.dao.impl.AccountDaoImpl;
+import com.financetrackingbackend.dao.AccountDao;
 import com.financetrackingbackend.exceptions.ResourceNotFoundException;
 import com.financetrackingbackend.services.AccountService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import software.amazon.awssdk.services.dynamodb.model.ConditionalCheckFailedExce
 @Slf4j
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
-    private final AccountDaoImpl accountDao;
+    private final AccountDao accountDao;
     private static final String ACC_NOT_FOUND_MSG = "Account was not found with id: ";
 
     @Override
