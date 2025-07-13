@@ -59,6 +59,7 @@ public final class AppConstants {
     public static final String AUTH_URL_TEMPLATE = "%s?client_id=%s&response_type=%s&scope=%s&redirect_uri=%s&request=%s";
     public static final String UB_NULL_RESPONSE_ERROR_MSG = "UB Response is null";
     public static final String FAILED_TO_GENERATE_STATE = "Failed to generate state token";
+    public static final String BACKSLASH = "/";
 
     public static final List<String> PERMISSION_ARR = Arrays.asList(
             "ReadAccountsDetail",
