@@ -35,7 +35,7 @@ public class AccountServiceImplTest {
         Account account = Instancio.of(Account.class).create();
         when(accountDao.addAccount(any())).thenReturn(account);
         Account result = accountService.addAccount(account);
-        assertEquals(result, account);
+        assertEquals(account, result);
         verify(accountDao, times(1)).addAccount(account);
     }
 
@@ -44,7 +44,7 @@ public class AccountServiceImplTest {
         Account account = Instancio.of(Account.class).create();
         when(accountDao.getAccount(any())).thenReturn(account);
         Account result = accountService.getAccount(ID);
-        assertEquals(result, account);
+        assertEquals(account, result);
         verify(accountDao, times(1)).getAccount(ID);
     }
 
@@ -61,7 +61,7 @@ public class AccountServiceImplTest {
         Account account = Instancio.of(Account.class).create();
         when(accountDao.deleteAccount(any())).thenReturn(account);
         Account result = accountService.deleteAccount(ID);
-        assertEquals(result, account);
+        assertEquals(account, result);
         verify(accountDao, times(1)).deleteAccount(ID);
     }
 
@@ -78,7 +78,7 @@ public class AccountServiceImplTest {
         Account account = Instancio.of(Account.class).create();
         when(accountDao.updateAccount(anyString(), any())).thenReturn(account);
         Account result = accountService.updateAccount(ID, account);
-        assertEquals(result, account);
+        assertEquals(account, result);
         verify(accountDao, times(1)).updateAccount(ID, account);
     }
 
