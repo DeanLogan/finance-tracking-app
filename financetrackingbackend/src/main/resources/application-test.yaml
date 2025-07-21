@@ -26,12 +26,13 @@ external:
             base-url: ${wiremock-host}
             accounts-url: open-banking/v3.1/aisp/accounts
             auth-url: https://api.sandbox.ulsterbank.co.uk/authorize
+            redirect-url: ${app-host}/ulsterbank/oauth/callback.html
             client-id: ${ULSTERBANK_CLIENT_ID}
             client-secret: ${ULSTERBANK_CLIENT_SECRET}
         monzo:
             base-url: ${wiremock-host}
             auth-url: ${wiremock-host}
-            redirect-url: http://localhost:8080/monzo/oauth/callback
+            redirect-url: ${app-host}/monzo/oauth/callback
             client-id: ${MONZO_CLIENT_ID}
             client-secret: ${MONZO_CLIENT_SECRET}
 
@@ -43,3 +44,4 @@ aws:
         secret-key: test
 
 wiremock-host: http://localhost:1080
+app-host: http://localhost:8080

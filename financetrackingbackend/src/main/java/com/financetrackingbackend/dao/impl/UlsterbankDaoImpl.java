@@ -15,6 +15,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClient.Builder;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.HashMap;
@@ -27,6 +28,7 @@ import static com.financetrackingbackend.util.AppConstants.ACCOUNT_ACCESS_CONSEN
 import static com.financetrackingbackend.util.AppConstants.APPLICATION_JSON;
 import static com.financetrackingbackend.util.AppConstants.AUTHORIZATION;
 import static com.financetrackingbackend.util.AppConstants.AUTH_CODE;
+import static com.financetrackingbackend.util.AppConstants.BACKSLASH;
 import static com.financetrackingbackend.util.AppConstants.BALANCES_PATH;
 import static com.financetrackingbackend.util.AppConstants.BEARER;
 import static com.financetrackingbackend.util.AppConstants.CLIENT_CREDENTIALS;
@@ -54,7 +56,7 @@ public class UlsterbankDaoImpl implements UlsterbankDao {
     private final WebClient webClient;
     private final UlsterbankConfig config;
 
-    public UlsterbankDaoImpl(WebClient.Builder webClientBuilder, UlsterbankConfig config) {
+    public UlsterbankDaoImpl(Builder webClientBuilder, UlsterbankConfig config) {
         this.webClient = webClientBuilder.baseUrl(config.getBaseUrl()).build();
         this.config = config;
     }
@@ -141,7 +143,7 @@ public class UlsterbankDaoImpl implements UlsterbankDao {
     private <T> T requestHelper(String accessToken, String accountId, String endpoint, Function<UlsterbankData, T> mapper) {
         try {
             return webClient.get()
-                    .uri(config.getAccountsUrl() + "/" + accountId + endpoint)
+                    .uri(config.getAccountsUrl() + BACKSLASH + accountId + endpoint)
                     .header(AUTHORIZATION, BEARER + accessToken)
                     .retrieve()
                     .bodyToMono(UlsterbankGeneralResponse.class)

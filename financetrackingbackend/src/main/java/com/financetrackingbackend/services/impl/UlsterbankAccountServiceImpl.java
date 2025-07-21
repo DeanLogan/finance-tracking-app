@@ -26,6 +26,9 @@ public class UlsterbankAccountServiceImpl implements UlsterbankAccountService {
 
     private double getBalanceForAccount(String accessToken, String accountId) {
         List<UlsterbankBalance> balances = ulsterbankDao.getBalances(accessToken, accountId);
+        if(balances == null) {
+            return 0;
+        }
         return balances.stream()
                 .filter(balance -> balance != null
                         && balance.getAmount() != null

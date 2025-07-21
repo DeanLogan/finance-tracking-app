@@ -43,8 +43,8 @@ public class AccountDaoImpl implements AccountDao {
     private final DynamoDbTable<Account> accountDynamoDbTable;
     private final AuthenticationUtil authUtil;
 
-    public AccountDaoImpl(AwsConfig awsConfig) {
-        this.authUtil = new AuthenticationUtil();
+    public AccountDaoImpl(AwsConfig awsConfig, AuthenticationUtil authUtil) {
+        this.authUtil = authUtil;
         DynamoDbClient dynamoDbClient = DynamoDbClient.builder()
                 .endpointOverride(URI.create(awsConfig.getEndpoint()))
                 .credentialsProvider(StaticCredentialsProvider.create(

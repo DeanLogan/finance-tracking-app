@@ -14,6 +14,6 @@ public interface MonzoDao {
     WhoAmI getWhoAmI(String accessToken);
     List<MonzoAccount> getAccounts(String accessToken);
     MonzoPots getAllPots(String accessToken, String accountId);
-    MonzoAccount getBalanceForAccount(String accessToken, String accountId);
+    MonzoAccount getAccount(String accessToken, String accountId);
     MonzoTransactionsResponse getTransactions(String accessToken, String accountId);
 }

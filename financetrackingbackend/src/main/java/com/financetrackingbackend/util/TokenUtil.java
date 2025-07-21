@@ -8,9 +8,12 @@ import java.util.Base64;
 @UtilityClass
 public class TokenUtil {
     public static String generateStateToken() {
+        return generateStateToken(new SecureRandom());
+    }
+
+    public static String generateStateToken(SecureRandom secureRandom) {
         try {
             byte[] randomBytes = new byte[32];
-            SecureRandom secureRandom = new SecureRandom();
             secureRandom.nextBytes(randomBytes);
             return Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
         } catch (Exception e) {

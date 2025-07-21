@@ -1,6 +1,5 @@
 package com.financetrackingbackend.services.impl;
 
-import com.example.model.MonzoAccessToken;
 import com.financetrackingbackend.configuration.MonzoConfig;
 import com.financetrackingbackend.services.MonzoAuthService;
 import lombok.RequiredArgsConstructor;
@@ -41,8 +40,4 @@ public class MonzoAuthServiceImpl implements MonzoAuthService {
                 .toUriString();
     }
 
-    @Override
-    public MonzoAccessToken getMonzoAccessToken(String grantType, String clientId, String clientSecret, String authCode, String redirectUri) {
-        return null;
-    }
 }
