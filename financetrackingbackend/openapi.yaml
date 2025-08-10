@@ -1171,6 +1171,42 @@ components:
             - $ref: '#/components/schemas/UlsterbankMeta'
           description: Metadata information associated with the response.
 
+    Quote:
+      type: object
+      description: Represents a response from the finnhub quote API which contains price info for a given stock.
+      properties:
+        c:
+          type: number
+          format: float
+          description: Current price of stock.
+        d:
+          type: number
+          format: float
+          description: Change in price.
+        dp:
+          type: number
+          format: float
+          description: Percentage change in price.
+        h:
+          type: number
+          format: float
+          description: High price of the day.
+        l:
+          type: number
+          format: float
+          description: Low price of the day.
+        o:
+          type: number
+          format: float
+          description: Open price of the day.
+        pc:
+          type: number
+          format: float
+          description: Previous close price (close price of the day before).
+        t:
+          type: integer
+          description: Unix time of price update.
+
     Currency:
       type: string
       description: Represents the currency type.
