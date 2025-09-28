@@ -35,6 +35,9 @@ external:
             redirect-url: ${app-host}/monzo/oauth/callback
             client-id: ${MONZO_CLIENT_ID}
             client-secret: ${MONZO_CLIENT_SECRET}
+        finnhub:
+            base-url: https://finnhub.io/api/v1
+            token: ${FINNHUB_TOKEN}
 
 aws:
     dynamodb:
