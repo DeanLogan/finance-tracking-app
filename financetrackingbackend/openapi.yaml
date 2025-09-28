@@ -1207,6 +1207,38 @@ components:
           type: integer
           description: Unix time of price update.
 
+    SymbolInformation:
+      type: object
+      description: Response from FinnHubs Symbol Lookup API
+      properties:
+        description:
+          type: string
+          description: Name of company.
+        displaySymbol:
+          type: string
+          description: Symbol that is used for display in the stock exchange.
+        symbol:
+          type: string
+          description: Symbol used for other calls to FinnHub.
+        type:
+          type: string
+          description: Security type.
+
+    SymbolLookupResponse:
+      type: object
+      description: Response from FinnHubs Symbol Lookup API
+      properties:
+        count:
+          type: number
+          format: integer
+          description: Number of results.
+        result:
+          x-jsonproperty: SymbolInformation
+          type: array
+          items:
+            $ref: '#/components/schemas/SymbolInformation'
+          description: Array of search results (SymbolInformation).
+
     Currency:
       type: string
       description: Represents the currency type.
